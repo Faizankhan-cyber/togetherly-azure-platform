@@ -58,6 +58,124 @@ See:
 - `infra/portal/v1/README.md`
 - `infra/bicep/v2/README.md`
 
+## Official repository layout
+
+Use this as the canonical folder blueprint. Do not create a second competing layout or move files without updating the documentation.
+
+```text
+togetherly-azure-platform/
+├── README.md
+├── PROJECT_OVERVIEW.md
+├── CHANGELOG.md
+├── PROMPT.md
+├── .gitignore
+├── .github/
+│   └── workflows/
+│       └── README.md
+├── docs/
+│   ├── architecture/
+│   │   ├── README.md
+│   │   ├── architecture-overview.md
+│   │   ├── network-topology.md
+│   │   └── diagrams/
+│   │       ├── README.md
+│   │       └── v1-architecture.mmd
+│   ├── decisions/
+│   │   ├── README.md
+│   │   ├── ADR-001-v1-hosting-architecture.md
+│   │   └── ADR-002-v2-bicep-adoption.md
+│   ├── versions/
+│   │   ├── v1.md
+│   │   ├── v2.md
+│   │   ├── v3.md
+│   │   ├── v4.md
+│   │   └── v5.md
+│   ├── security/
+│   │   ├── README.md
+│   │   ├── security-baseline.md
+│   │   ├── threat-model/
+│   │   │   └── README.md
+│   │   ├── data-classification/
+│   │   │   └── README.md
+│   │   ├── access-control/
+│   │   │   └── README.md
+│   │   └── security-reviews/
+│   │       └── README.md
+│   ├── runbooks/
+│   │   ├── README.md
+│   │   ├── deployment.md
+│   │   ├── troubleshooting.md
+│   │   ├── backup-and-restore.md
+│   │   ├── incident-response.md
+│   │   └── disaster-recovery.md
+│   └── cost-management/
+│       ├── README.md
+│       ├── budget-and-alerts.md
+│       ├── resource-cost-tracking.md
+│       └── cleanup-procedures.md
+├── infra/
+│   ├── portal/
+│   │   └── v1/
+│   │       ├── README.md
+│   │       ├── resource-checklist.md
+│   │       └── configuration-record.md
+│   ├── bicep/
+│   │   ├── v2/
+│   │   │   ├── README.md
+│   │   │   ├── main.bicep (future)
+│   │   │   ├── modules/ (future)
+│   │   │   └── parameters/ (future)
+│   │   ├── v3/README.md
+│   │   ├── v4/README.md
+│   │   └── v5/README.md
+│   └── shared/
+│       ├── README.md
+│       ├── naming-conventions.md
+│       └── resource-inventory.md
+├── application/
+│   ├── README.md
+│   ├── functions/
+│   │   └── README.md
+│   └── nginx/
+│       └── README.md
+├── scripts/
+│   ├── README.md
+│   ├── deployment/README.md
+│   ├── verification/README.md
+│   ├── maintenance/README.md
+│   └── cleanup/README.md
+├── tests/
+│   ├── README.md
+│   ├── unit/README.md
+│   ├── integration/README.md
+│   ├── security/README.md
+│   └── smoke/README.md
+└── evidence/
+    ├── v1/
+    │   ├── README.md
+    │   ├── architecture/
+    │   ├── azure-resources/
+    │   ├── networking/
+    │   ├── deployment/
+    │   ├── testing/
+    │   └── cost/
+    ├── v2/README.md
+    ├── v3/README.md
+    ├── v4/README.md
+    └── v5/README.md
+```
+
+Folder responsibilities:
+- `docs/architecture/`, `docs/decisions/`, `docs/versions/`, `docs/security/`, `docs/runbooks/`, and `docs/cost-management/` hold project documentation.
+- `infra/portal/v1/` holds manual V1 Azure Portal records. `infra/bicep/v2/` is the V2 Bicep milestone. Terraform is not in scope.
+- `infra/shared/` holds naming and resource inventory records.
+- `application/functions/` is reserved for the Azure Functions adapter only if that proposed design is approved. `application/nginx/` holds platform Nginx configuration.
+- `scripts/` and `tests/` hold reusable tools and checks as they are implemented.
+- `evidence/v1/` through `evidence/v5/` hold sanitised version-specific evidence.
+- The Togetherly Workforce app remains in its separate repository; never duplicate its full source here.
+
+Do not add fake source files or empty workflow definitions just to make the tree look complete. README placeholders describe planned areas. A planned directory is not an implemented feature.
+
 ## Safety and cost rules
 
 - The initial planning envelope is US$100 Azure credit; the initial V1 planning target is US$15. These are estimates, not quotes or hard spending limits.
