@@ -11,3 +11,7 @@ All notable project changes will be recorded here.
 - Added V1 Portal provisioning notes and a reserved V2 Bicep folder.
 - Updated README, project overview, V1 plan, and continuation prompt to reflect the current architecture and provisioning approach.
 - Removed unused Terraform and V1 automation placeholder files.
+
+- Finalised the canonical V1–V5 repository folder blueprint and documented folder ownership and implementation status.
+- Added documentation areas for architecture diagrams, ADRs, security, runbooks, cost management, application integration, scripts, tests, and version-specific evidence.
+- Kept V1 manual Azure Portal provisioning and reserved Bicep for V2; no Terraform files or Azure resources were added.
