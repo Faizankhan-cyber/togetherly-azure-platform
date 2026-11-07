@@ -1,0 +1,26 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Azure CLI / local state
+.azure/
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
