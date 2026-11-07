@@ -1,21 +1,38 @@
 flowchart TB
-    U[User browser]
-    DNS[Azure public IP and DNS]
-    NSG[Network Security Group]
-    VM[Azure Linux VM]
-    NGINX[Nginx reverse proxy]
-    WEB[React and Vite static frontend]
-    FUNC[Azure Function App - proposed TinyFish API]
-    STORE[Functions storage account]
-    SB[(Supabase Auth and PostgreSQL)]
-    TF[TinyFish API]
+    USER(["User / Browser"])
 
-    U -->|HTTPS 443| DNS
-    DNS --> NSG
-    NSG -->|Allowed web traffic| VM
+    subgraph AZURE["MICROSOFT AZURE"]
+        subgraph RG["Resource Group: rg-togetherly-platform"]
+            PUBLIC["Public IP / DNS"]
+            NSG["Network Security Group"]
+
+            subgraph VNET["Virtual Network"]
+                subgraph SUBNET["Application Subnet"]
+                    VM["Azure Linux VM"]
+                    NGINX["Nginx Reverse Proxy"]
+                    FRONTEND["React + Vite Static Frontend"]
+                end
+            end
+
+            subgraph FUNCAPP["Azure Function App"]
+                FUNCTIONS["TinyFish API Handlers"]
+                STORAGE[("Functions Storage Account")]
+            end
+        end
+    end
+
+    subgraph EXTERNAL["EXTERNAL SERVICES"]
+        SUPABASE[("Supabase Auth + PostgreSQL")]
+        TINYFISH["TinyFish API"]
+    end
+
+    USER -->|"HTTPS 443"| PUBLIC
+    PUBLIC --> NSG
+    NSG -->|"Allowed inbound traffic"| VM
     VM --> NGINX
-    NGINX -->|Static assets| WEB
-    NGINX -->|API paths over HTTPS| FUNC
-    FUNC -. runtime dependency .-> STORE
-    FUNC -->|HTTPS| SB
-    FUNC -->|HTTPS with server-side API key| TF
+    NGINX -->|"Static assets"| FRONTEND
+    NGINX -->|"/api/tinyfish/* over HTTPS"| FUNCTIONS
+    FUNCTIONS -.->|"Runtime dependency"| STORAGE
+    FUNCTIONS -->|"HTTPS: session validation and data access"| SUPABASE
+    FUNCTIONS -->|"HTTPS: server-side API key"| TINYFISH
+    FUNCTIONS -->|"API response"| NGINX
