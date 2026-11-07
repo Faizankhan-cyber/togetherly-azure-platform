@@ -1,0 +1,21 @@
+flowchart TB
+    U[User browser]
+    DNS[Azure public IP and DNS]
+    NSG[Network Security Group]
+    VM[Azure Linux VM]
+    NGINX[Nginx reverse proxy]
+    WEB[React and Vite static frontend]
+    FUNC[Azure Function App - proposed TinyFish API]
+    STORE[Functions storage account]
+    SB[(Supabase Auth and PostgreSQL)]
+    TF[TinyFish API]
+
+    U -->|HTTPS 443| DNS
+    DNS --> NSG
+    NSG -->|Allowed web traffic| VM
+    VM --> NGINX
+    NGINX -->|Static assets| WEB
+    NGINX -->|API paths over HTTPS| FUNC
+    FUNC -. runtime dependency .-> STORE
+    FUNC -->|HTTPS| SB
+    FUNC -->|HTTPS with server-side API key| TF
