@@ -1,338 +1,146 @@
 # Togetherly Azure Platform — Project Overview
 
-> A cumulative, five-version cloud engineering project that takes the Togetherly Workforce application from a repeatable Azure deployment to a secure, observable, threat-aware, and resilient cloud environment.
-
 **Repository:** https://github.com/Faizankhan-cyber/togetherly-azure-platform  
 **Application workload:** Togetherly Workforce  
-**Cloud provider:** Microsoft Azure  
+**Cloud:** Microsoft Azure  
 **Default branch:** main  
-**Current project stage:** V1 planning and repository foundation  
-**Document status:** Project reference; update as implementation changes
-
----
+**Current stage:** V1 repository foundation and architecture planning  
+**Azure resources:** None provisioned for this project as of this document update  
+**Shared resource group:** `rg-togetherly-platform`
 
 ## 1. Executive summary
 
-Togetherly Azure Platform is a hands-on cloud engineering project built around the existing Togetherly Workforce SaaS application. It is intended to demonstrate how a real application can be deployed, secured, operated, monitored, tested, and improved on Microsoft Azure.
+Togetherly Azure Platform is a five-version, cumulative cloud engineering project built around the existing Togetherly Workforce application. One repository and one evolving Azure platform will be used to demonstrate deployment, identity and data security, operations, detection, and resilience.
 
-The project is deliberately organised as **one repository and one cumulative environment roadmap**. Each version builds on the previous version. It is not a collection of unrelated tutorials or five disconnected demo projects.
+This repository manages the Azure platform and its documentation. It is separate from the Togetherly Workforce application repository and the separate Togetherly CloudSec Platform / CloudSec Engine project.
 
-The five maturity stages are:
+A capability is complete only when it is implemented, tested, documented, and supported by sanitised evidence. Diagrams and placeholder folders are not proof of implementation.
 
-1. **V1 — Repeatable, governed deployment:** deploy a pinned Togetherly Workforce revision to Azure using repeatable scripts, a controlled network, HTTPS, CI/CD, smoke tests, cost controls, and teardown.
-2. **V2 — Identity, secrets, and data governance:** strengthen workload identity, permissions, secret storage, data handling, policy, and the security baseline.
-3. **V3 — Hardening and cloud operations:** add stronger network controls, monitoring, logging, alerting, backup, restore, and patching.
-4. **V4 — Detection and investigation:** use Microsoft Sentinel, KQL, Python security checks, and authorised controlled security tests to detect and investigate suspicious activity.
-5. **V5 — Enterprise architecture and resilience:** evaluate architecture options and implement appropriate availability, recovery, disaster recovery, and measured RTO/RPO capabilities.
+## 2. Five-version roadmap
 
-The purpose is to produce working infrastructure and verifiable evidence, not merely diagrams or documentation. A capability is not complete just because a resource was created. It must be tested, documented, and reproducible.
+| Version | Goal | Main focus | Learning alignment | Infrastructure approach |
+|---|---|---|---|---|
+| V1 | Initial Azure deployment | Linux VM, Nginx, frontend, Azure Functions API, networking, HTTPS, testing | AZ-900 | Manual Azure Portal |
+| V2 | Identity, secrets, and data governance | Managed Identity, Key Vault, RBAC, OIDC, Policy, data classification, threat model | SC-900 | Azure Bicep |
+| V3 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore, patching | AZ-104 | Extend platform |
+| V4 | Detection and investigation | Sentinel, KQL, Python posture checks, authorised testing, incident report | Verify current certification mapping before relying on it | Extend platform |
+| V5 | Enterprise architecture and resilience | Availability, scaling, disaster recovery, measured RTO/RPO, Zero Trust review | AZ-305 | Extend platform |
 
-## 2. Project objectives
+All versions remain in this repository and build on the previous completed version. Use one shared resource group, `rg-togetherly-platform`, for the cumulative environment. Version-specific cleanup must never delete the shared group or resources still used by another version.
 
-The project aims to:
+## 3. V1 architecture
 
-- Deploy a pinned version or release of Togetherly Workforce to an Azure-hosted environment.
-- Understand and document the application's actual runtime, build, authentication, API, and external-service requirements before deployment.
-- Automate infrastructure creation, deployment, verification, and teardown.
-- Apply least privilege, secure secret handling, network controls, and governance.
-- Integrate GitHub Actions for repeatable build and deployment workflows.
-- Collect evidence that controls work, rather than relying only on configuration screenshots.
-- Rebuild each version from repository code and verify previous-version behaviour.
-- Track Azure spending and remove disposable resources after evidence has been captured.
-- Maintain architecture diagrams, decision records, runbooks, test results, known gaps, and version completion records.
-- Build practical skills in Azure administration, cloud architecture, cloud security, DevSecOps, automation, monitoring, and incident response.
+V1 proposes the following topology:
 
-## 3. Scope and boundaries
+- Azure Linux VM with Nginx serves the existing React/Vite frontend.
+- Nginx proxies `/api/tinyfish/*` requests to an Azure Function App over HTTPS.
+- Azure Functions hosts the TinyFish API routes.
+- Azure Functions communicates with Supabase and TinyFish over HTTPS.
+- Supabase remains the external managed authentication and PostgreSQL service.
 
-### In scope
+**Important compatibility finding:** the current Togetherly Workforce TinyFish endpoints are Vercel-style serverless handlers. The application repository does not contain a conventional Express server or Node.js API service. The handlers must be adapted and tested for the Azure Functions Node.js v4 programming model. Do not copy the existing handlers unchanged and assume they will run.
 
-- Azure infrastructure used to host and operate the Togetherly Workforce learning workload.
-- Azure networking, compute, storage, identity, access control, secrets, governance, monitoring, and recovery.
-- GitHub Actions and infrastructure/deployment automation.
-- Security validation of resources owned by the project or explicitly authorised for testing.
-- Documentation, evidence, cost tracking, and repeatability.
+The detailed proposed topology, request flows, trust boundaries, and open decisions are in [docs/architecture/v1-architecture.md](docs/architecture/v1-architecture.md).
 
-### Existing application and external services
+## 4. V1 infrastructure approach
 
-Togetherly Workforce is the application source. This repository is responsible for the cloud environment and its deployment process. Application changes are out of scope unless a small, documented compatibility adjustment is essential to run the pinned application revision on the target host.
+V1 resources will be created manually through the Azure Portal. Terraform and Bicep will not be used to provision V1.
 
-The current architecture keeps Supabase as an external managed service for application authentication and PostgreSQL data. The V1 target also includes the existing TinyFish API integration. The exact handlers, process model, environment variables, ports, and runtime requirements must be confirmed from the application source before deployment.
+V2 is the planned Azure Bicep learning milestone. The repository reserves `infra/bicep/v2/` for that future work. Terraform is not part of the current project plan.
 
-### Out of scope / important separation
+The shared resource group is:
 
-- This repository is not the Togetherly Workforce application repository.
-- This repository is not the separate Togetherly CloudSec Platform / CloudSec Engine project.
-- The older Azure Enterprise Infrastructure project is an archive/reference, not the active source of truth for this roadmap.
-- No production database changes or application security changes should be made merely as part of Azure infrastructure work. Any such change requires a separately scoped, reviewed, and authorised task.
-- Security testing must never target systems without ownership or explicit permission.
+`rg-togetherly-platform`
 
-## 4. Five-version roadmap
+Do not create Azure resources until the subscription, available credit, region, service availability, VM size, Functions hosting plan, network exposure, DNS/TLS design, and costs have been checked.
 
-All five versions live in this repository. The version labels describe cumulative maturity stages. The README and version records are the source of truth; update them when scope or implementation changes.
+### Planned V1 resource types
 
-### V1 — Repeatable, Governed Deployment
+- Resource Group (shared by V1–V5)
+- Virtual Network and subnet
+- Network Security Group
+- Public IP address
+- Ubuntu Linux Virtual Machine
+- Nginx
+- Azure Function App using Node.js v4
+- Storage account required by the Functions hosting configuration
+- HTTPS and DNS configuration
 
-**Learning alignment:** AZ-900  
-**Status:** Planning  
-**Goal:** Deploy a pinned Togetherly Workforce revision to Azure with repeatable Azure CLI scripts and a tested deployment process.
+Exact SKUs, region, pricing, hosting plan, storage redundancy, and certificate approach remain open until validated.
 
-Planned capabilities:
+## 5. Application and service boundaries
 
-- Repository and script conventions.
-- A dedicated Azure resource group.
-- Virtual Network and subnet.
-- Network Security Group with documented inbound and outbound rules.
-- Public IP and DNS label, subject to availability.
-- Eligible small B-series Ubuntu VM, subject to subscription and regional availability.
-- Required resource tags, including project, version, owner, and environment.
-- Budget notifications and cost review.
-- Private, TLS-only storage account for documented build artifacts or backups, with its purpose and access model defined.
-- Ubuntu cloud-init provisioning.
-- Nginx web server and reverse proxy.
-- Node.js runtime, non-root service user, and systemd-managed service, subject to runtime compatibility verification.
-- GitHub Actions build and deployment of a pinned Togetherly revision.
-- HTTPS using Let's Encrypt on the Azure DNS name.
-- Smoke tests, architecture documentation, cost review, evidence capture, and teardown verification.
-
-**Target request path:**
-
-    Internet
-       |
-    Azure Public IP / DNS
-       |
-    Network Security Group
-       |
-    Ubuntu VM
-       |
-    Nginx
-       |-------------------------------|
-       |                               |
-    Static frontend              /api/tinyfish
-                                       |
-                                Local Node.js service
-                                       |
-                                HTTPS outbound
-                                       |
-                                    Supabase
-
-This is a target architecture, not a statement that the integration is already deployed or validated. Inspect the actual Togetherly implementation before choosing the Node.js process model and configuring the proxy.
-
-**V1 acceptance criteria:**
-
-- [ ] A pinned Togetherly Workforce build is deployed to the Azure VM.
-- [ ] Nginx serves the frontend over HTTPS.
-- [ ] Required TinyFish API routes work through the documented Node.js/Nginx integration.
-- [ ] Supabase authentication and required application flows work as expected.
-- [ ] Network access is limited to documented ports; SSH is restricted to the administrator's current IP.
-- [ ] Resources carry the required project, version, owner, and environment tags.
-- [ ] Storage is private and TLS-only.
-- [ ] GitHub Actions build/deploy workflow succeeds.
-- [ ] Smoke tests pass against the deployed application.
-- [ ] The environment can be deleted and recreated using repository scripts.
-- [ ] Smoke tests pass again after a full rebuild.
-- [ ] Evidence, cost notes, known gaps, and the V1 version record are committed.
-- [ ] Teardown is verified and no unintended billable project resources remain.
-
-**Evidence checklist:**
-
-- Sanitised deployment logs and relevant Azure CLI output.
-- Resource inventory showing required tags.
-- Budget configuration and cost view.
-- Azure Advisor review and documented findings.
-- Storage configuration and access settings.
-- HTTPS response and browser screenshot.
-- Successful GitHub Actions run.
-- Smoke-test output before and after rebuild.
-- Architecture diagram and known-gaps record.
-- Teardown and post-cleanup verification.
-
-**Known V1 risks:**
-
-- Existing Togetherly TinyFish handlers may require a small Node.js compatibility wrapper. Inspect source before choosing a process model.
-- The current V1 plan temporarily uses a restricted environment file for the TinyFish credential. V2 must replace this with Managed Identity and Key Vault. Never commit the file or credential.
-- Azure region, VM-size availability, DNS label availability, pricing, and subscription restrictions must be checked before deployment.
-
-### V2 — Identity, Secrets, and Data Governance
-
-**Learning alignment:** SC-900  
-**Status:** Planned  
-**Goal:** Reduce identity and secret risks and establish a stronger cloud security baseline.
-
-Planned capability areas from the project roadmap:
-
-- Microsoft Entra ID concepts and workload identity.
-- Managed Identity for Azure-hosted workloads.
-- Azure Key Vault for secrets and key material.
-- GitHub Actions OpenID Connect (OIDC) federation where supported, avoiding long-lived deployment secrets.
-- Azure RBAC and least-privilege role assignments.
-- Data classification and documented data-handling requirements.
-- Azure Policy baseline and compliance checks.
-- Microsoft Defender for Cloud baseline and findings review, subject to subscription entitlement and pricing.
-- STRIDE threat modelling and documented trust boundaries.
-- Removal of the temporary V1 secret-on-disk approach after the V2 replacement is tested.
-
-V2 must not be considered complete until identity flows and secret retrieval are tested, permissions are demonstrably limited, and the V1 application behaviour still passes regression tests.
-
-### V3 — Hardening and Cloud Operations
-
-**Learning alignment:** AZ-104  
-**Status:** Planned  
-**Goal:** Improve operational security, visibility, and recovery of the deployed environment.
-
-Planned capability areas:
-
-- Network segmentation and refined network security rules.
-- Azure Monitor and Log Analytics.
-- Useful platform and workload metrics.
-- Actionable alerts and alert routing.
-- Backup configuration and restore testing.
-- VM patching and update process.
-- Operational runbooks and health checks.
-- Resource inventory and configuration review.
-- Regression checks for the V1 deployment and V2 identity/security controls.
-
-Monitoring must be tested with real, controlled signals. Backup completion is not enough; a restore must be performed and verified.
-
-### V4 — Detection and Investigation
-
-**Learning alignment:** SC-500 (confirm the current certification code and exam name before using it as a formal learning milestone)  
-**Status:** Planned  
-**Goal:** Detect and investigate suspicious activity using Azure security telemetry.
-
-Planned capability areas:
-
-- Microsoft Sentinel workspace and data connectors, after pricing and retention review.
-- KQL queries for useful security signals.
-- Detection rules and alert tuning.
-- Python-based cloud posture checks.
-- Authorised, controlled security tests against project-owned resources.
-- Incident investigation workflow and evidence collection.
-- Incident report documenting detection, triage, timeline, impact, response, and lessons learned.
-
-Avoid generating unnecessary telemetry or leaving paid Sentinel/Defender capabilities running without a clear test window and cost review.
-
-### V5 — Enterprise Architecture and Resilience
-
-**Learning alignment:** AZ-305  
-**Status:** Planned  
-**Goal:** Evaluate and implement appropriate architecture and recovery improvements based on measured needs.
-
-Planned capability areas:
-
-- Hosting and architecture decision records.
-- High-availability options and trade-offs.
-- Load balancing and scaling where justified.
-- Disaster recovery design and implementation.
-- Measured Recovery Time Objective (RTO) and Recovery Point Objective (RPO).
-- Backup and restore validation.
-- Zero Trust architecture review.
-- Cost, security, availability, and operational trade-off analysis.
-- Final architecture diagram and end-to-end project review.
-
-Do not add expensive high-availability components simply to make the architecture diagram look impressive. Choose components based on documented requirements, subscription limits, cost, and measured value.
-
-## 5. Current architecture and technology direction
-
-| Area | Planned technology / approach |
-|---|---|
-| Cloud | Microsoft Azure |
-| Host operating system | Ubuntu 24.04 LTS |
-| Web server / reverse proxy | Nginx |
-| Frontend | Existing Togetherly React, TypeScript, and Vite application |
-| API runtime | Node.js, subject to compatibility verification |
-| Application authentication and data | Supabase, external managed service |
-| Infrastructure automation | Azure CLI and Bash; PowerShell where useful |
-| CI/CD | GitHub Actions |
-| Identity | Microsoft Entra ID and Managed Identity |
-| Secrets | Azure Key Vault |
-| Governance | Azure RBAC, Azure Policy, Defender for Cloud baseline |
-| Monitoring | Azure Monitor and Log Analytics |
-| Detection | Microsoft Sentinel and KQL |
-| Security automation | Python |
-| Infrastructure as Code | Terraform after the planned learning milestone |
-| IaC scanning | Checkov alongside Terraform adoption |
-
-Technology choices may change if subscription availability, pricing, security, or compatibility checks show that a planned option is unsuitable. Record material changes in an Architecture Decision Record under docs/decisions/.
+- Togetherly Workforce remains the application source repository.
+- This repository contains Azure platform planning, configuration notes, architecture, evidence, and version records.
+- Supabase remains external and continues to provide application authentication and PostgreSQL.
+- TinyFish remains an external API.
+- `TINYFISH_API_KEY` must remain server-side. It must never be included in Vite/browser variables or committed to Git.
+- Preserve existing Supabase session validation, employee/role checks, URL validation, methods, status codes, and response behaviour when adapting the API routes.
+- Do not change production Supabase data, policies, or authentication settings as part of this infrastructure task without separate explicit approval.
 
 ## 6. Repository structure
 
-The intended repository layout is:
+```text
+togetherly-azure-platform/
+├── README.md
+├── PROJECT_OVERVIEW.md
+├── PROMPT.md
+├── CHANGELOG.md
+├── .gitignore
+├── .github/
+│   └── workflows/
+├── infra/
+│   ├── portal/
+│   │   └── v1/
+│   └── bicep/
+│       └── v2/
+├── docs/
+│   ├── architecture/
+│   ├── decisions/
+│   ├── data-classification/
+│   ├── runbooks/
+│   ├── threat-model/
+│   └── versions/
+├── evidence/
+│   ├── v1/
+│   ├── v2/
+│   ├── v3/
+│   ├── v4/
+│   └── v5/
+└── tests/
+```
 
-    togetherly-azure-platform/
-    ├── README.md
-    ├── PROJECT_OVERVIEW.md
-    ├── PROMPT.md
-    ├── CHANGELOG.md
-    ├── .gitignore
-    ├── .github/
-    │   └── workflows/
-    ├── infra/
-    │   ├── config/
-    │   ├── scripts/
-    │   │   ├── deploy/
-    │   │   ├── teardown/
-    │   │   ├── verify/
-    │   │   └── evidence/
-    │   └── terraform/
-    ├── docs/
-    │   ├── architecture/
-    │   ├── decisions/
-    │   ├── data-classification/
-    │   ├── runbooks/
-    │   ├── threat-model/
-    │   └── versions/
-    ├── evidence/
-    │   ├── v1/
-    │   ├── v2/
-    │   ├── v3/
-    │   ├── v4/
-    │   └── v5/
-    └── tests/
+A folder or README placeholder does not mean implementation exists. `infra/portal/v1/` stores manual provisioning notes. `infra/bicep/v2/` is reserved for future Bicep templates.
 
-The actual repository may contain placeholder files to keep directories in Git. Do not assume a folder means its planned implementation is complete. Inspect the current tree and files before editing or creating anything.
+## 7. Engineering principles
 
-## 7. Engineering workflow
+1. **One cumulative project:** all five versions build on the same platform and repository.
+2. **Manual V1, Bicep V2:** use the Azure Portal for V1; introduce Bicep in V2 after learning it.
+3. **Evidence before cleanup:** capture and sanitise evidence before deleting disposable resources.
+4. **Least privilege:** restrict network access and protect credentials.
+5. **Cost discipline:** validate pricing before provisioning. Azure budget alerts are notifications, not hard spending caps.
+6. **Honest status:** distinguish planned, deployed, tested, and verified capabilities.
+7. **Authorised testing:** test only project-owned or explicitly authorised systems.
+8. **No unapproved production changes:** infrastructure work must not silently modify production data or auth settings.
 
-Each version follows this lifecycle:
+## 8. V1 acceptance summary
 
-1. Create a working branch from the previous completed version tag.
-2. Rebuild the previous version and run its smoke and regression tests.
-3. Implement only the new version's scoped capabilities.
-4. Run validation and acceptance tests while Azure resources are live.
-5. Capture and sanitise evidence in evidence/vN/.
-6. Update the version record, architecture documentation, runbooks, decision records, and changelog.
-7. Open a pull request and review the changes.
-8. Merge to main only after the required checks and review are successful.
-9. Create the version tag only after the acceptance criteria are met.
-10. Capture final cost and teardown evidence, then delete the disposable environment.
-11. Verify cleanup and record remaining gaps before beginning the next version.
+- [ ] Resources are created in the shared resource group and tagged consistently.
+- [ ] Network access is restricted; SSH is limited to the administrator's current public IP.
+- [ ] Nginx serves the pinned frontend build over HTTPS.
+- [ ] Nginx proxies TinyFish API paths to Azure Functions over HTTPS.
+- [ ] Azure Functions preserve authentication and authorization checks.
+- [ ] Supabase login and required application flows work.
+- [ ] TinyFish routes are tested and secrets remain server-side.
+- [ ] Function execution limits and request timeouts are validated.
+- [ ] Cost, evidence, known gaps, and cleanup are documented.
+- [ ] Version-specific cleanup is tested without deleting shared resources.
 
-### Cumulative versioning
+The detailed checklist is in [docs/versions/v1.md](docs/versions/v1.md).
 
-- One repository contains all five versions.
-- Each version builds on the previous completed version.
-- Scripts, tests, documentation, and evidence accumulate.
-- Azure resources are disposable and may be recreated for each version.
-- A version is not complete until acceptance criteria pass and evidence is committed.
-- Do not create a vN.0 tag based on planning or partial implementation.
+## 9. Cost planning
 
-## 8. Security rules and safe operating boundaries
-
-- Never commit passwords, API keys, tokens, private keys, service-principal secrets, .env files, subscription IDs, tenant IDs, personal IP addresses, or unredacted account details.
-- Use example configuration files with placeholder values.
-- Prefer short-lived credentials and federated identity where supported.
-- Use least-privilege permissions.
-- Restrict SSH to the administrator's current IP and only expose documented application ports.
-- Do not run destructive commands without explaining the target and checking the resource group and subscription.
-- Do not modify production Togetherly data or authentication policies as part of infrastructure work without a separately authorised and reviewed change.
-- Security testing must target only project-owned or explicitly authorised resources.
-- Follow current Microsoft cloud penetration-testing rules and service terms.
-- Sanitise screenshots, logs, terminal output, and evidence before committing them.
-- Record security findings responsibly; do not publish exploitable details unnecessarily.
-
-## 9. Cost and resource governance
-
-The initial planning envelope recorded in the repository is **US$100 in Azure credit**, subject to the actual subscription terms and current regional pricing.
+The initial planning envelope is US$100 in Azure credit, subject to the actual Azure for Students offer and current regional pricing.
 
 | Stage | Planning target |
 |---|---:|
@@ -343,76 +151,42 @@ The initial planning envelope recorded in the repository is **US$100 in Azure cr
 | Reserve | US$10 |
 | **Total** | **US$100** |
 
-These are planning estimates, not quotes, guarantees, or spending caps. Validate each deployment with the Azure Pricing Calculator and the subscription's current offers before creating resources.
+These are planning estimates, not quotes, guaranteed limits, or hard spending caps. Check the Azure Pricing Calculator and subscription entitlements before provisioning. Budget alerts do not stop spending automatically.
 
-Cost controls:
+## 10. Security and evidence rules
 
-- Configure budget notifications before deployment.
-- Prefer small eligible VM sizes and stop or delete compute when not in use.
-- Time-box Sentinel and paid Defender capabilities.
-- Check for disks, public IPs, backups, storage, and other billable resources after teardown.
-- Review cost data after deployment and cleanup.
-- Remember that Azure budget alerts are notifications, not hard spending caps, and cost reporting can be delayed.
-- Do not create paid preview resources or paid branches merely for convenience without explicit approval.
+- Never commit passwords, API keys, tokens, private keys, `.env` files, subscription IDs, tenant IDs, or personal IP addresses.
+- Use placeholder example configuration only.
+- Keep TinyFish credentials server-side.
+- Prefer least privilege and short-lived credentials where supported.
+- Restrict SSH and expose only documented ports.
+- Sanitise screenshots, logs, and terminal output before committing.
+- Do not run destructive actions without checking the exact subscription and target resources.
+- Record limitations and failed tests honestly.
 
-## 10. Current implementation status
+## 11. Current verified status
 
-The following status is grounded in the repository's current README, V1 specification, and changelog at the time this document was written.
-
-| Milestone | Current status |
+| Item | Status |
 |---|---|
-| Repository created | Complete |
-| Five-version roadmap documented | Complete |
-| Initial folder structure | Complete |
-| V1 target architecture documented | Complete |
-| V1 acceptance criteria documented | Complete |
-| Engineering principles and safe workflow documented | Complete |
-| Initial cost plan documented | Complete |
-| Azure region, VM size, and price validation | Pending |
-| Togetherly runtime and API compatibility review | Pending |
+| GitHub repository and Git history | Existing |
+| Five-version roadmap | Documented |
+| Shared resource group naming | Decided: `rg-togetherly-platform` |
+| V1 manual Azure Portal approach | Decided |
+| V2 Azure Bicep approach | Planned |
+| V1 Azure Functions architecture | Proposed; implementation not started |
+| V1 architecture diagram | Documented as proposed |
 | Azure resource creation | Not started |
-| V1 deployment scripts | Not started |
-| Azure VM, VNet, NSG, Nginx deployment | Not started |
-| HTTPS and application deployment | Not started |
-| GitHub Actions deployment pipeline | Not started |
-| V1 smoke tests and evidence | Not started |
-| V2 implementation | Not started |
-| V3 implementation | Not started |
-| V4 implementation | Not started |
-| V5 implementation | Not started |
+| Application/API adaptation | Not started |
+| V1 deployment and acceptance tests | Not started |
+| V2–V5 implementation | Not started |
 
-**Overall status:** Repository foundation and planning are complete; cloud implementation has not started. Do not report a percentage as an audited metric unless it is calculated from a defined task checklist. The presence of documentation or directories is not evidence of deployed infrastructure.
+## 12. Immediate next steps
 
-## 11. Immediate next steps
+1. Finish and review the repository structure and documentation.
+2. Confirm the V1 architecture and Azure Functions hosting choice.
+3. Validate subscription, region, service availability, and costs.
+4. Create V1 resources manually through the Azure Portal only after the checks and approvals.
+5. Adapt and test the TinyFish handlers for Azure Functions.
+6. Deploy, test, document, capture sanitised evidence, and clean up safely.
 
-The next work should remain within V1:
-
-1. Inspect the current repository tree and V1 files to confirm the exact starting point.
-2. Inspect Togetherly Workforce source code and deployment configuration to establish its actual build process, Node.js requirements, TinyFish API routes, environment variables, and Supabase integration.
-3. Identify the Azure subscription type, available credit, allowed regions, VM sizes, and relevant service restrictions without creating resources.
-4. Validate the V1 architecture, network exposure, DNS and HTTPS plan, and current price estimates.
-5. Design idempotent Azure CLI scripts with explicit prerequisites, validation, safe teardown, and clear output.
-6. Add automated checks and smoke tests before provisioning.
-7. Only then provision the V1 resource group and infrastructure, capture evidence, test, and tear down.
-
-Do not jump to V2 or create Azure resources before the V1 design, compatibility, cost, and safety checks are ready.
-
-## 12. Definition of project success
-
-The project will be successful when the repository demonstrates a complete, repeatable engineering journey:
-
-- A pinned application revision can be deployed and rebuilt from code.
-- Infrastructure is documented, automated, and appropriately secured.
-- Identity and secret handling follow least privilege.
-- Monitoring and detections produce useful, tested signals.
-- Backups and recovery are actually tested.
-- Security tests are authorised and documented.
-- Each version has acceptance results, sanitised evidence, cost notes, and known gaps.
-- The final architecture decisions are justified by requirements and trade-offs.
-- The environment can be safely removed without leaving unintended billable resources.
-
----
-
-## Document maintenance
-
-Update this file whenever the roadmap, architecture, scope, technology choices, safety boundaries, or verified project status changes. Keep it consistent with README.md and docs/versions/. If two documents conflict, inspect the latest approved repository changes and correct the inconsistency rather than silently assuming one is right.
+Update this document whenever an approved scope, architecture, safety, or verified implementation status changes. Keep it consistent with README.md, PROMPT.md, and docs/versions/v1.md.
