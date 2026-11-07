@@ -54,37 +54,15 @@ Resources are added and retired individually as the platform evolves. Do not del
 
 ## Repository structure
 
-```text
-togetherly-azure-platform/
-├── README.md
-├── PROJECT_OVERVIEW.md
-├── PROMPT.md
-├── CHANGELOG.md
-├── .gitignore
-├── .github/
-│   └── workflows/
-├── infra/
-│   ├── portal/
-│   │   └── v1/
-│   └── bicep/
-│       └── v2/
-├── docs/
-│   ├── architecture/
-│   ├── decisions/
-│   ├── data-classification/
-│   ├── runbooks/
-│   ├── threat-model/
-│   └── versions/
-├── evidence/
-│   ├── v1/
-│   ├── v2/
-│   ├── v3/
-│   ├── v4/
-│   └── v5/
-└── tests/
-```
+The complete, maintained folder blueprint is documented in [Repository Structure](docs/repository-structure.md). The main responsibilities are:
 
-The `infra/portal/v1/` directory will hold manual provisioning notes and configuration records. The `infra/bicep/v2/` directory is reserved for the V2 Bicep implementation. A directory or placeholder file does not mean that its contents are implemented.
+- `docs/`: architecture, decisions, security, runbooks, cost guidance, and version plans.
+- `infra/`: Azure Portal provisioning notes, Bicep templates, and shared resource records.
+- `application/`: Azure-specific Functions and Nginx components only; the main Togetherly Workforce app stays in its own repository.
+- `scripts/` and `tests/`: reusable automation and validation, added when implemented.
+- `evidence/`: sanitised proof organised by version.
+
+Future folders are planned placeholders, not completed code or deployed services. V1 uses the Azure Portal; Bicep is reserved for V2. Terraform is not part of this project roadmap.
 
 ## Engineering principles
 
