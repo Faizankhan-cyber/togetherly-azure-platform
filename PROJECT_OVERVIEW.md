@@ -80,37 +80,130 @@ Exact SKUs, region, pricing, hosting plan, storage redundancy, and certificate a
 
 ## 6. Repository structure
 
+The repository uses one shared layout for the full V1–V5 lifecycle. Version-specific plans live in `docs/versions/`, Azure provisioning/configuration lives in `infra/`, Azure-specific integration components live in `application/`, reusable tooling lives in `scripts/`, and proof of work lives in `evidence/`.
+
 ```text
 togetherly-azure-platform/
 ├── README.md
 ├── PROJECT_OVERVIEW.md
-├── PROMPT.md
 ├── CHANGELOG.md
+├── PROMPT.md
 ├── .gitignore
 ├── .github/
 │   └── workflows/
+│       └── README.md
+├── docs/
+│   ├── architecture/
+│   │   ├── README.md
+│   │   ├── architecture-overview.md
+│   │   ├── network-topology.md
+│   │   └── diagrams/
+│   │       ├── README.md
+│   │       └── v1-architecture.mmd
+│   ├── decisions/
+│   │   ├── README.md
+│   │   ├── ADR-001-v1-hosting-architecture.md
+│   │   └── ADR-002-v2-bicep-adoption.md
+│   ├── versions/
+│   │   ├── v1.md
+│   │   ├── v2.md
+│   │   ├── v3.md
+│   │   ├── v4.md
+│   │   └── v5.md
+│   ├── security/
+│   │   ├── README.md
+│   │   ├── security-baseline.md
+│   │   ├── threat-model/
+│   │   │   └── README.md
+│   │   ├── data-classification/
+│   │   │   └── README.md
+│   │   ├── access-control/
+│   │   │   └── README.md
+│   │   └── security-reviews/
+│   │       └── README.md
+│   ├── runbooks/
+│   │   ├── README.md
+│   │   ├── deployment.md
+│   │   ├── troubleshooting.md
+│   │   ├── backup-and-restore.md
+│   │   ├── incident-response.md
+│   │   └── disaster-recovery.md
+│   └── cost-management/
+│       ├── README.md
+│       ├── budget-and-alerts.md
+│       ├── resource-cost-tracking.md
+│       └── cleanup-procedures.md
 ├── infra/
 │   ├── portal/
 │   │   └── v1/
-│   └── bicep/
-│       └── v2/
-├── docs/
-│   ├── architecture/
-│   ├── decisions/
-│   ├── data-classification/
-│   ├── runbooks/
-│   ├── threat-model/
-│   └── versions/
-├── evidence/
-│   ├── v1/
-│   ├── v2/
-│   ├── v3/
-│   ├── v4/
-│   └── v5/
-└── tests/
+│   │       ├── README.md
+│   │       ├── resource-checklist.md
+│   │       └── configuration-record.md
+│   ├── bicep/
+│   │   ├── v2/
+│   │   │   ├── README.md
+│   │   │   ├── main.bicep (future)
+│   │   │   ├── modules/ (future)
+│   │   │   └── parameters/ (future)
+│   │   ├── v3/README.md
+│   │   ├── v4/README.md
+│   │   └── v5/README.md
+│   └── shared/
+│       ├── README.md
+│       ├── naming-conventions.md
+│       └── resource-inventory.md
+├── application/
+│   ├── README.md
+│   ├── functions/
+│   │   └── README.md
+│   └── nginx/
+│       └── README.md
+├── scripts/
+│   ├── README.md
+│   ├── deployment/README.md
+│   ├── verification/README.md
+│   ├── maintenance/README.md
+│   └── cleanup/README.md
+├── tests/
+│   ├── README.md
+│   ├── unit/README.md
+│   ├── integration/README.md
+│   ├── security/README.md
+│   └── smoke/README.md
+└── evidence/
+    ├── v1/
+    │   ├── README.md
+    │   ├── architecture/
+    │   ├── azure-resources/
+    │   ├── networking/
+    │   ├── deployment/
+    │   ├── testing/
+    │   └── cost/
+    ├── v2/README.md
+    ├── v3/README.md
+    ├── v4/README.md
+    └── v5/README.md
 ```
 
-A folder or README placeholder does not mean implementation exists. `infra/portal/v1/` stores manual provisioning notes. `infra/bicep/v2/` is reserved for future Bicep templates.
+### Folder ownership and rules
+
+- `.github/workflows/`: CI and security automation. Add workflow YAML only when its checks are configured and tested.
+- `docs/architecture/`: platform diagrams, network topology, and architecture descriptions.
+- `docs/decisions/`: Architecture Decision Records (ADRs) documenting decisions and alternatives.
+- `docs/versions/`: scope, acceptance criteria, risks, and completion records for V1–V5.
+- `docs/security/`: security baseline, threat models, data classification, access control, and review records.
+- `docs/runbooks/`: operational procedures for deployment, troubleshooting, backup, incidents, and recovery.
+- `docs/cost-management/`: budgets, cost tracking, and cleanup guidance.
+- `infra/portal/v1/`: V1 manual Azure Portal checklists and configuration records. V1 is not provisioned using Terraform or Bicep.
+- `infra/bicep/v2/`: planned Bicep implementation for V2. Future V3–V5 infrastructure methods will be selected when those scopes are designed.
+- `infra/shared/`: naming conventions and a resource inventory shared across versions.
+- `application/functions/`: only the Azure Functions adapter/integration code if the proposed Functions architecture is approved and implemented.
+- `application/nginx/`: Nginx configuration and deployment notes used by this Azure platform.
+- `scripts/`: reusable deployment, verification, maintenance, and cleanup utilities when they become necessary.
+- `tests/`: unit, integration, security, and smoke tests.
+- `evidence/v1/` through `evidence/v5/`: sanitised screenshots, logs, test outputs, and reports for each version.
+
+The Togetherly Workforce application source remains in its separate repository. Do not copy the full frontend or unrelated application code here. The Azure Functions design remains proposed until hosting, compatibility, and cost are validated. Planned folders and README guides are not evidence of implementation.
 
 ## 7. Engineering principles
 
