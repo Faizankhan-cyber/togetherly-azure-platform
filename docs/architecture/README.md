@@ -1,9 +1,16 @@
 # Architecture
 
-This directory contains the current architecture diagram, deployment topology, trust boundaries, and version-by-version architecture changes.
+This directory contains the platform architecture diagrams, deployment topology, trust boundaries, and version-by-version architecture changes.
 
-## V1 target
+## Current diagram
 
-The intended request path is Internet → Azure Public IP → NSG → Ubuntu VM running Nginx. Nginx serves the static Togetherly frontend and reverse-proxies the required /api/tinyfish routes to a local Node.js service. That service communicates with Supabase over HTTPS. The exact Node.js compatibility and runtime model must be verified by inspecting the existing Togetherly implementation before deployment.
+See [V1 Azure Architecture](v1-architecture.md) for the proposed V1 topology.
 
-Architecture diagrams must reflect the deployed and tested state. Clearly label planned components that are not yet implemented.
+## Architecture rules
+
+- Diagrams must distinguish proposed, deployed, and verified components.
+- The V1 resource group is shared across the cumulative V1–V5 platform.
+- V1 infrastructure is created manually through the Azure Portal.
+- V2 is planned to introduce Azure Bicep. Terraform is not currently part of the project plan.
+- The existing Togetherly TinyFish API routes are Vercel-style serverless handlers. V1 proposes adapting them to Azure Functions; they are not a conventional Node.js server.
+- Record material architecture changes in `docs/decisions/`.
