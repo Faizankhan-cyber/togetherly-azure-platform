@@ -10,7 +10,6 @@ togetherly-azure-platform/
 ├── PROJECT_OVERVIEW.md
 ├── CHANGELOG.md
 ├── .gitignore
-├── .github/workflows/
 ├── docs/
 │   ├── architecture/
 │   ├── decisions/
@@ -20,12 +19,10 @@ togetherly-azure-platform/
 │   └── cost-management/
 ├── infra/
 │   ├── portal/v1/
-│   ├── bicep/v2-v5/
+│   ├── bicep/v2/
 │   └── shared/
 ├── application/
 │   └── nginx/
-├── scripts/
-├── tests/
 └── evidence/
     ├── v1/
     │   ├── azure-resources/
@@ -43,10 +40,7 @@ togetherly-azure-platform/
 | `docs/` | Plans, architecture, decisions, security guidance, runbooks and cost records |
 | `infra/` | Azure provisioning notes, infrastructure definitions and shared resource inventory |
 | `application/` | Azure-specific integration components and deployment notes |
-| `scripts/` | Reusable deployment and operational scripts when implemented |
-| `tests/` | Repeatable validation when implemented |
 | `evidence/` | Sanitised proof grouped by version |
-| `.github/workflows/` | Configured and tested repository automation |
 
 ## Version rules
 
@@ -62,4 +56,4 @@ The Togetherly Workforce application source remains in its own repository. Do no
 
 ## Placeholder policy
 
-A README-only folder documents a planned responsibility; it is not an implementation. Add code, scripts or workflow files only when the corresponding feature is actually built and tested. Keep future-version placeholders where they support the agreed roadmap.
+A README-only folder documents a planned responsibility; it is not an implementation. Add code, scripts or workflow files only when the corresponding feature is actually built and tested. Keep future-version placeholders only where they support the agreed roadmap.

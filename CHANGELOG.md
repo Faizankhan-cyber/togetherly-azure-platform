@@ -10,6 +10,8 @@ All notable project changes are recorded here.
 - Identified duplicate Azure resource screenshots and removed the duplicate copy from the architecture documentation area.
 - Corrected the evidence folder name from `deployement` to `deployment`.
 - Removed the obsolete continuation prompt, which contained outdated architecture and deployment status.
+- Removed unused README-only scaffolding for unimplemented scripts, tests, CI workflows, future runbooks and future-version Bicep directories.
+- Kept the V2 Bicep placeholder because Bicep is part of the agreed V2 plan.
 - Flagged screenshot privacy review, actual cost review and resource-state decisions as remaining V1 closure tasks.
 
 ## 2026-11-08 — V1 deployment

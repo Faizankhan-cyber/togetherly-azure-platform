@@ -8,14 +8,14 @@
 
 ## Project status
 
-**V1 core deployment is running and the main application workflows have been tested.** Twelve evidence screenshots have been uploaded. Final closure is still pending a privacy review/redaction of screenshots, an actual Azure cost review, and a resource-by-resource cleanup decision.
+**V1 core deployment is running and the main application workflows have been tested.** Twelve evidence screenshots have been uploaded. Final closure is pending screenshot privacy review/redaction, an actual Azure cost review, and a resource-by-resource cleanup decision.
 
 Live application: https://togetherly-v1-faizan.centralindia.cloudapp.azure.com
 
 ## What is deployed in V1
 
 - Azure Resource Group: `rg-togetherly-platform` (shared by V1–V5).
-- Central India VNet, application subnet, NSG, Linux VM, public IP, NIC, and OS disk.
+- Central India VNet, application subnet, NSG, Linux VM, public IP, NIC and OS disk.
 - Ubuntu Server 24.04 LTS VM: `vm-togetherly-v1`.
 - Nginx serves the React/Vite production frontend over HTTPS.
 - Nginx reverse-proxies `/api/tinyfish/*` to a Node.js Express API bound to `127.0.0.1:3001`.
@@ -41,7 +41,6 @@ This is one cumulative platform, not five unrelated labs. The shared resource gr
 - `docs/`: architecture, decisions, security, runbooks, cost records and version plans.
 - `infra/`: Portal configuration records, future Bicep work and shared resource inventory.
 - `application/`: Azure-specific deployment notes. The full Togetherly Workforce source remains in its [own repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
-- `scripts/` and `tests/`: reusable automation and validation as they are implemented.
 - `evidence/`: sanitised, version-specific implementation evidence.
 
 See [Project Overview](PROJECT_OVERVIEW.md) and [Repository Structure](docs/repository-structure.md).
@@ -57,7 +56,7 @@ See [Project Overview](PROJECT_OVERVIEW.md) and [Repository Structure](docs/repo
 - [x] Twelve evidence screenshots uploaded to `evidence/v1/`.
 - [ ] Review and redact screenshots for subscription IDs, IP addresses, email addresses and other personal/account details.
 - [ ] Review actual Azure spend and remaining student credit.
-- [ ] Record the final resource state and decide whether to retain, deallocate or delete V1 resources individually.
+- [ ] Verify the live resource inventory and decide whether to retain, deallocate or delete V1 resources individually.
 
 ## Security and cost rules
 

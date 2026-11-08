@@ -43,8 +43,6 @@ The API runs as `tinyfish-api.service` under systemd. Nginx serves the frontend,
 
 ## V1 status
 
-Verified from the deployment workflow and user-confirmed application tests:
-
 - Resource group, VNet, subnet, NSG and Ubuntu VM provisioned in Central India.
 - Nginx serves the production frontend.
 - HTTPS works and HTTP redirects to HTTPS.
@@ -77,11 +75,9 @@ V2–V5 are plans, not deployed capabilities. V3–V5 implementation methods wil
 - `docs/`: architecture, decisions, version plans, security, runbooks and cost management.
 - `infra/`: provisioning records, future Bicep templates and shared resource inventory.
 - `application/`: Azure-specific integration and deployment notes only.
-- `scripts/`: reviewed reusable automation when implemented.
-- `tests/`: repeatable validation when implemented.
 - `evidence/`: sanitised implementation proof grouped by version.
 
-README placeholders describe planned areas; they do not represent working code or deployed services.
+README-only future-version evidence folders are planning placeholders, not proof of implementation.
 
 ## Safety and operating rules
 
