@@ -3,62 +3,59 @@
 > A five-version cloud engineering project that evolves the Togetherly Workforce application into a secure, observable, threat-aware, and resilient Azure environment.
 
 [![Cloud](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![V1 provisioning](https://img.shields.io/badge/V1-Azure%20Portal%20Manual-yellow)](docs/versions/v1.md)
+[![V1](https://img.shields.io/badge/V1-Deployed%20Core%20Workload-success)](docs/versions/v1.md)
 [![V2 IaC](https://img.shields.io/badge/V2-Azure%20Bicep-0078D4)](https://learn.microsoft.com/azure/azure-resource-manager/bicep/overview)
 
 ## Overview
 
-Togetherly Azure Platform is one cumulative cloud engineering project built around the existing **Togetherly Workforce** application. Each version builds on the previous one:
+Togetherly Azure Platform is one cumulative cloud engineering project built around the existing Togetherly Workforce application. Each version builds on the previous one:
 
-1. **V1 — Initial Azure deployment:** deploy the frontend to an Azure Linux VM with Nginx and host the TinyFish API routes on Azure Functions.
-2. **V2 — Identity, secrets, and data governance:** introduce stronger workload identity, Key Vault, RBAC, policy, and data-handling controls using Azure Bicep.
+1. **V1 — Initial Azure deployment:** deploy the frontend and TinyFish API to an Azure Linux VM using Nginx and a local Node.js service.
+2. **V2 — Identity, secrets, and data governance:** introduce workload identity, Key Vault, RBAC, policy, and data-handling controls using Azure Bicep.
 3. **V3 — Hardening and operations:** add network controls, monitoring, alerts, backup, restore, and patching.
 4. **V4 — Detection and investigation:** add Microsoft Sentinel, KQL detections, Python posture checks, and authorised security testing.
 5. **V5 — Enterprise architecture and resilience:** evaluate availability, recovery, disaster recovery, and measured RTO/RPO.
 
 This is one repository and one evolving platform roadmap, not five disconnected labs.
 
-**Current status:** Repository foundation and V1 planning. No Azure resources have been provisioned for this project.
+**Current status:** V1 core application deployment is running and smoke-tested. Evidence capture, actual cost review, and cleanup review remain before V1 is fully closed.
 
 ## Version roadmap
 
 | Version | Focus | Infrastructure / learning approach | Status |
 |---|---|---|---|
-| V1 | Initial Azure deployment | Manual Azure Portal provisioning; VM, VNet, NSG, Nginx, Azure Functions | Planning |
+| V1 | Initial Azure deployment | Manual Azure Portal provisioning; VM, VNet, NSG, Nginx, Node.js API | Core deployment complete; closure tasks remain |
 | V2 | Identity, secrets, governance | Azure Bicep; Managed Identity, Key Vault, RBAC, Policy | Planned |
 | V3 | Hardening and operations | Build on the existing platform | Planned |
 | V4 | Detection and investigation | Sentinel, KQL, Python security checks | Planned |
 | V5 | Architecture and resilience | Availability and disaster recovery design | Planned |
 
-## V1 architecture
+## V1 deployed architecture
 
-The proposed V1 topology is:
+- Azure Linux VM in Central India.
+- Nginx serves the React/Vite frontend over HTTPS.
+- Nginx reverse-proxies `/api/tinyfish/*` to a Node.js Express API bound to `127.0.0.1:3001`.
+- The API runs as `tinyfish-api.service` under systemd.
+- The API connects to external Supabase and TinyFish services using server-side environment configuration.
+- Public application: https://togetherly-v1-faizan.centralindia.cloudapp.azure.com
 
-- Azure Linux VM + Nginx serves the React/Vite frontend.
-- Nginx reverse-proxies `/api/tinyfish/*` requests to an Azure Function App over HTTPS.
-- Azure Functions hosts the adapted TinyFish API endpoints.
-- Azure Functions calls Supabase and TinyFish over HTTPS.
-- Supabase remains the external managed authentication and PostgreSQL service.
+**Architecture correction:** Azure Functions was part of an earlier proposal but was not deployed. V1 uses a local Node.js API service on the VM. The repository documentation records this implementation honestly.
 
-The existing Togetherly Workforce API routes are Vercel-style serverless handlers, not an Express server. They must be adapted and tested for the Azure Functions Node.js v4 programming model.
-
-See [V1 Architecture Diagram](docs/architecture/v1-architecture.md).
+See [V1 Architecture](docs/architecture/v1-architecture.md) and [V1 implementation record](docs/versions/v1.md).
 
 ## Shared resource group
 
-All versions use one shared Azure Resource Group:
-
-`rg-togetherly-platform`
+All versions use one shared Azure Resource Group: `rg-togetherly-platform`.
 
 Resources are added and retired individually as the platform evolves. Do not delete the shared resource group during a version-specific cleanup. Only remove explicitly identified resources after checking that they are not used by another version.
 
 ## Repository structure
 
-The complete, maintained folder blueprint is documented in [Repository Structure](docs/repository-structure.md). The main responsibilities are:
+The maintained folder blueprint is documented in [Repository Structure](docs/repository-structure.md). The main responsibilities are:
 
 - `docs/`: architecture, decisions, security, runbooks, cost guidance, and version plans.
 - `infra/`: Azure Portal provisioning notes, Bicep templates, and shared resource records.
-- `application/`: Azure-specific Functions and Nginx components only; the main Togetherly Workforce app stays in its own repository.
+- `application/`: Azure-specific deployment notes; the main Togetherly Workforce app stays in its own repository.
 - `scripts/` and `tests/`: reusable automation and validation, added when implemented.
 - `evidence/`: sanitised proof organised by version.
 
@@ -67,7 +64,7 @@ Future folders are planned placeholders, not completed code or deployed services
 ## Engineering principles
 
 - **One cumulative project:** all versions build on the same platform and repository.
-- **Manual V1, Bicep V2:** V1 resources are created through the Azure Portal; V2 introduces Azure Bicep. Terraform is not part of the current roadmap.
+- **Manual V1, Bicep V2:** V1 resources are created through the Azure Portal; V2 introduces Azure Bicep.
 - **Evidence before cleanup:** capture and sanitise evidence before removing disposable resources.
 - **Least privilege:** restrict network access and protect all credentials.
 - **Cost discipline:** validate prices before provisioning and review charges regularly. Budget alerts are not spending caps.
@@ -76,30 +73,21 @@ Future folders are planned placeholders, not completed code or deployed services
 
 ## V1 acceptance summary
 
-- [ ] Frontend deployed to the Azure VM and served over HTTPS.
-- [ ] Nginx proxies TinyFish API requests to Azure Functions.
-- [ ] Azure Functions preserve authentication and authorization checks.
-- [ ] Supabase login and required application flows work.
-- [ ] TinyFish routes are tested and secrets remain server-side.
-- [ ] Network access is restricted and resources are tagged.
-- [ ] Cost, evidence, known gaps, and cleanup are documented.
+- [x] Frontend deployed to the Azure VM and served over HTTPS.
+- [x] Nginx proxies TinyFish API requests to the local Node.js service.
+- [x] API authentication rejects unauthenticated requests.
+- [x] Supabase login and authenticated application use verified in the live app.
+- [x] TinyFish search, fetch, and agent workflows confirmed by the user.
+- [x] Network access configured and resources tagged.
+- [ ] Capture and commit sanitised evidence.
+- [ ] Review actual Azure cost and remaining credit.
+- [ ] Complete cleanup review and record final resource state.
 
 See [V1 implementation checklist](docs/versions/v1.md) for detailed acceptance and evidence requirements.
 
 ## Cost planning
 
-The initial planning envelope recorded for the project is US$100, subject to the Azure for Students offer and current regional pricing.
-
-| Stage | Planning target |
-|---|---:|
-| V1 | US$15 |
-| V2 | US$10 |
-| V3 | US$35 |
-| V4 | US$30 |
-| Reserve | US$10 |
-| **Total** | **US$100** |
-
-These are planning estimates, not quotes or guaranteed limits. Check the current Azure Pricing Calculator and subscription offer before creating resources.
+The initial planning envelope recorded for the project is US$100, subject to the Azure for Students offer and current regional pricing. This is a planning estimate, not a quote, hard limit, or spending cap. Review actual billing before cleanup or additional provisioning.
 
 ## Security and disclosure
 
@@ -109,8 +97,8 @@ Never commit credentials, API keys, tokens, private keys, `.env` files, subscrip
 
 1. Read [Project Overview](PROJECT_OVERVIEW.md).
 2. Review the [V1 architecture](docs/architecture/v1-architecture.md).
-3. Follow the [V1 plan](docs/versions/v1.md).
-4. Do not provision resources until region, availability, network exposure, runtime compatibility, and cost checks are complete.
+3. Follow the [V1 implementation record](docs/versions/v1.md).
+4. Review the V2–V5 roadmap before extending the platform.
 
 ## License
 
