@@ -1,105 +1,73 @@
 # Togetherly Azure Platform
 
-> A five-version cloud engineering project that evolves the Togetherly Workforce application into a secure, observable, threat-aware, and resilient Azure environment.
+> A cumulative five-version cloud engineering project that evolves Togetherly Workforce into a secure, observable, and resilient Azure environment.
 
-[![Cloud](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![V1](https://img.shields.io/badge/V1-Deployed%20Core%20Workload-success)](docs/versions/v1.md)
-[![V2 IaC](https://img.shields.io/badge/V2-Azure%20Bicep-0078D4)](https://learn.microsoft.com/azure/azure-resource-manager/bicep/overview)
+[![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
+[![V1](https://img.shields.io/badge/V1-Core%20deployment%20running-success)](docs/versions/v1.md)
+[![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-blue)](docs/versions/)
 
-## Overview
+## Project status
 
-Togetherly Azure Platform is one cumulative cloud engineering project built around the existing Togetherly Workforce application. Each version builds on the previous one:
+**V1 core deployment is running and the main application workflows have been tested.** Twelve evidence screenshots have been uploaded. Final closure is still pending a privacy review/redaction of screenshots, an actual Azure cost review, and a resource-by-resource cleanup decision.
 
-1. **V1 — Initial Azure deployment:** deploy the frontend and TinyFish API to an Azure Linux VM using Nginx and a local Node.js service.
-2. **V2 — Identity, secrets, and data governance:** introduce workload identity, Key Vault, RBAC, policy, and data-handling controls using Azure Bicep.
-3. **V3 — Hardening and operations:** add network controls, monitoring, alerts, backup, restore, and patching.
-4. **V4 — Detection and investigation:** add Microsoft Sentinel, KQL detections, Python posture checks, and authorised security testing.
-5. **V5 — Enterprise architecture and resilience:** evaluate availability, recovery, disaster recovery, and measured RTO/RPO.
+Live application: https://togetherly-v1-faizan.centralindia.cloudapp.azure.com
 
-This is one repository and one evolving platform roadmap, not five disconnected labs.
+## What is deployed in V1
 
-**Current status:** V1 core application deployment is running and smoke-tested. Evidence capture, actual cost review, and cleanup review remain before V1 is fully closed.
-
-## Version roadmap
-
-| Version | Focus | Infrastructure / learning approach | Status |
-|---|---|---|---|
-| V1 | Initial Azure deployment | Manual Azure Portal provisioning; VM, VNet, NSG, Nginx, Node.js API | Core deployment complete; closure tasks remain |
-| V2 | Identity, secrets, governance | Azure Bicep; Managed Identity, Key Vault, RBAC, Policy | Planned |
-| V3 | Hardening and operations | Build on the existing platform | Planned |
-| V4 | Detection and investigation | Sentinel, KQL, Python security checks | Planned |
-| V5 | Architecture and resilience | Availability and disaster recovery design | Planned |
-
-## V1 deployed architecture
-
-- Azure Linux VM in Central India.
-- Nginx serves the React/Vite frontend over HTTPS.
+- Azure Resource Group: `rg-togetherly-platform` (shared by V1–V5).
+- Central India VNet, application subnet, NSG, Linux VM, public IP, NIC, and OS disk.
+- Ubuntu Server 24.04 LTS VM: `vm-togetherly-v1`.
+- Nginx serves the React/Vite production frontend over HTTPS.
 - Nginx reverse-proxies `/api/tinyfish/*` to a Node.js Express API bound to `127.0.0.1:3001`.
 - The API runs as `tinyfish-api.service` under systemd.
-- The API connects to external Supabase and TinyFish services using server-side environment configuration.
-- Public application: https://togetherly-v1-faizan.centralindia.cloudapp.azure.com
+- Supabase and TinyFish are external services accessed by the server-side API.
 
-**Architecture correction:** Azure Functions was part of an earlier proposal but was not deployed. V1 uses a local Node.js API service on the VM. The repository documentation records this implementation honestly.
+**Architecture clarification:** Azure Functions was considered during planning but was not deployed. The working V1 API is a local Node.js Express service on the VM. See [V1 architecture](docs/architecture/v1-architecture.md).
 
-See [V1 Architecture](docs/architecture/v1-architecture.md) and [V1 implementation record](docs/versions/v1.md).
+## Five-version roadmap
 
-## Shared resource group
+| Version | Focus | Approach | Status |
+|---|---|---|---|
+| V1 | Initial Azure deployment, networking, HTTPS, frontend and TinyFish API | Manual Azure Portal provisioning | Core deployment running; closure reviews pending |
+| V2 | Identity, secrets, RBAC, policy and data governance | Azure Bicep | Planned |
+| V3 | Network hardening, monitoring, alerts, backup and patching | Extend the platform | Planned |
+| V4 | Microsoft Sentinel, KQL, Python posture checks and investigation | Extend the platform | Planned |
+| V5 | Availability, disaster recovery and measured RTO/RPO | Extend the platform | Planned |
 
-All versions use one shared Azure Resource Group: `rg-togetherly-platform`.
+This is one cumulative platform, not five unrelated labs. The shared resource group must not be deleted during version-specific cleanup. Terraform is not part of the current roadmap; Bicep is planned for V2.
 
-Resources are added and retired individually as the platform evolves. Do not delete the shared resource group during a version-specific cleanup. Only remove explicitly identified resources after checking that they are not used by another version.
+## Repository map
 
-## Repository structure
+- `docs/`: architecture, decisions, security, runbooks, cost records and version plans.
+- `infra/`: Portal configuration records, future Bicep work and shared resource inventory.
+- `application/`: Azure-specific deployment notes. The full Togetherly Workforce source remains in its [own repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
+- `scripts/` and `tests/`: reusable automation and validation as they are implemented.
+- `evidence/`: sanitised, version-specific implementation evidence.
 
-The maintained folder blueprint is documented in [Repository Structure](docs/repository-structure.md). The main responsibilities are:
+See [Project Overview](PROJECT_OVERVIEW.md) and [Repository Structure](docs/repository-structure.md).
 
-- `docs/`: architecture, decisions, security, runbooks, cost guidance, and version plans.
-- `infra/`: Azure Portal provisioning notes, Bicep templates, and shared resource records.
-- `application/`: Azure-specific deployment notes; the main Togetherly Workforce app stays in its own repository.
-- `scripts/` and `tests/`: reusable automation and validation, added when implemented.
-- `evidence/`: sanitised proof organised by version.
+## V1 verification summary
 
-Future folders are planned placeholders, not completed code or deployed services. V1 uses the Azure Portal; Bicep is reserved for V2. Terraform is not part of this project roadmap.
+- [x] Frontend deployed and reachable over HTTPS.
+- [x] HTTP redirects to HTTPS.
+- [x] Nginx and TinyFish API services running.
+- [x] API bound to loopback; port 3001 is not intended for public exposure.
+- [x] Unauthenticated API requests rejected with HTTP 401.
+- [x] Authenticated TinyFish search, fetch and agent workflows confirmed in the live app.
+- [x] Twelve evidence screenshots uploaded to `evidence/v1/`.
+- [ ] Review and redact screenshots for subscription IDs, IP addresses, email addresses and other personal/account details.
+- [ ] Review actual Azure spend and remaining student credit.
+- [ ] Record the final resource state and decide whether to retain, deallocate or delete V1 resources individually.
 
-## Engineering principles
+## Security and cost rules
 
-- **One cumulative project:** all versions build on the same platform and repository.
-- **Manual V1, Bicep V2:** V1 resources are created through the Azure Portal; V2 introduces Azure Bicep.
-- **Evidence before cleanup:** capture and sanitise evidence before removing disposable resources.
-- **Least privilege:** restrict network access and protect all credentials.
-- **Cost discipline:** validate prices before provisioning and review charges regularly. Budget alerts are not spending caps.
-- **Honest status:** distinguish planned, deployed, tested, and verified capabilities.
-- **Authorised testing:** security testing is limited to project-owned or explicitly authorised resources.
-
-## V1 acceptance summary
-
-- [x] Frontend deployed to the Azure VM and served over HTTPS.
-- [x] Nginx proxies TinyFish API requests to the local Node.js service.
-- [x] API authentication rejects unauthenticated requests.
-- [x] Supabase login and authenticated application use verified in the live app.
-- [x] TinyFish search, fetch, and agent workflows confirmed by the user.
-- [x] Network access configured and resources tagged.
-- [ ] Capture and commit sanitised evidence.
-- [ ] Review actual Azure cost and remaining credit.
-- [ ] Complete cleanup review and record final resource state.
-
-See [V1 implementation checklist](docs/versions/v1.md) for detailed acceptance and evidence requirements.
-
-## Cost planning
-
-The initial planning envelope recorded for the project is US$100, subject to the Azure for Students offer and current regional pricing. This is a planning estimate, not a quote, hard limit, or spending cap. Review actual billing before cleanup or additional provisioning.
-
-## Security and disclosure
-
-Never commit credentials, API keys, tokens, private keys, `.env` files, subscription or tenant identifiers, personal IP addresses, or unredacted account details. Sanitise screenshots and logs before committing them. Do not modify production Togetherly data or authentication settings as part of this infrastructure project without a separately approved change.
-
-## Getting started
-
-1. Read [Project Overview](PROJECT_OVERVIEW.md).
-2. Review the [V1 architecture](docs/architecture/v1-architecture.md).
-3. Follow the [V1 implementation record](docs/versions/v1.md).
-4. Review the V2–V5 roadmap before extending the platform.
+- Never commit credentials, API keys, tokens, private keys, `.env` files, subscription IDs, tenant IDs or personal IP addresses.
+- Keep `TINYFISH_API_KEY` server-side only.
+- Sanitise screenshots and logs before publishing them.
+- Do not modify production Supabase data, policies or authentication settings without separate approval.
+- Verify dependencies and costs before deleting or provisioning resources. Budget alerts are notifications, not spending caps.
+- Do not delete the shared `rg-togetherly-platform` resource group as part of V1 cleanup.
 
 ## License
 
-No open-source license has been selected. Unless and until a license is added, all rights are reserved by the repository owner.
+No open-source license has been selected. All rights are reserved unless a license is added.

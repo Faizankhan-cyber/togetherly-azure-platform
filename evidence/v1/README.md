@@ -1,27 +1,24 @@
 # V1 Evidence
 
-Store sanitised V1 evidence in the matching subfolders:
+Evidence is grouped by deployment area:
 
-- `architecture/`: deployed architecture diagram and decision notes
-- `azure-resources/`: Resource Group, VM, disk, and public IP overview
-- `networking/`: VNet, subnet, NSG, and inbound rule evidence
-- `deployment/`: VM, Nginx, Node.js API service, frontend, DNS, and HTTPS evidence
-- `testing/`: API syntax check, health endpoint, four unauthenticated 401 checks, and authenticated app workflow evidence
-- `cost/`: actual Azure cost view, remaining credit record, and cleanup outcome
+| Folder | Evidence |
+|---|---|
+| `azure-resources/` | Resource Group and VNet overview |
+| `networking/` | Subnet, NSG inbound rules, VM overview and VM network settings |
+| `deployment/` | SSH connection, Nginx/API service state and HTTPS deployment |
+| `testing/` | TinyFish search, fetch and agent workflows |
+| `cost/` | Actual Azure cost view, remaining credit and final cleanup record |
+| `architecture/` | Architecture-specific evidence, if needed |
 
-## Verified implementation
+Twelve screenshots have been uploaded across the resource, networking, deployment and testing folders.
 
-The V1 frontend and TinyFish API are deployed on the Azure VM. Nginx serves the frontend and reverse-proxies API requests to a local Node.js Express service managed by systemd. Azure Functions was not deployed.
+## Deployed implementation
 
-## Evidence still to capture
+The V1 frontend and TinyFish API run on the Azure VM. Nginx serves the frontend and reverse-proxies API requests to a local Node.js Express service managed by systemd. Azure Functions was not deployed.
 
-- [ ] Resource Group and resource overview
-- [ ] VNet, subnet, and NSG rules
-- [ ] VM configuration and service state
-- [ ] Live HTTPS application page
-- [ ] Nginx configuration test and API service status
-- [ ] Four unauthenticated API checks showing 401
-- [ ] Authenticated TinyFish search/fetch/agent workflow
-- [ ] Azure Cost Management view and final resource state
+## Evidence privacy review
 
-Do not commit screenshots until they have been checked for subscription IDs, tenant IDs, public IP addresses, personal email addresses, usernames where unnecessary, access tokens, API keys, private keys, and raw authentication data. Never commit `.env` files or raw authentication headers.
+**Do not treat uploaded screenshots as publication-ready until they have been reviewed.** Some Azure Portal captures may show subscription identifiers, public IP addresses, SSH source IP addresses or account details. Redact these details before keeping the screenshots in this public repository. Keep original copies privately.
+
+Never commit `.env` files, private keys, access tokens, API keys, raw authentication headers or unredacted account details.
