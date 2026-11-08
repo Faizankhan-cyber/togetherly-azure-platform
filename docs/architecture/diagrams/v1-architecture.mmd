@@ -3,20 +3,15 @@ flowchart TB
 
     subgraph AZURE["MICROSOFT AZURE"]
         subgraph RG["Resource Group: rg-togetherly-platform"]
-            PUBLIC["Public IP / DNS"]
+            PUBLIC["Azure Public IP / DNS"]
             NSG["Network Security Group"]
-
-            subgraph VNET["Virtual Network"]
-                subgraph SUBNET["Application Subnet"]
-                    VM["Azure Linux VM"]
-                    NGINX["Nginx Reverse Proxy"]
+            subgraph VNET["vnet-togetherly-platform"]
+                subgraph SUBNET["snet-app: 10.10.1.0/24"]
+                    VM["Ubuntu VM: vm-togetherly-v1"]
+                    NGINX["Nginx: TLS + Reverse Proxy"]
                     FRONTEND["React + Vite Static Frontend"]
+                    API["Node.js Express TinyFish API<br/>127.0.0.1:3001<br/>systemd service"]
                 end
-            end
-
-            subgraph FUNCAPP["Azure Function App"]
-                FUNCTIONS["TinyFish API Handlers"]
-                STORAGE[("Functions Storage Account")]
             end
         end
     end
@@ -31,8 +26,10 @@ flowchart TB
     NSG -->|"Allowed inbound traffic"| VM
     VM --> NGINX
     NGINX -->|"Static assets"| FRONTEND
-    NGINX -->|"/api/tinyfish/* over HTTPS"| FUNCTIONS
-    FUNCTIONS -.->|"Runtime dependency"| STORAGE
-    FUNCTIONS -->|"HTTPS: session validation and data access"| SUPABASE
-    FUNCTIONS -->|"HTTPS: server-side API key"| TINYFISH
-    FUNCTIONS -->|"API response"| NGINX
+    NGINX -->|"/api/tinyfish/*"| API
+    API -->|"HTTPS: session validation and data access"| SUPABASE
+    API -->|"HTTPS: server-side API key"| TINYFISH
+    API -->|"API response"| NGINX
+
+    NOTE["Azure Functions was proposed but not deployed in V1"]
+    NOTE -.-> API
