@@ -15,10 +15,10 @@ Twelve screenshots have been uploaded across the resource, networking, deploymen
 
 ## Deployed implementation
 
-The V1 frontend and TinyFish API run on the Azure VM. Nginx serves the frontend and reverse-proxies API requests to a local Node.js Express service managed by systemd. Azure Functions was not deployed.
+The V1 frontend and TinyFish API ran on the Azure VM. Nginx served the frontend and reverse-proxied API requests to a local Node.js Express service managed by systemd. Azure Functions was not deployed. The VM was user-confirmed stopped and deallocated on 2026-11-09.
 
 ## Evidence privacy review
 
-**Do not treat uploaded screenshots as publication-ready until they have been reviewed.** Some Azure Portal captures may show subscription identifiers, public IP addresses, SSH source IP addresses or account details. Redact these details before keeping the screenshots in this public repository. Keep original copies privately.
+The twelve supplied screenshots were reviewed. They are relevant and useful evidence, but **not ready for public release without redaction**. Redact account email, subscription and network identifiers, public IP information, and the SSH source IP in sanitised copies. Keep original copies privately.
 
 Never commit `.env` files, private keys, access tokens, API keys, raw authentication headers or unredacted account details.
