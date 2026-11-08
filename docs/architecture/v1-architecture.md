@@ -1,111 +1,70 @@
 # V1 Architecture
 
-**Status:** Proposed design, not yet deployed or validated  
-**Hosting model:** Azure Portal-created infrastructure; application code deployed separately  
-**Resource group:** `rg-togetherly-platform` (shared by V1–V5)
+**Status:** Deployed and smoke-tested; see documented limitations  
+**Hosting model:** Azure VM, Nginx, static frontend, and local Node.js API service  
+**Resource group:** `rg-togetherly-platform` (shared by V1–V5)  
+**Region:** Central India
 
 ## Integrated application and infrastructure diagram
 
-The diagram below combines the application request flow with the Azure resource and network layout. It is the single logical overview for V1.
-
-```mermaid
-flowchart TB
-    USER(["User / Browser"])
-
-    subgraph AZURE["MICROSOFT AZURE"]
-        subgraph RG["Resource Group: rg-togetherly-platform"]
-            PUBLIC["Public IP / DNS"]
-            NSG["Network Security Group"]
-
-            subgraph VNET["Virtual Network"]
-                subgraph SUBNET["Application Subnet"]
-                    VM["Azure Linux VM"]
-                    NGINX["Nginx Reverse Proxy"]
-                    FRONTEND["React + Vite Static Frontend"]
-                end
-            end
-
-            subgraph FUNCAPP["Azure Function App"]
-                FUNCTIONS["TinyFish API Handlers"]
-                STORAGE[("Functions Storage Account")]
-            end
-        end
-    end
-
-    subgraph EXTERNAL["EXTERNAL SERVICES"]
-        SUPABASE[("Supabase Auth + PostgreSQL")]
-        TINYFISH["TinyFish API"]
-    end
-
-    USER -->|"HTTPS 443"| PUBLIC
-    PUBLIC --> NSG
-    NSG -->|"Allowed inbound traffic"| VM
-    VM --> NGINX
-    NGINX -->|"Static assets"| FRONTEND
-    NGINX -->|"/api/tinyfish/* over HTTPS"| FUNCTIONS
-    FUNCTIONS -.->|"Runtime dependency"| STORAGE
-    FUNCTIONS -->|"HTTPS: session validation and data access"| SUPABASE
-    FUNCTIONS -->|"HTTPS: server-side API key"| TINYFISH
-    FUNCTIONS -->|"API response"| NGINX
-```
+This diagram represents the implementation that is currently running. Azure Functions was part of an earlier proposal but was not provisioned.
 
 Editable source: [V1 integrated Mermaid diagram](diagrams/v1-architecture.mmd).
 
-## Component responsibilities
+## Actual request path
 
-| Component | Responsibility |
-|---|---|
-| Azure Resource Group | Shared management boundary for the cumulative V1–V5 platform |
-| Virtual Network and application subnet | Network boundary for the Linux VM |
-| Network Security Group | Restrict inbound access to only the required ports |
-| Public IP / DNS | Public entry point for the web application |
-| Linux VM | Hosts Nginx and the built static frontend |
-| Nginx | Serves frontend assets and reverse-proxies the TinyFish API path to Azure Functions |
-| Azure Function App | Hosts the adapted TinyFish API endpoints using the Azure Functions Node.js programming model |
-| Functions storage account | Runtime dependency for the selected Functions hosting configuration |
-| Supabase | External managed authentication and PostgreSQL service |
-| TinyFish | External API called by the server-side Functions |
+1. The browser opens the Togetherly Workforce app through the Azure-provided DNS name over HTTPS.
+2. The public endpoint and NSG allow web traffic to the Ubuntu VM.
+3. Nginx terminates TLS and serves the React/Vite production build.
+4. Requests under `/api/tinyfish/*` are reverse-proxied to the Node.js Express API at `127.0.0.1:3001`.
+5. The API validates the Supabase session and application access before calling external services.
+6. The API calls Supabase and TinyFish over HTTPS using server-side environment configuration.
+7. API responses return through Nginx to the browser.
 
-## Request flows
+## Deployed components
 
-### Frontend
-1. The browser requests the Togetherly application over HTTPS.
-2. The Azure public endpoint routes traffic through the NSG to the Linux VM.
-3. Nginx serves the built React/Vite files.
+| Component | Responsibility | Observed state |
+|---|---|---|
+| Resource Group | Shared V1–V5 management boundary | Created |
+| VNet / subnet | VM network boundary | Created |
+| NSG | Controls inbound SSH, HTTP, and HTTPS | Configured |
+| Ubuntu VM | Hosts Nginx, frontend build, and API process | Running during verification |
+| Nginx | TLS termination, static hosting, and API reverse proxy | Running |
+| React/Vite frontend | Togetherly Workforce user interface | Deployed |
+| Node.js Express API | TinyFish search, fetch, agent, and agent-run endpoints | systemd service active |
+| Supabase | External managed authentication and PostgreSQL | External dependency |
+| TinyFish | External API used by the server-side API | External dependency |
 
-### TinyFish API
-1. The frontend sends a request to `/api/tinyfish/*` on the same public origin.
-2. Nginx proxies that request to the Azure Function App over HTTPS.
-3. The Function validates the user's Supabase session and required employee/role access.
-4. The Function calls TinyFish using a server-side `TINYFISH_API_KEY`.
-5. The response returns through Nginx to the browser.
+## Network and service boundaries
 
-## Important implementation notes
+- Public inbound traffic is limited to the VM's configured NSG rules.
+- SSH should remain restricted to the administrator's current public IP.
+- Ports 80 and 443 are allowed for web access.
+- The Node.js API listens on loopback port 3001. Do not add a public NSG rule for port 3001.
+- Nginx proxies the required API path to the loopback service.
+- Keep API credentials and Supabase server configuration on the VM, not in the frontend build.
+- Supabase and TinyFish remain external services.
 
-- The existing Togetherly Workforce API routes are Vercel-style serverless handlers. They are **not** a conventional Express or Node.js server.
-- The handlers must be adapted and tested for the Azure Functions Node.js v4 programming model. Do not assume the existing files can be copied unchanged.
-- Preserve the existing authentication, role checks, URL validation, HTTP methods, status codes, and response behaviour during the adaptation.
-- Keep `TINYFISH_API_KEY` on the server side only. Never place it in Vite variables or the browser bundle.
-- Supabase and TinyFish remain external services. This project does not migrate their data or change production authentication settings.
-- Nginx should proxy only the required API path to the Function App. The Function App should not expose secrets in responses or logs.
-- The diagram is a logical target. Actual ports, routes, hosting plan, region, DNS, TLS termination, and costs must be confirmed before deployment.
-- HTTPS certificate and domain strategy must be decided before the live deployment. The public entry point must not be left serving application traffic over plain HTTP.
-- V1 resources are created manually through the Azure Portal. V2 is planned to introduce Azure Bicep. Terraform is not part of this roadmap.
+## TLS and DNS
 
-## Trust boundaries
+The deployed hostname is `togetherly-v1-faizan.centralindia.cloudapp.azure.com`. A Let's Encrypt certificate was installed through Certbot. HTTPS returned HTTP 200, and HTTP returned a redirect to HTTPS. The certificate expiry reported during setup was 2027-02-06; verify renewal status periodically.
 
-1. **Internet to Azure VM:** controlled by the public IP, NSG, and Nginx.
-2. **VM/Nginx to Function App:** outbound HTTPS to the Function App endpoint.
-3. **Function App to Supabase:** HTTPS; user identity and application authorization must be validated server-side.
-4. **Function App to TinyFish:** HTTPS using a server-side secret.
-5. **Management plane:** Azure Portal access is controlled by the user's Azure identity and subscription RBAC.
+## Important architecture decision
 
-## Diagram legend
+The initial plan proposed an Azure Function App and storage account. That plan was not implemented. To complete a working V1 quickly, the TinyFish routes were deployed as a separate Node.js Express service on the VM and managed with systemd. The current topology is therefore VM + Nginx + local Node API, not VM + Azure Functions.
 
-- **Solid arrows:** application or network traffic.
-- **Dashed arrows:** runtime dependencies.
-- **Nested boundaries:** Azure resource group, virtual network, and subnet scope.
+This is a documented scope decision, not a claim that Azure Functions has been deployed. A later version may migrate the API to Azure Functions after reviewing hosting costs, compatibility, secrets, and deployment design.
 
-## Not shown
+## Security notes
 
-This diagram does not imply that CI/CD, private endpoints, a WAF, a custom domain, Azure Front Door, or production-grade high availability are included in V1. Add them only after the requirement, availability, and cost are reviewed.
+- API process binds to loopback, not a public interface.
+- Nginx forwards the Authorization header to the API.
+- API routes return 401 for unauthenticated requests.
+- User confirmed authenticated search, fetch, and agent flows in the live application.
+- Keep `.env` permission-restricted and excluded from Git.
+- Never expose `TINYFISH_API_KEY` in browser code, build variables, screenshots, logs, or repository files.
+- Do not alter production Supabase policies or data as part of infrastructure cleanup.
+
+## Not included in V1
+
+Azure Functions, Key Vault, Managed Identity, private endpoints, WAF, Azure Front Door, CI/CD, high availability, and automated infrastructure deployment are not part of the verified V1 deployment. These may be considered in later versions after cost and scope review.
