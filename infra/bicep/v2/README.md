@@ -1,14 +1,14 @@
-# V2 — Azure Bicep (Reserved)
+# Azure Bicep — Reserved Infrastructure-as-Code Work
 
-V2 is the planned Infrastructure as Code milestone. Azure Bicep will be introduced after the V1 environment has been created and understood manually through the Azure Portal.
+The deployed V2 environment was configured manually through the Azure Portal. **No Bicep template was used to deploy the V2 resources.**
 
-No Bicep templates are part of V1. Do not deploy anything from this folder until V2 scope, dependencies, and cost have been reviewed.
+This folder is reserved for a future Infrastructure-as-Code milestone. The project roadmap introduces Bicep after the manual Portal work has been documented and understood. Do not treat the existence of this folder as evidence of an IaC deployment.
 
-Planned future contents may include:
+Possible future contents:
 
 - `main.bicep`
 - `modules/`
 - `parameters/` with non-secret example parameter files
-- `README.md` with deployment and validation instructions
+- Deployment, validation and rollback instructions
 
-Never commit credentials or secret parameter values.
+Before implementing templates, review resource dependencies, Azure Policy behaviour, naming, region, network access and cost. Never commit credentials or secret parameter values. Terraform is not part of this project.
