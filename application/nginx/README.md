@@ -1,8 +1,8 @@
 # Nginx Configuration
 
-**V1 status:** Deployed on `vm-togetherly-v1`.
+**V1 status:** Deployed and verified on `vm-togetherly-v1`. The VM was user-confirmed deallocated on 9 November 2026, so Nginx is not currently expected to be running.
 
-Nginx is configured to:
+During V1, Nginx was configured to:
 
 - Serve the React/Vite production build from `/opt/togetherly/togetherly-workforce/dist`.
 - Use the SPA fallback to `index.html`.
@@ -12,9 +12,9 @@ Nginx is configured to:
 - Proxy `/api/tinyfish/*` requests to the local Node.js API at `http://127.0.0.1:3001`.
 - Forward the Authorization header and standard forwarded request headers.
 
-The API must remain bound to loopback. Do not expose port 3001 through the NSG. The active configuration is maintained on the VM at `/etc/nginx/sites-enabled/default`; inspect the live file before changing it. Certbot manages the TLS-related server directives, so avoid overwriting those sections manually.
+The API was bound to loopback. Port 3001 must not be exposed through the NSG. The active configuration was maintained on the VM at `/etc/nginx/sites-enabled/default`. Certbot managed the TLS-related server directives.
 
-Validation commands:
+If the VM is intentionally restarted for maintenance, inspect the live configuration before changing it. Validate with:
 
 ```bash
 sudo nginx -t
