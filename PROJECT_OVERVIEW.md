@@ -1,90 +1,81 @@
-# Togetherly Azure Platform — Project Overview
+# Togetherly Azure Platform
 
 ## Purpose
 
-Togetherly Azure Platform is a five-version, cumulative cloud engineering project built around the existing Togetherly Workforce application. This repository manages Azure infrastructure records, architecture, operational documentation, version plans and evidence. The application source remains in its separate repository.
+Togetherly Azure Platform is a cumulative cloud engineering project built around the existing Togetherly Workforce application. This repository contains Azure architecture, infrastructure records, deployment documentation, version plans and implementation evidence. The application source remains in its [own repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
 
-- **Platform repository:** https://github.com/Faizankhan-cyber/togetherly-azure-platform
-- **Application repository:** https://github.com/Faizankhan-cyber/togetherly-workforce
 - **Cloud:** Microsoft Azure
 - **Shared resource group:** `rg-togetherly-platform`
-- **Current milestone:** V1 core deployment running; closure reviews pending.
+- **Current milestone:** V1 deployed and tested; resource cleanup pending.
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
-## Current V1 implementation
+## V1 implementation
 
-The deployed V1 topology is:
+The V1 frontend and TinyFish API were hosted on one Ubuntu Linux VM in Central India.
 
 ```text
 Browser
   |
-  | HTTPS
+ HTTPS
   v
-Azure public DNS / public IP
+Azure public endpoint
   |
-Network Security Group
+ Network Security Group
   |
-Ubuntu Linux VM (Central India)
+Ubuntu Linux VM
   |
-  +--> Nginx --> React/Vite production frontend
+  +-- Nginx --> React/Vite frontend
   |
-  +--> Nginx /api/tinyfish/* --> Node.js Express API
-                                  (127.0.0.1:3001)
-                                      |
-                                      +--> Supabase
-                                      |
-                                      +--> TinyFish API
+  +-- Nginx /api/tinyfish/* --> Node.js Express API
+                                  |
+                                  +--> Supabase
+                                  +--> TinyFish
 ```
 
-The API runs as `tinyfish-api.service` under systemd. Nginx serves the frontend, terminates HTTPS and forwards API requests to the loopback service.
+Nginx served the frontend, handled HTTPS and reverse-proxied API requests to the Express service on `127.0.0.1:3001`. The API was managed by `tinyfish-api.service` under systemd.
 
-**Azure Functions was an earlier design option and was not deployed in V1.** The current working API is the Node.js Express service on the VM. Do not describe Azure Functions as part of the deployed environment.
+**Azure Functions was considered but not deployed.** Do not describe it as part of V1.
 
 ## V1 status
 
-- Resource group, VNet, subnet, NSG and Ubuntu VM provisioned in Central India.
-- Nginx serves the production frontend.
-- HTTPS works and HTTP redirects to HTTPS.
-- TinyFish API runs on loopback port 3001 under systemd.
-- Unauthenticated requests to the four API routes return HTTP 401.
+- Azure network and Ubuntu VM provisioned.
+- React/Vite production frontend deployed and served by Nginx.
+- HTTPS and HTTP-to-HTTPS redirect verified during deployment.
+- TinyFish Express API deployed on loopback and managed by systemd.
+- Unauthenticated API requests returned HTTP 401.
 - Authenticated search, fetch and agent workflows were confirmed in the live application.
-- Twelve screenshots are uploaded under `evidence/v1/`.
+- Twelve sanitised evidence screenshots are stored in `evidence/v1/`.
+- VM was user-confirmed deallocated on 9 November 2026.
+- The public application is not expected to be reachable while the VM is deallocated.
+- Final Azure resource review and cleanup remain.
 
-Remaining closure tasks:
+## Roadmap
 
-1. Review and redact evidence screenshots before public release. Some Azure Portal captures show account or network identifiers.
-2. Review actual Azure charges and remaining student credit.
-3. Verify the live Azure resource inventory and dependencies.
-4. Record whether each V1 resource will be retained, deallocated or deleted. Never delete the shared resource group.
+| Version | Focus | Main planned capabilities |
+|---|---|---|
+| V1 | Initial Azure deployment | VM, VNet, NSG, Nginx, frontend, TinyFish API and HTTPS |
+| V2 | Identity and governance | Managed Identity, Key Vault, RBAC, GitHub OIDC, Azure Policy, data classification and threat modelling |
+| V3 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching |
+| V4 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and authorised testing |
+| V5 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review |
 
-## Five-version roadmap
-
-| Version | Goal | Main capabilities | Planned approach |
-|---|---|---|---|
-| V1 | Initial Azure deployment | VM, VNet, NSG, Nginx, frontend, TinyFish API, HTTPS and smoke tests | Manual Azure Portal |
-| V2 | Identity, secrets and data governance | Managed Identity, Key Vault, RBAC, GitHub OIDC, Azure Policy, data classification and threat model | Azure Bicep |
-| V3 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Extend the platform |
-| V4 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and authorised testing | Extend the platform |
-| V5 | Enterprise architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Extend the platform |
-
-V2–V5 are plans, not deployed capabilities. V3–V5 implementation methods will be selected when those versions are designed. Terraform is not part of the current roadmap.
+V2–V5 are plans, not deployed capabilities. V1 used manual Azure Portal provisioning. Azure Bicep is planned for V2; Terraform is not part of the current roadmap.
 
 ## Repository responsibilities
 
-- `docs/`: architecture, decisions, version plans, security, runbooks and cost management.
-- `infra/`: provisioning records, future Bicep templates and shared resource inventory.
-- `application/`: Azure-specific integration and deployment notes only.
-- `evidence/`: sanitised implementation proof grouped by version.
+- `docs/`: architecture, version records, decisions, security notes and runbooks.
+- `infra/`: Azure provisioning records and shared resource inventory.
+- `application/`: Azure-specific deployment notes; not the application source.
+- `evidence/`: sanitised implementation evidence for completed versions.
 
-README-only future-version evidence folders are planning placeholders, not proof of implementation.
-
-## Safety and operating rules
+## Safety rules
 
 - Keep API keys and credentials out of Git and browser bundles.
-- Keep the TinyFish API bound to loopback; do not expose port 3001 publicly.
 - Do not commit subscription IDs, tenant IDs, personal IP addresses, private keys or raw authentication data.
 - Do not modify production Supabase data, policies or authentication settings without separate approval.
 - Test only project-owned or explicitly authorised systems.
-- Check dependencies and actual cost before deleting or creating resources.
-- All versions share `rg-togetherly-platform`; never delete it during a version-specific cleanup.
+- Verify resource dependencies before deleting resources.
+- All versions share `rg-togetherly-platform`; never delete it during version-specific cleanup.
+
+Billing amounts, credit balances and personal cost records are intentionally kept private and are not part of this repository.
