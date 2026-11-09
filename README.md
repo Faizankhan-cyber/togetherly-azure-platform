@@ -13,6 +13,11 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 The VM was running during V2 service verification; its current live state has not been independently rechecked for this documentation update. Confirm that it is **Stopped (deallocated)** when not testing. Managed disks, a retained public IP and Key Vault operations may still incur charges while the VM is deallocated.
 
+## Releases
+
+- **V1.0.0:** [Release notes prepared](docs/releases/v1.0.0.md). The GitHub tag and published release are still pending. The intended tag target is the V1 completion commit, before V2 changes.
+- **V2.0.0:** [Published GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). Its release archive predates the later V2 screenshot upload; the current `main` branch contains all 14 screenshot files.
+
 ## V1 — Initial Azure deployment
 
 - Azure Virtual Network, application subnet and Network Security Group.
