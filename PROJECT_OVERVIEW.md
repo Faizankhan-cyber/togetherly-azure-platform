@@ -6,7 +6,7 @@ Togetherly Azure Platform is a cumulative cloud engineering project built around
 
 - **Cloud:** Microsoft Azure
 - **Shared resource group:** `rg-togetherly-platform`
-- **Current milestone:** V1 deployed and tested; resource cleanup and evidence publication review pending.
+- **Current milestone:** V1 deployed and tested; sanitised evidence published; resource cleanup pending.
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
@@ -45,7 +45,7 @@ Nginx served the frontend, handled HTTPS and reverse-proxied API requests to the
 - TinyFish Express API deployed on loopback and managed by systemd.
 - Unauthenticated API requests returned HTTP 401.
 - Authenticated search, fetch and agent workflows were confirmed in the live application.
-- Twelve V1 implementation screenshots are stored in `evidence/v1/`; sanitised public copies still need to replace the originals.
+- Twelve V1 implementation screenshots are stored in `evidence/v1/`; sanitised public copies have been uploaded and replace the originals.
 - VM was user-confirmed deallocated on 9 November 2026.
 - The public application is not expected to be reachable while the VM is deallocated.
 - Final Azure resource review and cleanup remain.
@@ -67,7 +67,7 @@ V2–V5 are plans, not deployed capabilities. V1 used manual Azure Portal provis
 - `docs/`: architecture, version records, decisions, security notes and runbooks.
 - `infra/`: Azure provisioning records and shared resource inventory.
 - `application/`: Azure-specific deployment notes; not the application source.
-- `evidence/`: V1 implementation screenshots. Sanitised public copies are pending.
+- `evidence/`: V1 implementation screenshots with sanitised public copies uploaded.
 
 ## Safety rules
 
