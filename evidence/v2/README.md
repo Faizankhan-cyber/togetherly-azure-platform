@@ -1,6 +1,6 @@
 # V2 Evidence
 
-This folder is reserved for the 14 V2 implementation screenshots. The project owner will upload the reviewed, sanitised screenshots after completing the documentation and final review.
+This folder indexes the 14 V2 implementation screenshots. The project owner will upload reviewed, sanitised image files in a follow-up commit. The `v2.0.0` GitHub release is already published and explicitly records that these image files are pending.
 
 | No. | Evidence | Filename |
 |---:|---|---|
@@ -26,4 +26,4 @@ This folder is reserved for the 14 V2 implementation screenshots. The project ow
 - [ ] Redact email addresses, subscription IDs, tenant IDs, principal IDs, public IP addresses, secret values, access tokens and unrelated personal information.
 - [ ] Ensure the Key Vault secret value is never visible.
 - [ ] Keep unredacted originals private.
-- [ ] Update the V2 release record after evidence publication.
+- [ ] Add the reviewed screenshot files and update the evidence publication record in a follow-up commit; do not imply that the current release archive already contains them.
