@@ -3,12 +3,12 @@
 ## 2026-11-09 — V1 documentation cleanup
 
 - Updated project status to show V1 deployment and testing complete, with the VM deallocated and resource cleanup pending.
-- Removed public billing amounts, credit-balance tracking and cost-analysis documentation.
+- Removed public billing amounts, credit-balance tracking and cost-analysis documentation; personal cost records remain private.
 - Updated architecture and network records to describe the deployed VM, Nginx and Node.js Express design.
 - Marked the original Azure Functions hosting proposal as superseded.
 - Removed unused future-version evidence placeholders and redundant README-only folders.
 - Kept the shared resource inventory and V1 provisioning records for safe resource cleanup.
-- Confirmed that V1 evidence is represented by twelve sanitised screenshots.
+- Recorded that twelve V1 screenshots are in the repository and sanitised replacement copies are still pending publication.
 
 ## 2026-11-08 — V1 deployment
 
