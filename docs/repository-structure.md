@@ -11,6 +11,7 @@ togetherly-azure-platform/
 │   ├── architecture/
 │   ├── decisions/
 │   ├── runbooks/
+│   ├── security/
 │   └── versions/
 ├── infra/
 │   ├── portal/v1/
@@ -32,12 +33,13 @@ togetherly-azure-platform/
 | `docs/architecture/` | Deployed architecture and editable diagrams |
 | `docs/decisions/` | Important technical decisions |
 | `docs/runbooks/` | Deployment and operational procedures |
+| `docs/security/` | Security baseline and project safeguards |
 | `docs/versions/` | Status and scope for V1–V5 |
 | `infra/portal/v1/` | V1 manual provisioning records |
 | `infra/bicep/v2/` | Reserved for planned V2 Bicep templates |
-| `infra/shared/` | Shared Azure resource inventory and naming notes |
+| `infra/shared/` | Shared Azure resource inventory |
 | `application/` | Azure-specific application deployment notes |
-| `evidence/v1/` | Sanitised screenshots from the completed V1 deployment |
+| `evidence/v1/` | Sanitised screenshots from the V1 deployment |
 
 ## Version rules
 
