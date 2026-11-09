@@ -4,14 +4,14 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 [![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
 [![V1](https://img.shields.io/badge/V1-Deployed-blue)](docs/versions/v1.md)
-[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Pending-orange)](docs/versions/v2.md)
+[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Pending-orange)](docs/versions/v2.md) [![Release](https://img.shields.io/badge/Release-v2.0.0-blue)](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
 [![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
 
 ## Current status
 
-**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and tested.** V2 documentation is recorded; the 14 reviewed V2 screenshots are to be uploaded by the project owner before evidence publication and release sign-off.
+**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** The `v2.0.0` GitHub release is published. The 14 V2 screenshots remain a separate evidence-publication follow-up and will be uploaded after owner sanitisation and review.
 
-The Azure VM was running during the V2 service verification. Deallocate it when testing is finished to reduce compute charges. Managed disks, a retained public IP and Key Vault usage may still incur charges while the VM is deallocated.
+The VM was running during V2 service verification; its current live state has not been independently rechecked for this documentation update. Confirm that it is **Stopped (deallocated)** when not testing. Managed disks, a retained public IP and Key Vault operations may still incur charges while the VM is deallocated.
 
 ## V1 — Initial Azure deployment
 
