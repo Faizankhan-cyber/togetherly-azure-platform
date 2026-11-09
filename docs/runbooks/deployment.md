@@ -1,18 +1,19 @@
 # V1 Deployment Runbook
 
-**Deployment model:** Manual Azure Portal provisioning; application deployment over SSH.
+**Deployment model:** Manual Azure Portal provisioning; application deployment over SSH.  
+**Record type:** Historical procedure for the V1 deployment.
 
 ## Prerequisites
 
 - Access to the Azure subscription and the shared `rg-togetherly-platform` resource group.
-- Confirm current student credit and estimated costs before creating or starting resources.
+- Confirm available student credit and estimated costs before creating or starting resources.
 - Verify resource region, VM SKU, public IP, disk, VNet, subnet, and NSG settings.
 - Keep the SSH private key and all application secrets outside Git.
 - Confirm the Togetherly Workforce source repository and required environment variable names.
 
 ## Deployed sequence
 
-1. Create or verify the shared resource group.
+1. Verify the shared resource group.
 2. Create the VNet `vnet-togetherly-platform` and subnet `snet-app`.
 3. Create `nsg-togetherly-v1`; allow SSH only from the administrator's current public IP and allow HTTP/HTTPS for the public web application.
 4. Provision `vm-togetherly-v1` with Ubuntu Server 24.04 LTS in Central India and attach it to the subnet/NSG.
@@ -39,7 +40,7 @@ Run unauthenticated smoke tests for search, fetch, agent, and agent-run. Each sh
 
 ## Actual hosting decision
 
-The initial proposal to host the TinyFish API on Azure Functions was not implemented. V1 uses a Node.js Express service on the VM. The Functions folder is documentation-only. See the V1 architecture decision and implementation record.
+The initial proposal to host the TinyFish API on Azure Functions was not implemented. V1 used a Node.js Express service on the VM. Azure Functions and its storage account were not deployed.
 
 ## Rollback and cleanup
 
@@ -48,3 +49,5 @@ The initial proposal to host the TinyFish API on Azure Functions was not impleme
 - Before deallocating or deleting resources, inspect dependencies and Azure Cost Management.
 - Never delete `rg-togetherly-platform` as part of V1 cleanup.
 - A deallocated VM may still incur disk and public IP charges. Review each resource separately.
+
+The V1 VM was user-confirmed deallocated on 9 November 2026. This runbook documents the historical deployment and does not mean the services are currently running.
