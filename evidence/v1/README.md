@@ -1,6 +1,6 @@
 # V1 Evidence
 
-Twelve screenshots document the V1 implementation. Sanitised public copies must replace the current originals before this evidence folder is considered safe for public release.
+Twelve sanitised screenshots document the V1 implementation. The sanitised public copies have been uploaded and replace the originals in this evidence folder.
 
 | Folder | Evidence |
 |---|---|
@@ -15,6 +15,6 @@ The V1 frontend and TinyFish API ran on the Azure VM. Nginx served the frontend 
 
 ## Publication privacy
 
-The current repository screenshots have not yet been replaced with the sanitised copies. The reviewed originals show account email, subscription/network identifiers, public IP information and the SSH source IP. Do not treat the current images as publication-ready.
+The sanitised replacement screenshots have been uploaded to this folder. The original unredacted screenshots are kept privately and are not intended for public release.
 
 Keep original screenshots privately. Publish only reviewed, sanitised copies. Never commit `.env` files, private keys, access tokens, API keys, raw authentication headers or unredacted account details.
