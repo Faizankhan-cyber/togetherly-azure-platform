@@ -1,6 +1,8 @@
 # Changelog
 
-## 2026-11-09 — V1 documentation cleanup
+## 2026-11-09 — V1 evidence publication and documentation update
+
+- Confirmed that all twelve sanitised V1 screenshots have been uploaded to `evidence/v1/`; unredacted originals remain private.
 
 - Updated project status to show V1 deployment and testing complete, with the VM deallocated and resource cleanup pending.
 - Removed public billing amounts, credit-balance tracking and cost-analysis documentation; personal cost records remain private.
@@ -8,7 +10,7 @@
 - Marked the original Azure Functions hosting proposal as superseded.
 - Removed unused future-version evidence placeholders and redundant README-only folders.
 - Kept the shared resource inventory and V1 provisioning records for safe resource cleanup.
-- Recorded that twelve V1 screenshots are in the repository and sanitised replacement copies are still pending publication.
+- Confirmed that twelve sanitised V1 screenshots are published in the repository; unredacted originals remain private.
 
 ## 2026-11-08 — V1 deployment
 
