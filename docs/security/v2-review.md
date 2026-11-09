@@ -49,14 +49,16 @@ This review did not scan all Git history, every binary/image, every commit in bo
 - **Application authorization:** this Azure review does not re-audit Supabase RLS, employee/role authorization or production data access.
 - **Host hardening:** current SSH daemon settings, host firewall, package patch level, Nginx TLS configuration and file permissions were not independently inspected during this review.
 
-## Release gate
+## Release status and remaining checks
 
-Before publishing V2 evidence or declaring the release final:
+The Git tag and published GitHub release `v2.0.0` already exist. The release notes disclose that the 14 V2 screenshot files are pending owner upload. This review records the implementation release while keeping evidence publication and live operational checks open.
+
+Before publishing the V2 screenshot evidence:
 
 - Upload all 14 screenshots only after redacting account emails, subscription/tenant identifiers, principal IDs, public IP addresses, secret values and tokens.
 - Confirm the Key Vault networking screenshot shows the intended VNet/subnet rule and service endpoint without revealing the administrator IP.
 - Confirm Search, Fetch and Agent evidence reflects the post-V2 application, not only the earlier V1 tests.
-- Check current Azure VM state and Cost Management actuals.
+- Check current Azure VM state and Cost Management actuals/forecast. This documentation review did not access the Azure subscription or billing data.
 - Recheck the repository for accidental secrets and sensitive image content.
 
 ## Conclusion
