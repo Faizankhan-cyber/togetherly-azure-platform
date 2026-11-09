@@ -1,22 +1,24 @@
-# ADR-001: V1 Hosting Architecture
+# ADR-001: Original V1 Hosting Proposal
 
-**Status:** Proposed, not approved for deployment  
+**Status:** Superseded by the implemented VM + Nginx + Node.js Express design  
 **Date:** 2026-11-08
 
 ## Context
 
-Togetherly Workforce uses a React/Vite frontend and Vercel-style serverless TinyFish API handlers. It does not provide a conventional Express API server. The platform needs an Azure hosting design that preserves the existing authentication and authorization behaviour.
+The initial V1 design considered moving the TinyFish API handlers from the Togetherly Workforce application into an Azure-hosted serverless API while serving the frontend from an Azure Linux VM.
 
-## Proposed decision
+## Original proposal
+
+The proposal was to:
 
 - Serve the built frontend from an Azure Linux VM running Nginx.
-- Reverse-proxy the required `/api/tinyfish/*` paths from Nginx to an Azure Function App over HTTPS.
-- Adapt the existing API handlers to the Azure Functions Node.js v4 programming model.
+- Reverse-proxy `/api/tinyfish/*` requests to an Azure Function App.
+- Adapt the API handlers to the Azure Functions Node.js programming model.
 - Keep Supabase and TinyFish as external HTTPS services.
 - Keep `TINYFISH_API_KEY` server-side.
 
-## Consequences and validation required
+## What was implemented instead
 
-This design is a proposal, not a deployment decision. Before approval, validate Functions runtime compatibility, hosting plan, request duration, storage dependency, regional availability, DNS/TLS, networking, security, and total cost. Preserve session validation, employee/role checks, URL validation, HTTP methods, status codes, and response semantics.
+Azure Functions and its storage account were not deployed. The working V1 API was deployed as a separate Node.js Express service on the same VM, bound to `127.0.0.1:3001` and managed by `tinyfish-api.service` under systemd. Nginx reverse-proxies `/api/tinyfish/*` to that local service.
 
-See [V1 architecture](../architecture/v1-architecture.md). No Azure resources are authorised by this ADR.
+This record is retained to explain why the final implementation differs from the original proposal. The [V1 architecture](../architecture/v1-architecture.md) documents the deployed design.
