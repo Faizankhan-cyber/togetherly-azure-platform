@@ -1,18 +1,14 @@
 # Changelog
 
-All notable project changes are recorded here.
+## 2026-11-09 — V1 documentation cleanup
 
-## 2026-11-09 — Repository cleanup and V1 evidence update
-
-- Updated the root README, project overview, repository structure, V1 architecture index, V1 implementation record and evidence guide to match the deployed VM + Nginx + Node.js Express architecture.
-- Recorded that Azure Functions was not deployed in V1.
-- Added the twelve uploaded V1 screenshots to the evidence index.
-- Identified duplicate Azure resource screenshots and removed the duplicate copy from the architecture documentation area.
-- Corrected the evidence folder name from `deployement` to `deployment`.
-- Removed the obsolete continuation prompt, which contained outdated architecture and deployment status.
-- Removed unused README-only scaffolding for unimplemented scripts, tests, CI workflows, future runbooks and future-version Bicep directories.
-- Kept the V2 Bicep placeholder because Bicep is part of the agreed V2 plan.
-- Flagged screenshot privacy review, actual cost review and resource-state decisions as remaining V1 closure tasks.
+- Updated project status to show V1 deployment and testing complete, with the VM deallocated and resource cleanup pending.
+- Removed public billing amounts, credit-balance tracking and cost-analysis documentation.
+- Updated architecture and network records to describe the deployed VM, Nginx and Node.js Express design.
+- Marked the original Azure Functions hosting proposal as superseded.
+- Removed unused future-version evidence placeholders and redundant README-only folders.
+- Kept the shared resource inventory and V1 provisioning records for safe resource cleanup.
+- Confirmed that V1 evidence is represented by twelve sanitised screenshots.
 
 ## 2026-11-08 — V1 deployment
 
