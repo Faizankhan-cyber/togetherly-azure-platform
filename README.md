@@ -4,12 +4,12 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 [![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
 [![V1](https://img.shields.io/badge/V1-Deployed-blue)](docs/versions/v1.md)
-[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Pending-orange)](docs/versions/v2.md) [![Release](https://img.shields.io/badge/Release-v2.0.0-blue)](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
+[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md) [![Release](https://img.shields.io/badge/Release-v2.0.0-blue)](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
 [![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
 
 ## Current status
 
-**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** The `v2.0.0` GitHub release is published. The 14 V2 screenshots remain a separate evidence-publication follow-up and will be uploaded after owner sanitisation and review.
+**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** The `v2.0.0` GitHub release is published. All 14 V2 screenshot files are now uploaded under `evidence/v2/`; a full-size visual privacy review remains outstanding.
 
 The VM was running during V2 service verification; its current live state has not been independently rechecked for this documentation update. Confirm that it is **Stopped (deallocated)** when not testing. Managed disks, a retained public IP and Key Vault operations may still incur charges while the VM is deallocated.
 
@@ -46,7 +46,7 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 | Version | Focus | Status |
 |---|---|---|
 | V1 | Azure hosting, networking, HTTPS and application integration | Implemented; VM-based workload |
-| V2 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Implemented; evidence upload pending |
+| V2 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Implemented; 14 evidence files uploaded |
 | V3 | Network hardening, monitoring, backup and operations | Planned |
 | V4 | Microsoft Sentinel, KQL and security investigation | Planned |
 | V5 | Availability, disaster recovery and resilience | Planned |
