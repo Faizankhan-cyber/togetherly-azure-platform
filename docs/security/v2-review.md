@@ -31,7 +31,7 @@ Findings and actions:
 
 1. The platform repository's `.gitignore` excludes `.env`, `.env.*`, private key extensions and local Azure state files.
 2. The application repository's `.env.example` contains placeholders and explicitly warns against placing a service-role key in frontend environment variables.
-3. The application repository's `.gitignore` previously ignored only a file named `.env`, not all `.env.*` variants. The ignore rule is being strengthened to exclude environment variants while allowing the placeholder `.env.example`.
+3. The application repository's `.gitignore` currently ignores `.env` but does not yet ignore all `.env.*` variants. A direct update was rejected by GitHub branch protection because changes must go through a pull request with required status checks. Treat this as an open repository-hygiene finding; add `.env.*` and an explicit `!.env.example` exception through a reviewed PR.
 4. The reviewed public platform documentation did not contain the TinyFish secret value, subscription ID or tenant ID in its prose.
 5. The V1 evidence folder contains sanitised public screenshots according to its evidence record. V2 screenshots have not yet been uploaded and must be reviewed before publication.
 
@@ -47,7 +47,7 @@ This review did not scan all Git history, every binary/image, every commit in bo
 - **Public VM web endpoint:** retain only required inbound web rules; SSH should remain limited to a trusted source. Do not expose API port 3001.
 - **Credential rotation:** rotate the TinyFish credential if it is suspected to have been exposed. Removing it from the current `.env` file does not remove copies from backups or Git history.
 - **Application authorization:** this Azure review does not re-audit Supabase RLS, employee/role authorization or production data access.
-- **Host hardening:** current SSH daemon settings, host firewall, package patch level, Nginx TLS configuration and file permissions were not independently inspected during this review.
+- **Environment-file ignore coverage:** the separate Togetherly Workforce repository does not yet ignore all `.env.*` variants. A direct change was blocked by branch protection; fix through a pull request and verify `.env.example` remains trackable.\n- **Host hardening:** current SSH daemon settings, host firewall, package patch level, Nginx TLS configuration and file permissions were not independently inspected during this review.
 
 ## Release status and remaining checks
 
