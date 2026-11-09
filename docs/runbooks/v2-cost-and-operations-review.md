@@ -52,9 +52,23 @@ In Azure Portal:
 - No Azure Functions, Function App, extra storage account or monitoring workspace was created as part of V2.
 - No exact monthly cost is claimed because live billing data has not been retrieved for this review.
 
+## Final review outcome
+
+The documented design avoids additional always-on compute for V2: it reuses the V1 VM, uses a Standard Key Vault, relies on a subnet service endpoint rather than a Private Endpoint, and does not add Azure Functions or a dedicated monitoring workspace. This keeps the V2 resource footprint relatively small, but it does not establish a zero-cost environment.
+
+This final review is based on the repository's resource inventory and operating records. No live Azure Cost Management data or live resource query was available during the review, so no current charge, remaining student-credit balance, or current VM state is asserted.
+
 ## Current-state caveat
 
-The VM was running during the V2 API service verification screenshot. Its current state must be checked in the Azure Portal before concluding that compute charges have stopped. The OS disk and public IP must also be reviewed separately.
+The VM was running during the V2 API service verification screenshot. The project owner must check the current state in the Azure Portal before concluding that compute charges have stopped. Confirm **Stopped (deallocated)** when not testing. The OS disk, public IP and Key Vault must be reviewed separately because they may continue to incur charges even when the VM is deallocated.
+
+### Final owner checks
+
+- [ ] Confirm `vm-togetherly-v1` is stopped and deallocated when not in use.
+- [ ] Review the attached OS disk and retained public IP for ongoing charges and project dependencies.
+- [ ] Review Key Vault operations and the current Standard-tier charge in Cost Analysis.
+- [ ] Review current-month actual cost and forecast in Azure Cost Management.
+- [ ] Confirm a budget and alert threshold are configured; remember that alerts are not hard spending caps.
 
 ## Safe cleanup rules
 
