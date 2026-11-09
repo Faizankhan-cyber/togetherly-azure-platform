@@ -18,7 +18,7 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 - Node.js Express TinyFish API running as a systemd service on `127.0.0.1:3001`.
 - Nginx reverse proxy for `/api/tinyfish/*`.
 - Integration with external Supabase and TinyFish services.
-- Twelve sanitised implementation screenshots in [V1 evidence](evidence/v1/).
+- Twelve V1 implementation screenshots. Sanitised public copies still need to replace the originals before the evidence folder is considered publication-ready.
 
 **Architecture note:** Azure Functions was considered during planning but was not deployed. The V1 API runs on the VM as a Node.js Express service. See [V1 architecture](docs/architecture/v1-architecture.md).
 
@@ -40,7 +40,7 @@ The versions build on one shared platform. The resource group `rg-togetherly-pla
 - [Architecture](docs/architecture/): deployed V1 design and diagrams.
 - [Version records](docs/versions/): implementation status and plans.
 - [Infrastructure](infra/): V1 provisioning records and shared resource inventory.
-- [Evidence](evidence/v1/): sanitised V1 screenshots.
+- [Evidence](evidence/v1/): V1 implementation screenshots; sanitised publication copies are pending.
 - [Deployment runbook](docs/runbooks/deployment.md): how V1 was deployed and verified.
 
 The Togetherly Workforce application source is maintained separately: [togetherly-workforce](https://github.com/Faizankhan-cyber/togetherly-workforce).
