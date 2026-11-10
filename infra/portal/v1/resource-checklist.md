@@ -1,8 +1,8 @@
 # V1 Azure Resource Checklist
 
-**Status:** Core V1 resources provisioned and application workflows tested. The VM was user-confirmed deallocated on 9 November 2026. Verify live Azure state before cleanup.
+**Status:** Core V1 resources provisioned and application workflows tested. The VM was user-confirmed deallocated on 9 November 2026. The temporary V1/V2 environment is planned for deletion after preservation and final owner checks.
 
-- [x] Use shared resource group `rg-togetherly-platform`
+- [x] Create temporary environment resource group `rg-togetherly-platform`
 - [x] Create VNet `vnet-togetherly-platform` and subnet `snet-app`
 - [x] Create NSG `nsg-togetherly-v1` and attach it to the VM NIC
 - [x] Restrict SSH to the administrator source; allow HTTP/HTTPS
@@ -16,8 +16,8 @@
 - [x] Upload twelve sanitised evidence screenshots
 - [x] Deallocate the V1 VM
 - [ ] Verify current resource state and dependencies
-- [ ] Decide which V1 resources to retain or delete
-- [ ] Complete approved V1 resource cleanup
+- [ ] Complete the V1/V2 Infrastructure Preservation Pack checks and capture any missing live Portal configuration
+- [ ] Delete the temporary resource group after final owner approval; verify orphaned resources and Key Vault recovery separately
 
 **Architecture note:** Azure Functions and its storage account were not provisioned. The V1 API is a Node.js Express service on the VM.
 
