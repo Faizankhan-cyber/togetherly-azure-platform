@@ -24,7 +24,7 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 - Node.js Express TinyFish API running as a systemd service on `127.0.0.1:3001`.
 - Nginx reverse proxy for `/api/tinyfish/*`.
 - Integration with external Supabase and TinyFish services.
-- **V1 status:** Implemented; all 12 sanitised evidence screenshots uploaded under [`evidence/v1/`](evidence/v1/); the temporary Azure resource group was deleted on 10 November 2026.
+- **V1 status:** Implemented; all 12 sanitised evidence screenshots uploaded under [`evidence/v1/`](evidence/v1/) the temporary Azure resource group was deleted on 10 November 2026.
 
 **Architecture note:** Azure Functions was considered during planning but was not deployed. The V1 API runs on the VM as a Node.js Express service. See [V1 architecture](docs/architecture/v1-architecture.md).
 
