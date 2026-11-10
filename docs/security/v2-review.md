@@ -70,7 +70,8 @@ The supplied TinyFish Express route and URL-helper source was reviewed alongside
 - **Public VM web endpoint:** retain only required inbound web rules; SSH should remain limited to a trusted source. Do not expose API port 3001.
 - **Credential rotation:** rotate the TinyFish credential if it is suspected to have been exposed. Removing it from the current `.env` file does not remove copies from backups or Git history.
 - **Application authorization:** this Azure review does not re-audit Supabase RLS, employee/role authorization or production data access.
-- **Environment-file ignore coverage:** the separate Togetherly Workforce repository does not yet ignore all `.env.*` variants. A direct change was blocked by branch protection; fix through a pull request and verify `.env.example` remains trackable.\n- **Host hardening:** current SSH daemon settings, host firewall, package patch level, Nginx TLS configuration and file permissions were not independently inspected during this review.
+- **Environment-file ignore coverage:** the separate Togetherly Workforce repository does not yet ignore all `.env.*` variants. A direct change was blocked by branch protection; fix through a pull request and verify `.env.example` remains trackable.
+- **Host hardening:** current SSH daemon settings, host firewall, package patch level, Nginx TLS configuration and file permissions were not independently inspected during this review.
 
 ## Release status and remaining checks
 
