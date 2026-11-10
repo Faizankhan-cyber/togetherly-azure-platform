@@ -57,7 +57,7 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 | V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
 | V5 | After AZ-305 | Availability, disaster recovery and resilience | Planned |
 
-The versions build on one shared resource group, `rg-togetherly-platform`. Preserve shared resources during version-specific cleanup. V1 and V2 were configured manually through the Azure Portal. Azure Bicep is reserved for a later infrastructure-as-code milestone. Terraform is not part of this project.
+The project will use a **rebuild-and-destroy lifecycle** for each version milestone. After a version is completed, tested, documented, released and its evidence is safely preserved in GitHub, the Azure resource group and its billable resources will be deleted to prevent idle infrastructure costs. Before the next milestone, the completed earlier versions will be recreated from source-controlled **Azure Bicep** templates, then the new version will be added. V1 and V2 were originally configured manually through the Azure Portal; beginning with V3, Bicep becomes the source of truth for rebuilding V1, V2 and the new V3 infrastructure. Terraform is not part of this project.
 
 ## Repository guide
 
@@ -77,8 +77,10 @@ The Togetherly Workforce application source is maintained separately: [togetherl
 - Never commit credentials, API keys, tokens, private keys, `.env` files or personal identifiers.
 - Keep TinyFish credentials server-side and retrieve them through Managed Identity.
 - Review screenshots and logs before publishing.
-- Verify resource dependencies before deleting anything.
-- Do not delete the shared `rg-togetherly-platform` resource group during version-specific cleanup.
+- Delete Azure resources only after the version's code, configuration, documentation, release and sanitised evidence are preserved and verified.
+- The current `rg-togetherly-platform` resource group is planned for deletion after V2 closure. It will be recreated from Bicep for V3.
+- Check for resources outside the resource group and soft-deleted Key Vaults that may remain after resource-group deletion.
+- Never commit secrets or live personal/billing identifiers to the Bicep templates or parameter files.
 - Do not treat a compliant tag-policy result as a complete security audit.
 - Keep live Azure billing screenshots and remaining credit balances private.
 
