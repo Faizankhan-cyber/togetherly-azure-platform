@@ -5,9 +5,9 @@
 Togetherly Azure Platform is a cumulative cloud engineering project built around the Togetherly Workforce application. This repository contains Azure architecture, infrastructure records, deployment documentation, version plans and implementation evidence. The application source remains in its [own repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
 
 - **Cloud:** Microsoft Azure
-- **Current temporary resource group:** `rg-togetherly-platform` (V1/V2 environment; planned for deletion after preservation checks)
+- **Previous temporary resource group:** `rg-togetherly-platform` (V1/V2 environment; deleted on 2026-11-10)
 - **Region:** Central India
-- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. The project is preparing to destroy the current Azure environment after final V2 closure, then recreate V1 and V2 through Bicep for V3. See the [V1/V2 Infrastructure Preservation Pack](docs/preservation/v2-infrastructure-preservation-pack.md).
+- **Current milestone:** V1 and V2 officially completed. All 14 V2 screenshots are uploaded, the V2 release is published, preservation documentation is committed, and the owner confirmed deletion of `rg-togetherly-platform` on 2026-11-10. Check for retained resources and delayed charges after billing data refreshes. Recreate V1 and V2 through Bicep before V3. See the [V1/V2 Infrastructure Preservation Pack](docs/preservation/v2-infrastructure-preservation-pack.md).
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
@@ -62,7 +62,7 @@ See [V2 architecture and trust boundaries](docs/architecture/v2-architecture.md)
 | Version | Certification milestone | Focus | Main capabilities | Status |
 |---|---|---|---|---|
 | V1 | After AZ-900 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented |
-| V2 | After SC-500 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Implemented; all 14 screenshots uploaded |
+| V2 | After SC-500 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Completed; resource group deleted; all 14 screenshots uploaded |
 | V3 | After AZ-104 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Planned |
 | V4 | After SC-500 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
 | V5 | After AZ-305 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Planned |
@@ -84,7 +84,7 @@ V1 and V2 were originally configured manually through the Azure Portal. From V3 
 - Do not modify production Supabase data, policies or authentication settings without separate approval.
 - Test only project-owned or explicitly authorised systems.
 - Delete Azure resources only after the completed version's source, Bicep templates, configuration records, documentation, release and sanitised evidence are safely preserved.
-- The current `rg-togetherly-platform` environment is temporary and is planned for deletion after V2 closure; V3 will recreate it through Bicep.
+- The temporary `rg-togetherly-platform` environment was deleted after V2 closure on 2026-11-10; V3 will recreate the required infrastructure through Bicep.
 - Check for resources outside the resource group and soft-deleted Key Vaults that may remain after deletion.
 - Azure Policy tag compliance is a governance check, not proof that every resource is secure.
 - Billing amounts and personal credit balances are private and are intentionally not recorded here.
