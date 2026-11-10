@@ -3,20 +3,20 @@
 A cumulative Azure cloud engineering project built around the Togetherly Workforce application. Each version adds a practical layer of cloud engineering, security, operations and resilience.
 
 [![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![V1](https://img.shields.io/badge/V1-Deployed-blue)](docs/versions/v1.md)
+[![V1](https://img.shields.io/badge/V1-Implemented-blue)](docs/versions/v1.md)
 [![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md)
 [![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
 
 ## Current status
 
-**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** All 14 V2 screenshot files are present under `evidence/v2/`; a full-size visual privacy review remains outstanding. The V2 release notes are prepared, but the Git tag and published GitHub release still need to be created.
+**V1 deployment and application workflow verification are complete. V2 workload identity, Key Vault secret management, network restrictions and Azure Policy governance have been implemented and functionally tested.** All 14 V2 screenshot files are present under `evidence/v2/`. The remaining evidence task is a full-size visual privacy/readability review.
 
-The VM was running during V2 service verification; its current live state has not been independently rechecked for this documentation update. Confirm that it is **Stopped (deallocated)** when not testing. Managed disks, a retained public IP and Key Vault operations may still incur charges while the VM is deallocated.
+The V2 VM service-status screenshot showed the service active at capture time. The current VM state has not been independently rechecked during this repository review. Confirm **Stopped (deallocated)** when the VM is not being used. Deallocation stops VM compute billing but does not remove managed-disk, retained public-IP or Key Vault charges.
 
 ## Releases
 
-- **V1.0.0:** [Release notes prepared](docs/releases/v1.0.0.md). The GitHub tag and published release are still pending. The intended tag target is the V1 completion commit, before V2 changes.
-- **V2.0.0:** [Release notes prepared](docs/releases/v2.0.0.md). The Git tag and published GitHub release are pending. All 14 V2 screenshot files are present on `main`; full-size privacy review remains open.
+- **V1.0.0:** [Release notes](docs/releases/v1.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v1.0.0). The tag points to the V1 completion commit, before V2 work.
+- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). The tag represents the V2 implementation and documentation milestone. All 14 evidence files are present; full-size visual review remains open.
 
 ## V1 — Initial Azure deployment
 
@@ -43,6 +43,7 @@ V2 adds security controls to the existing VM-based application:
 - Resource-group-scoped `Project=Togetherly` tag policy assignment configured with **DoNotEnforce**.
 - Policy compliance scan reported 8 of 8 resources compliant.
 - TinyFish Search, Fetch and Agent workflows re-tested after the security integration.
+- Fourteen V2 evidence files present in `evidence/v2/`.
 
 V2 was configured manually through the Azure Portal and verified from the VM and application. **GitHub OIDC, a Key Vault private endpoint, Azure Functions, and Bicep deployment were not implemented in V2.** See [V2 implementation record](docs/versions/v2.md) and [V2 architecture](docs/architecture/v2-architecture.md).
 
@@ -51,7 +52,7 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 | Version | Focus | Status |
 |---|---|---|
 | V1 | Azure hosting, networking, HTTPS and application integration | Implemented; VM-based workload |
-| V2 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Implemented; 14 evidence files uploaded |
+| V2 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Implemented; 14 evidence files present |
 | V3 | Network hardening, monitoring, backup and operations | Planned |
 | V4 | Microsoft Sentinel, KQL and security investigation | Planned |
 | V5 | Availability, disaster recovery and resilience | Planned |
@@ -63,7 +64,7 @@ The versions build on one shared resource group, `rg-togetherly-platform`. Prese
 - [Project overview](PROJECT_OVERVIEW.md): purpose, architecture and roadmap.
 - [Architecture](docs/architecture/): V1 and V2 architecture and network design.
 - [Version records](docs/versions/): implementation status and plans.
-- [Security review](docs/security/): baseline and V2 review notes.
+- [Security review](docs/security/v2-review.md): V2 controls, limitations and residual risks.
 - [Cost and operations review](docs/runbooks/v2-cost-and-operations-review.md): cost drivers and safe shutdown guidance.
 - [Infrastructure](infra/): provisioning records and shared resource inventory.
 - [Evidence](evidence/): versioned implementation evidence.
@@ -79,6 +80,7 @@ The Togetherly Workforce application source is maintained separately: [togetherl
 - Verify resource dependencies before deleting anything.
 - Do not delete the shared `rg-togetherly-platform` resource group during version-specific cleanup.
 - Do not treat a compliant tag-policy result as a complete security audit.
+- Keep live Azure billing screenshots and remaining credit balances private.
 
 ## License
 
