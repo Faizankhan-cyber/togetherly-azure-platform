@@ -1,18 +1,18 @@
 # V2 Infrastructure Preservation Pack
 
-**Purpose:** Preserve the known V1/V2 Azure configuration before the current Azure environment is deleted. This is the handover record for rebuilding the platform after the next certification milestone.
+**Purpose:** Preserve the known V1/V2 Azure configuration and record the completed teardown. This is the handover record for rebuilding the platform after the next certification milestone.
 
 **Prepared:** 2026-11-10  
 **Environment:** Azure for Students, Central India  
-**Current resource group:** `rg-togetherly-platform`  
+**Previous resource group:** `rg-togetherly-platform` (deleted on 2026-11-10; owner-confirmed)  
 **Versions covered:** V1 (AZ-900) and V2 (SC-500)  
 **Evidence:** [V1 evidence](../../evidence/v1/) · [V2 evidence](../../evidence/v2/)
 
-> **Important:** This pack is based on the repository's implementation records and the Azure screenshots supplied for this closure. It is not a live Azure export. Verify every resource, property, association and dependency in the Portal immediately before deletion. Unknown values are deliberately marked as not captured rather than guessed.
+> **Important:** This pack is based on the repository's implementation records and Azure screenshots supplied for this closure. It is not a live Azure export. The owner confirmed deletion of the resource group on 2026-11-10. Unknown values are deliberately marked as not captured rather than guessed; verify them during the Bicep rebuild rather than treating this document as an exact deployment export.
 
 ## 1. Rebuild objective and lifecycle
 
-V1 and V2 were originally provisioned manually through the Azure Portal. After V2 closure, the owner intends to delete the current Azure resource group to avoid idle resource charges. Before V3 (after AZ-104), recreate V1 and V2 using Azure Bicep, then implement V3. Repeat the preserve, verify, release and teardown cycle after each version.
+V1 and V2 were originally provisioned manually through the Azure Portal. After V2 closure, the owner deleted the Azure resource group on 2026-11-10 to avoid idle resource charges. Before V3 (after AZ-104), recreate V1 and V2 using Azure Bicep, then implement V3. Repeat the preserve, verify, release and teardown cycle after each version.
 
 - Preserve source code, deployment instructions, non-secret configuration, architecture records, release tags, sanitised evidence and this pack in GitHub.
 - Do not preserve or publish secrets, private keys, tokens, personal IP addresses, subscription IDs, tenant IDs or billing account identifiers.
@@ -31,7 +31,7 @@ V1 and V2 were originally provisioned manually through the Azure Portal. After V
 | V2 milestone | After SC-500 |
 | Provisioning method used | Azure Portal, manual |
 | V1/V2 Bicep deployment | Not performed |
-| Current intended action | Delete the resource group after owner verifies the checklist |
+| Current state | Resource group deleted on 2026-11-10 (owner-confirmed); post-deletion resource and billing checks remain |
 | Next rebuild | Recreate V1 and V2 using Bicep before/with V3, after AZ-104 |
 
 The resource group was used as the deployment boundary for the current V1/V2 environment. It is **not** a permanent shared resource group that must be retained. Check for dependencies outside it before deletion.
@@ -42,7 +42,7 @@ This inventory combines the existing repository records and the supplied Azure P
 
 | Resource | Name | Configuration captured | Rebuild notes |
 |---|---|---|---|
-| Resource group | `rg-togetherly-platform` | Central India | Recreate as the environment's deployment boundary; do not assume it survives teardown |
+| Resource group | `rg-togetherly-platform` | Central India; deleted on 2026-11-10 (owner-confirmed) | Recreate as the environment's deployment boundary for V3 |
 | Virtual network | `vnet-togetherly-platform` | Address space `10.10.0.0/16`; Central India | Recreate before subnet-dependent resources |
 | Subnet | `snet-app` | `10.10.1.0/24`; Microsoft.KeyVault service endpoint enabled in V2 | Recreate V2 service endpoint setting before adding Key Vault VNet rule |
 | Network Security Group | `nsg-togetherly-v1` | SSH TCP/22 restricted to one administrator source; HTTP TCP/80 and HTTPS TCP/443 allowed; default inbound deny; associated with VM NIC during V1 | Exact rule names, priorities, source prefix, outbound rules and full current association were not captured in the preservation notes. Re-derive and validate before deployment. Never reuse a stale personal IP allow-list |
@@ -178,7 +178,7 @@ Before deletion, the owner should retain the private screenshots if needed, then
 
 ## 9. Pre-deletion owner checklist
 
-Complete these checks in Azure Portal immediately before deleting the resource group:
+The owner completed the preservation process and confirmed resource-group deletion on 2026-11-10. The checklist below records the pre-deletion controls; items not explicitly confirmed remain unchecked rather than being retrospectively assumed.
 
 - [ ] Confirm the current GitHub default branch contains this preservation pack and all version records.
 - [ ] Confirm V1 and V2 release tags/releases `v1.0.0` and `v2.0.0` remain published.
@@ -191,19 +191,19 @@ Complete these checks in Azure Portal immediately before deleting the resource g
 - [ ] Confirm no TinyFish Agent run or other workload is still running.
 - [ ] Confirm the owner accepts that the application endpoint will stop working after teardown.
 - [ ] Confirm the Key Vault's 90-day soft-delete and purge-protection behaviour is understood.
-- [ ] Delete `rg-togetherly-platform` only after all checks above are complete.
+- [x] Delete `rg-togetherly-platform` after preservation; owner confirmed deletion on 2026-11-10.
 - [ ] After deletion, inspect Azure Resource Groups, Key Vault deleted-vault recovery, Public IPs, Disks, Snapshots and Cost Management for remaining resources/charges.
 
 ## 10. Post-deletion verification
 
 Do not mark cleanup complete merely because the delete operation was submitted.
 
-- [ ] Azure Portal no longer lists `rg-togetherly-platform`.
+- [x] Owner confirmed Azure Portal no longer lists `rg-togetherly-platform`.
 - [ ] No orphaned NIC, disk, public IP, snapshot or other billable resource remains from this environment unless intentionally retained and documented.
 - [ ] Check Key Vault deleted-vault state; retain soft-delete and purge protection.
 - [ ] Check current-month Cost Analysis after billing data refreshes; delayed charges can appear.
-- [ ] Update the resource inventory to reflect actual deletion and any retained recovery objects.
-- [ ] Record the deletion date and Azure confirmation evidence without publishing personal identifiers or billing details.
+- [x] Update the resource inventory to record the owner-confirmed resource-group deletion. Retained recovery objects still require a separate Azure Portal check.
+- [x] Record the owner-confirmed deletion date (2026-11-10) without publishing personal identifiers or billing details.
 
 ## 11. Rebuild sequence for V3
 
@@ -224,4 +224,15 @@ After AZ-104, implement and test the Bicep modules before deploying:
 
 Use separate Bicep modules and parameter files for reusable infrastructure. Keep environment-specific values non-secret. Never commit secret values, private keys, tokens, personal IPs, subscription IDs or tenant IDs. Add a deployment/teardown runbook and test the deployment in a controlled scope before relying on it.
 
-**This file is a preservation record, not an executable deployment. No Azure resources have been deleted or recreated by creating this document.**
+**Teardown closure (2026-11-10):** The owner confirmed that `rg-togetherly-platform` was deleted from Azure Portal. The Key Vault secret `TINYFISH-API-KEY` had been deleted before resource-group teardown. The Key Vault had 90-day soft-delete retention and purge protection enabled; check its deleted-vault recovery state separately. Also check for orphaned disks, public IPs, snapshots and delayed charges after Azure data refreshes. This file is a preservation record, not an executable deployment or a live Azure export.
+
+
+## 12. Teardown completion record
+
+- **Resource group:** `rg-togetherly-platform`
+- **Owner-confirmed deletion date:** 2026-11-10
+- **Key Vault secret:** `TINYFISH-API-KEY` deleted before resource-group deletion
+- **GitHub preservation:** V1/V2 documentation, releases and sanitised evidence retained in this repository
+- **Not yet independently verified:** absence of orphaned resources outside the resource group, deleted-vault recovery state, and final post-deletion Cost Management actuals
+
+Do not publish billing screenshots, subscription identifiers, personal IP addresses, principal IDs or secret values as teardown evidence.
