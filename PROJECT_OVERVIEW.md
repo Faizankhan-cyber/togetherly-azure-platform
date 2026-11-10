@@ -7,7 +7,7 @@ Togetherly Azure Platform is a cumulative cloud engineering project built around
 - **Cloud:** Microsoft Azure
 - **Shared resource group:** `rg-togetherly-platform`
 - **Region:** Central India
-- **Current milestone:** V1 deployed; V2 identity, Key Vault, network and governance controls implemented and tested; all 14 screenshot files are present; full-size privacy review pending.
+- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. V2's screenshot-upload checklist is complete.
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
@@ -59,13 +59,13 @@ See [V2 architecture and trust boundaries](docs/architecture/v2-architecture.md)
 
 ## Version roadmap
 
-| Version | Focus | Main capabilities | Status |
-|---|---|---|---|
-| V1 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented |
-| V2 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Implemented; screenshot publication pending |
-| V3 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Planned |
-| V4 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
-| V5 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Planned |
+| Version | Certification milestone | Focus | Main capabilities | Status |
+|---|---|---|---|---|
+| V1 | After AZ-900 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented |
+| V2 | After SC-500 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Implemented; all 14 screenshots uploaded |
+| V3 | After AZ-104 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Planned |
+| V4 | After SC-500 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
+| V5 | After AZ-305 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Planned |
 
 V1 and V2 were configured manually through the Azure Portal. Azure Bicep is reserved for a later infrastructure-as-code milestone. Terraform is not part of this project.
 
