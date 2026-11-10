@@ -22,10 +22,9 @@ All 14 V2 implementation screenshots have been uploaded to this folder. GitHub l
 ## Evidence completion checklist
 
 - [x] Confirm all 14 image files are present in the repository.
+- [x] Upload all 14 V2 screenshots to GitHub.
 - [ ] Review every screenshot at full size for readability and privacy.
 - [ ] Redact email addresses, subscription IDs, tenant IDs, principal IDs, public IP addresses, secret values, access tokens and unrelated personal information.
 - [ ] Ensure the Key Vault secret value is never visible.
 - [ ] Keep unredacted originals private.
-- [x] Upload all 14 screenshot files to `evidence/v2/`.
-- [x] Upload all 14 V2 screenshots to `evidence/v2/`.
 - [x] Publish the V2 Git tag and GitHub release using `docs/releases/v2.0.0.md`.
