@@ -1,6 +1,18 @@
 # Platform Architecture Overview
 
-Togetherly Azure Platform is a cumulative project built in five versions. V1 and V2 have implementation records; V3–V5 are future plans and must not be presented as deployed capabilities.
+Togetherly Azure Platform is a cumulative project built in five versions, with each version scheduled after its associated Azure certification milestone. V1 and V2 are implemented; V3–V5 are future plans and must not be presented as deployed capabilities.
+
+## Certification-driven version sequence
+
+| Version | Certification milestone |
+|---|---|
+| V1 | After AZ-900 |
+| V2 | After SC-500 |
+| V3 | After AZ-104 |
+| V4 | After SC-500 |
+| V5 | After AZ-305 |
+
+This is the planned sequence supplied for the project. Keep the milestone labels as recorded unless the certification plan is deliberately revised.
 
 ## Version direction
 
