@@ -12,7 +12,7 @@ V1 was created manually through the Azure Portal so the resource configuration a
 
 V2 identity, Key Vault, network and governance controls were configured manually through the Azure Portal. **Bicep templates and automated Bicep deployment were not implemented in V2.**
 
-The original proposal is therefore not a description of the delivered V2 implementation. Bicep may be introduced in a later milestone after resource ownership, shared dependencies, parameters, deployment scope and cost have been reviewed.
+The original proposal is therefore not a description of the delivered V2 implementation. The owner has selected Azure Bicep as the rebuild/deployment method beginning with V3 after AZ-104. The current V1/V2 environment will be deleted after its configuration is preserved, then V1 and V2 will be recreated from Bicep before V3 is added. No deployable Bicep templates exist yet; the current folder is reserved. See the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md).
 
 ## Consequences
 
@@ -20,5 +20,5 @@ The original proposal is therefore not a description of the delivered V2 impleme
 - Do not run a template deployment from the reserved Bicep folder as part of V2.
 - Any future templates must be validated and tested before deployment.
 - Parameters must not contain secrets.
-- Shared resources and version-specific resources must be clearly identified.
+- The temporary V1/V2 resource group is a teardown boundary, not a permanent shared resource group.
 - Future V3–V5 infrastructure methods remain undecided until their scope is designed.
