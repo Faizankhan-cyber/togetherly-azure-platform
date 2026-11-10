@@ -66,7 +66,8 @@ The project will use a **rebuild-and-destroy lifecycle** for each version milest
 - [Version records](docs/versions/): implementation status and plans.
 - [Security review](docs/security/v2-review.md): V2 controls, limitations and residual risks.
 - [Cost and operations review](docs/runbooks/v2-cost-and-operations-review.md): cost drivers and safe shutdown guidance.
-- [Infrastructure](infra/): provisioning records and shared resource inventory.
+- [Infrastructure](infra/): provisioning records and temporary environment resource inventory.
+- [Infrastructure preservation pack](docs/preservation/v2-infrastructure-preservation-pack.md): V1/V2 configuration, pre-deletion checklist and V3 Bicep rebuild sequence.
 - [Evidence](evidence/): versioned implementation evidence.
 - [Deployment runbook](docs/runbooks/deployment.md): V1 deployment record.
 
