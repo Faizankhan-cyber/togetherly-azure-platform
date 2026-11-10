@@ -31,7 +31,7 @@ After application testing and evidence capture:
 5. Recheck the VM status before leaving the environment.
 6. Remember that deallocation does not delete the VM, OS disk, Key Vault or public IP. These resources may continue to incur charges.
 
-The project owner has chosen to delete the temporary V1/V2 resource group after the preservation checks in the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md) are complete. Do not delete individual resources blindly or assume the OS disk, public IP, snapshots or Key Vault recovery state are automatically removed.
+The project owner confirmed that the temporary V1/V2 resource group `rg-togetherly-platform` was deleted on 2026-11-10 after the preservation checks. Do not assume separately retained disks, public IPs, snapshots or the soft-deleted Key Vault were permanently removed.
 
 ## Monthly cost check
 
@@ -72,20 +72,20 @@ The VM was running during the V2 API service verification screenshot. The projec
 
 ## Planned rebuild-and-destroy lifecycle
 
-The project owner has chosen to delete the temporary Azure environment after each version is completed, tested, documented, released and its evidence/configuration is safely preserved. The full captured V1/V2 configuration and owner checklist are maintained in the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md). This avoids ongoing charges while waiting for the next certification milestone.
+The project owner has completed the V2 teardown by deleting the temporary Azure environment on 2026-11-10 after preserving the configuration, documentation, release and evidence in GitHub. The full captured V1/V2 configuration and teardown record are maintained in the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md).
 
-For V2 closure, the intended sequence is:
+For V2 closure, the completed sequence and remaining follow-up are:
 
 1. Complete and review the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md), including its list of configuration values that still need to be checked in the Portal.
 2. Confirm all secrets can be recreated securely. Never commit secret values, credentials, private keys or tokens to Git, Bicep files or parameter files.
 3. Check DNS, resource dependencies and resources outside `rg-togetherly-platform` that may be billed separately.
-4. Delete the temporary resource group only after all pre-deletion owner checks are complete and the owner gives final approval.
-5. Check Azure Cost Management and the resource inventory after deletion to confirm which charges have stopped and whether any retained resources remain.
+4. **Completed:** Delete the temporary resource group after preservation and owner approval; deletion was confirmed by the owner on 2026-11-10.
+5. **Follow-up:** Check Azure Cost Management and the resource inventory after billing data refreshes to confirm which charges have stopped and whether any retained resources remain.
 6. Before V3, implement and test Azure Bicep templates to recreate V1 and V2, then deploy V3 after AZ-104. The current Bicep directory is only reserved documentation; deployable templates do not yet exist. Repeat the same preservation and teardown process after future version milestones.
 
 **Key Vault recovery caveat:** `togetherly-key-2026` has 90-day soft-delete retention and purge protection enabled. Resource-group deletion does not immediately purge a soft-deleted vault. The vault name may remain reserved during the retention period, and purge protection prevents early permanent deletion. Plan to use a new versioned Key Vault name during the Bicep rebuild if the original name is unavailable. Keep recovery protections enabled.
 
-This teardown is a plan; do not treat it as completed until the Azure Portal confirms the resource group deletion and a follow-up cost/resource review is performed.
+The resource-group teardown is complete according to the owner's Azure Portal confirmation on 2026-11-10. A follow-up review of retained resources and delayed charges is still required before declaring the subscription free of V1/V2 costs.
 
 ## Safe cleanup rules
 
