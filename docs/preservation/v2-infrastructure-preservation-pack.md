@@ -153,22 +153,11 @@ The policy's definition effect is Deny, but the assignment's DoNotEnforce mode m
 
 The Key Vault overview screenshot showed tags `Environment=Development`, `Project=Togetherly`, and `Version=V2`. Exact tag values on every other resource were not captured and must be checked before rebuilding.
 
-## 7. Cost evidence supplied by the project owner
+## 7. Cost evidence and privacy
 
-The supplied November 2026 Cost Analysis screenshot showed a total of **₹189.65** for the selected scope and resource group filter, broken down as follows:
+The project owner supplied Azure Education and Cost Analysis screenshots for November 2026. The views displayed different totals, so they must not be merged or treated as an invoice reconciliation. The screenshots contain personal billing/account context and are intentionally **not stored in this public repository**.
 
-| Resource category/name as shown | Captured cost |
-|---|---:|
-| Virtual network | ₹76.18 |
-| Virtual machine | ₹74.69 |
-| Public IP address | ₹21.02 |
-| Disk | ₹17.75 |
-| Key Vault | Less than ₹0.01 |
-| **Displayed total** | **₹189.65** |
-
-A separate Azure Education overview screenshot displayed November costs of **₹159.43**. These two screenshots show different totals and must not be merged or treated as an invoice reconciliation. They may reflect different scope, refresh timing or view settings. Use Azure Cost Management after deletion to review final billed usage and any delayed charges.
-
-These figures are historical screenshots, not a forecast or guarantee of future cost. No subscription IDs, billing account identifiers or credit balance are reproduced in this public preservation file.
+Before deletion, the owner should retain the private screenshots if needed, then use Azure Cost Management after deletion to review final billed usage and any delayed charges. This preservation pack does not publish the subscription ID, billing account identifier, credit balance or exact cost totals.
 
 ## 8. Dependencies and deletion impact
 
