@@ -1,6 +1,6 @@
 # V2 Architecture — Managed Identity, Key Vault and Governance
 
-**Status:** Implemented and functionally verified; all 14 screenshot files are present; full-size privacy review pending.  
+**Status:** Implemented and functionally verified; all 14 screenshot files are present; full-size privacy/readability review remains open.  
 **Deployment method:** Manual Azure Portal configuration.  
 **Region:** Central India.  
 **Resource group:** `rg-togetherly-platform`.
@@ -78,8 +78,10 @@ The following are not part of the deployed V2 architecture:
 - Bicep deployment of the V2 resources.
 - Microsoft Sentinel, Log Analytics or Azure Monitor alerting.
 
-## Verification and limitations
+## Verification, cost and limitations
 
-The VM successfully retrieved the secret without printing its value. The API service reported active/running. Search, Fetch and Agent workflows were re-tested after the Key Vault integration and network restriction. The tag policy scan reported 8 of 8 resources compliant.
+The VM successfully retrieved the secret without printing its value. The API service reported active/running. Search, Fetch and Agent workflows were re-tested after the Key Vault integration and network restriction. The tag policy scan reported 8 of 8 resources compliant. All 14 evidence image files are present under `evidence/v2/`; their full-size privacy/readability review remains outstanding.
+
+The V2 deployment reuses the existing VM and uses a Standard Key Vault, a subnet service endpoint and RBAC. It does not add a Private Endpoint, Azure Functions or a separate monitoring workspace. The VM was running during the service-status capture. Its current state and current Azure Cost Management actuals/forecast have not been independently queried during this repository review. The VM, managed disk, retained public IP and Key Vault operations may have separate charges; see [V2 cost and operations review](../runbooks/v2-cost-and-operations-review.md).
 
 These checks record implementation-time evidence. They are not a formal penetration test, independent audit or guarantee that the current live configuration has not changed. See [V2 implementation record](../versions/v2.md) and [V2 security review](../security/v2-review.md).
