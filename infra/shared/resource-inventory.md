@@ -1,13 +1,13 @@
 # Shared Azure Resource Inventory
 
 **Last updated:** 2026-11-10  
-**Scope:** Historical inventory for the temporary `rg-togetherly-platform` Azure environment used by V1 and V2. This is not a live Azure export. Check the Azure Portal before deletion or rebuild.
+**Scope:** Historical inventory for the V1/V2 Azure environment. The owner confirmed that `rg-togetherly-platform` was deleted on 2026-11-10. This is not a live Azure export; check Azure for retained resources and recovery objects.
 
-The project owner has chosen a **rebuild-and-destroy lifecycle**: delete the current V1/V2 Azure environment after preserving its configuration and evidence, then recreate V1 and V2 using Azure Bicep before adding V3 after AZ-104. The resource group is temporary, not a permanent resource group shared across all future versions.
+The project owner follows a **rebuild-and-destroy lifecycle**: the V1/V2 Azure environment was deleted on 2026-11-10 after preserving its configuration and evidence. Recreate V1 and V2 using Azure Bicep before adding V3 after AZ-104. The resource group is temporary, not a permanent resource group shared across all future versions.
 
 | Resource name | Resource type | Version introduced | Recorded configuration / status | Cleanup and rebuild notes |
 |---|---|---|---|---|
-| `rg-togetherly-platform` | Resource Group | V1 | Central India; current environment boundary | Planned for deletion after final owner checks; recreate for V3 |
+| `rg-togetherly-platform` | Resource Group | V1 | Central India; **deleted on 2026-11-10 (owner-confirmed)** | Recreate for V3; check for separately retained resources and Key Vault recovery state |
 | `vnet-togetherly-platform` | Virtual Network | V1 | Central India; `10.10.0.0/16` | Recreate from preserved configuration |
 | `snet-app` | Subnet | V1 | `10.10.1.0/24`; Microsoft.KeyVault service endpoint enabled in V2 | Recreate endpoint setting before Key Vault network rule |
 | `nsg-togetherly-v1` | Network Security Group | V1 | SSH TCP/22 restricted to administrator source; TCP/80 and TCP/443 allowed; default inbound deny; associated with VM NIC during deployment | Exact rule names/priorities and source CIDR not published; capture/re-derive before rebuild |
@@ -43,7 +43,7 @@ These are software services, not separate Azure resources:
 - Togetherly Workforce frontend build was deployed from the separate application repository.
 - Supabase and TinyFish are external dependencies and are not part of the Azure resource group.
 
-The API service was active during the V2 verification screenshot. The VM's current state must be checked in Azure before teardown.
+The API service was active during the V2 verification screenshot. The owner subsequently confirmed deletion of the resource group on 2026-11-10; this historical inventory does not independently verify orphaned resources or current billing.
 
 ## Not provisioned as part of V1 or V2
 
@@ -58,6 +58,6 @@ The API service was active during the V2 verification screenshot. The VM's curre
 ## Source and confidence notes
 
 - This inventory is a historical configuration record, not a live Azure resource query.
-- Exact NSG rule names/priorities, VM NIC and disk properties, public IP SKU/allocation, full tags, and external resources are not fully captured. Check them in Azure before deletion.
+- Exact NSG rule names/priorities, VM NIC and disk properties, public IP SKU/allocation, full tags, and external resources are not fully captured. Use the preserved screenshots and rebuild validation to re-establish these settings.
 - The full preservation checklist and rebuild notes are in [V2 Infrastructure Preservation Pack](../../docs/preservation/v2-infrastructure-preservation-pack.md).
 - Never store subscription IDs, tenant IDs, personal IP addresses, secrets, private keys, access tokens or billing account identifiers here.
