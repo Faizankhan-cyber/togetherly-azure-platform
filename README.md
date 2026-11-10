@@ -41,7 +41,7 @@ V2 adds security controls to the existing VM-based application:
 - Resource-group-scoped `Project=Togetherly` tag policy assignment configured with **DoNotEnforce**.
 - Policy compliance scan reported 8 of 8 resources compliant.
 - TinyFish Search, Fetch and Agent workflows re-tested after the security integration.
-- Fourteen V2 evidence files present in `evidence/v2/`.
+- Fourteen V2 evidence files present in [`evidence/v2/`](evidence/v2/);.
 
 V2 was configured manually through the Azure Portal and verified from the VM and application. **GitHub OIDC, a Key Vault private endpoint, Azure Functions, and Bicep deployment were not implemented in V2.** See [V2 implementation record](docs/versions/v2.md) and [V2 architecture](docs/architecture/v2-architecture.md).
 
