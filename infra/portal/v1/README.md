@@ -5,7 +5,7 @@ V1 infrastructure was provisioned manually through the Azure Portal. This folder
 ## Shared platform settings
 
 - Resource group: `rg-togetherly-platform`
-- Scope: shared by V1–V5
+- Scope: temporary V1/V2 environment; planned for deletion after preservation
 - Provisioning method: Azure Portal
 - Region: Central India
 - Environment: learning
@@ -25,6 +25,6 @@ V1 infrastructure was provisioned manually through the Azure Portal. This folder
 
 **Architecture clarification:** Azure Functions and its storage account were considered during planning but were not deployed. The V1 API runs on the VM as Node.js Express.
 
-See the [V1 configuration record](configuration-record.md), [resource checklist](resource-checklist.md) and [shared resource inventory](../../shared/resource-inventory.md).
+See the [V1/V2 Infrastructure Preservation Pack](../../../docs/preservation/v2-infrastructure-preservation-pack.md), [V1 configuration record](configuration-record.md), [resource checklist](resource-checklist.md) and [shared resource inventory](../../shared/resource-inventory.md).
 
 Do not commit secrets, subscription identifiers, tenant identifiers, personal IP addresses or private key material.
