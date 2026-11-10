@@ -1,6 +1,6 @@
 # ADR-002: Infrastructure as Code approach
 
-**Status:** Superseded for V2; Bicep remains a possible future milestone  
+**Status:** Superseded for V2; Azure Bicep adopted from V3 onward  
 **Date:** 2026-11-08  
 **Updated:** 2026-11-10
 
@@ -21,4 +21,4 @@ The original proposal is therefore not a description of the delivered V2 impleme
 - Any future templates must be validated and tested before deployment.
 - Parameters must not contain secrets.
 - The temporary V1/V2 resource group is a teardown boundary, not a permanent shared resource group.
-- Future V3–V5 infrastructure methods remain undecided until their scope is designed.
+- Azure Bicep is the infrastructure method for V3 through V5. Terraform is not used in this project.

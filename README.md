@@ -50,8 +50,8 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 | Version | Certification milestone | Focus | Status |
 |---|---|---|---|
 | V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Implemented; evidence uploaded; resource group deleted |
-| V2 | After SC-500 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; Azure environment deleted; all 14 screenshots uploaded |
-| V3 | After AZ-104 | Network hardening, monitoring, backup and operations | Planned |
+| V2 | After SC-900 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; Azure environment deleted; all 14 screenshots uploaded |
+| V3 | After AZ-104 | Network hardening, monitoring, backup and operations, plus Bicep, GitHub OIDC and a Key Vault private endpoint deferred from V2 | Planned |
 | V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
 | V5 | After AZ-305 | Availability, disaster recovery and resilience | Planned |
 

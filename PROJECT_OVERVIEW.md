@@ -64,8 +64,8 @@ See [V2 architecture and trust boundaries](docs/architecture/v2-architecture.md)
 | Version | Certification milestone | Focus | Main capabilities | Status |
 |---|---|---|---|---|
 | V1 | After AZ-900 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented; evidence uploaded; resource group deleted |
-| V2 | After SC-500 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Completed; resource group deleted; all 14 screenshots uploaded |
-| V3 | After AZ-104 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Planned |
+| V2 | After SC-900 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Completed; resource group deleted; all 14 screenshots uploaded |
+| V3 | After AZ-104 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching, plus Bicep, GitHub OIDC and a Key Vault private endpoint deferred from V2 | Planned |
 | V4 | After SC-500 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
 | V5 | After AZ-305 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Planned |
 
