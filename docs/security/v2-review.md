@@ -37,6 +37,29 @@ Findings and actions:
 
 This review did not scan all Git history, every binary/image, every commit in both repositories, GitHub Actions secrets, the live VM filesystem, Supabase production settings or Azure tenant-wide IAM. A clean current README is not proof that a secret was never committed in history. The 14 V2 image files are present in the platform repository, but their full-size visual contents were not inspected as part of this review.
 
+## Application API source review
+
+The supplied TinyFish Express route and URL-helper source was reviewed alongside the repository records.
+
+### Positive controls observed
+
+- TinyFish routes call the shared authorization helper before using the provider API key.
+- The authorization helper verifies the Supabase bearer token, active employee membership and an allowed application role.
+- Search query and Agent goal lengths are bounded; Fetch accepts between one and ten URLs.
+- The URL helper restricts protocols to HTTP/HTTPS, rejects URL credentials and explicit ports, blocks common local/internal hostnames, and rejects IP-literal hosts.
+- Agent goals are wrapped with read-only research instructions that prohibit login, form submission, messaging, purchases and destructive actions.
+- The Agent status route checks that the requested run belongs to the authenticated user before returning provider status.
+- Provider requests have request timeouts, and returned Search/Fetch results are capped before being sent to the client.
+- The Azure-side secret retrieval test succeeded without printing the credential value.
+
+### Findings to track
+
+1. **DNS-based SSRF protection is incomplete in the application URL helper.** The helper rejects IP-literal addresses and known local hostnames, but it does not resolve a hostname and verify every resolved address is public. Its own source comment describes it as defense-in-depth, not complete SSRF prevention. Because TinyFish performs the page retrieval, confirm that TinyFish enforces private-address and redirect protections on its side. If the application later fetches URLs directly, add robust DNS/IP and redirect validation.
+2. **No per-user rate limit or usage quota was visible in the reviewed route snippets.** Search, Fetch and Agent calls can consume provider credits. Add server-side per-user limits, concurrency controls and usage logging before treating the API as production-ready.
+3. **The read-only Agent prompt is a guardrail, not a hard security boundary.** Keep provider-side action restrictions enabled where available and do not grant the Agent authenticated sessions or credentials for arbitrary target sites.
+4. **The separate Togetherly Workforce repository's `.gitignore` ignores `.env` but not all `.env.*` variants.** Add `.env.*` and an explicit `!.env.example` exception through a reviewed pull request. The platform repository already has the broader ignore pattern.
+5. **Repository history and uploaded images were not exhaustively scanned.** Current tracked text files and documentation were inspected, but this review does not prove that no credential was ever committed or that every screenshot is free of personal identifiers.
+
 ## Residual risks and follow-up
 
 - **Subscription-level Owner roles:** two inherited Owner assignments were observed during the V2 configuration work and were not changed. Review them separately in Azure IAM; this project did not attempt to change subscription ownership.
