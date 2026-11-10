@@ -5,9 +5,9 @@
 Togetherly Azure Platform is a cumulative cloud engineering project built around the Togetherly Workforce application. This repository contains Azure architecture, infrastructure records, deployment documentation, version plans and implementation evidence. The application source remains in its [own repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
 
 - **Cloud:** Microsoft Azure
-- **Shared resource group:** `rg-togetherly-platform`
+- **Current temporary resource group:** `rg-togetherly-platform` (V1/V2 environment; planned for deletion after preservation checks)
 - **Region:** Central India
-- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. The project is preparing to destroy the current Azure environment after final V2 closure, then recreate V1 and V2 through Bicep for V3.
+- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. The project is preparing to destroy the current Azure environment after final V2 closure, then recreate V1 and V2 through Bicep for V3. See the [V1/V2 Infrastructure Preservation Pack](docs/preservation/v2-infrastructure-preservation-pack.md).
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
