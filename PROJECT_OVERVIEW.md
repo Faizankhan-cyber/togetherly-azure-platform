@@ -7,7 +7,7 @@ Togetherly Azure Platform is a cumulative cloud engineering project built around
 - **Cloud:** Microsoft Azure
 - **Shared resource group:** `rg-togetherly-platform`
 - **Region:** Central India
-- **Current milestone:** V1 deployed; V2 identity, Key Vault, network and governance controls implemented and tested; V2 screenshot publication pending.
+- **Current milestone:** V1 deployed; V2 identity, Key Vault, network and governance controls implemented and tested; all 14 screenshot files are present; full-size privacy review pending.
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
