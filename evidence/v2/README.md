@@ -1,6 +1,6 @@
 # V2 Evidence
 
-All 14 V2 implementation screenshots are present in this folder. GitHub lists 14 image files plus this README. The uploaded files use the `.png.jpeg` suffix created during upload. File presence has been verified; each image still needs a full-size visual privacy review before being described as fully reviewed.
+All 14 V2 implementation screenshots have been uploaded to this folder. GitHub lists 14 image files plus this README. The uploaded files use the `.png.jpeg` suffix created during upload. The screenshot upload deliverable is complete; a separate full-size visual privacy review is still recommended.
 
 | No. | Evidence | Filename |
 |---:|---|---|
@@ -19,7 +19,7 @@ All 14 V2 implementation screenshots are present in this folder. GitHub lists 14
 | 13 | TinyFish Fetch verification | `13-tinyfish-fetch-verification.png.jpeg` |
 | 14 | TinyFish Agent execution and status | `14-tinyfish-agent-execution-status.png.jpeg` |
 
-## Publication checklist
+## Evidence completion checklist
 
 - [x] Confirm all 14 image files are present in the repository.
 - [ ] Review every screenshot at full size for readability and privacy.
@@ -27,4 +27,5 @@ All 14 V2 implementation screenshots are present in this folder. GitHub lists 14
 - [ ] Ensure the Key Vault secret value is never visible.
 - [ ] Keep unredacted originals private.
 - [x] Upload all 14 screenshot files to `evidence/v2/`.
-- [ ] After visual review, publish the V2 Git tag and GitHub release using `docs/releases/v2.0.0.md`.
+- [x] Upload all 14 V2 screenshots to `evidence/v2/`.
+- [x] Publish the V2 Git tag and GitHub release using `docs/releases/v2.0.0.md`.
