@@ -56,7 +56,7 @@ In Azure Portal:
 
 The documented design avoids additional always-on compute for V2: it reuses the V1 VM, uses a Standard Key Vault, relies on a subnet service endpoint rather than a Private Endpoint, and does not add Azure Functions or a dedicated monitoring workspace. This keeps the V2 resource footprint relatively small, but it does not establish a zero-cost environment.
 
-This final review is based on the repository's resource inventory and operating records. No live Azure Cost Management data or live resource query was available during the review, so no current charge, remaining student-credit balance, or current VM state is asserted.
+This final review is based on the repository's resource inventory and operating records. The VM was confirmed running during the V2 service-status verification, but its state was not re-queried during this final documentation review. No live Azure Cost Management data or live resource query was available, so no current charge, remaining student-credit balance, or current VM state is asserted.
 
 ## Current-state caveat
 
