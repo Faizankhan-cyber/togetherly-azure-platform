@@ -12,7 +12,7 @@ V1 infrastructure was provisioned manually through the Azure Portal. This folder
 
 ## Implemented sequence
 
-1. Verified the shared resource group.
+1. Verified the temporary V1/V2 environment resource group.
 2. Created the VNet and application subnet.
 3. Created the Network Security Group and configured inbound rules.
 4. Created the public IP and Linux VM.
