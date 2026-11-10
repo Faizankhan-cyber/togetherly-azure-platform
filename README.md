@@ -3,7 +3,7 @@
 A cumulative Azure cloud engineering project built around the Togetherly Workforce application. Each version adds a practical layer of cloud engineering, security, operations and resilience.
 
 [![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![V1](https://img.shields.io/badge/V1-Implemented-blue)](docs/versions/v1.md)
+[![V1](https://img.shields.io/badge/V1-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v1.md)
 [![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md)
 [![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
 
@@ -49,7 +49,7 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 
 | Version | Certification milestone | Focus | Status |
 |---|---|---|---|
-| V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Completed |
+| V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Completed; all 12 screenshots uploaded |
 | V2 | After SC-500 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; Azure environment deleted; all 14 screenshots uploaded |
 | V3 | After AZ-104 | Network hardening, monitoring, backup and operations | Planned |
 | V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
