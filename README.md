@@ -1,88 +1,169 @@
 # Togetherly Azure Platform
 
-A cumulative Azure cloud engineering project built around the Togetherly Workforce application. Each version adds a practical layer of cloud engineering, security, operations and resilience.
+<p align="center">
+  <strong>A versioned Azure cloud engineering project focused on secure application hosting, identity, secrets management and cloud governance.</strong>
+  <br />
+  Built around the Togetherly Workforce application, with each version adding a practical layer of cloud engineering.
+</p>
 
-[![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
-[![V1](https://img.shields.io/badge/V1-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v1.md)
-[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md)
-[![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
+<p align="center">
+  <a href="https://learn.microsoft.com/azure/"><img src="https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white" alt="Microsoft Azure" /></a>
+  <img src="https://img.shields.io/badge/V1-Completed-success" alt="V1 completed" />
+  <img src="https://img.shields.io/badge/V2-Completed-success" alt="V2 completed" />
+  <a href="https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0"><img src="https://img.shields.io/badge/Latest%20Release-v2.0.0-blue" alt="Latest release v2.0.0" /></a>
+  <img src="https://img.shields.io/badge/Next%20Milestone-V3-orange" alt="Next milestone V3" />
+</p>
 
-## Current status
+---
 
-**V1 and V2 are officially complete.** V2 implementation, functional verification, all 14 evidence uploads, GitHub release `v2.0.0`, preservation documentation and Azure resource-group teardown are complete. The owner confirmed that `rg-togetherly-platform` was deleted from Azure Portal on 2026-11-10. A post-teardown check for retained/orphaned resources and delayed billing remains an operational follow-up; resource-group deletion alone does not prove that every separately retained resource or charge is gone.
+## Project overview
 
-## Releases
+Togetherly Azure Platform is a hands-on cloud engineering project that documents the deployment, security improvements and planned evolution of the Azure infrastructure supporting the **Togetherly Workforce** application.
 
-- **V1.0.0:** [Release notes](docs/releases/v1.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v1.0.0). The tag points to the V1 completion commit, before V2 work.
-- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). V2 implementation, verification, evidence upload and Azure teardown are complete.
+The project began with a working VM-based application deployment in V1. V2 built on that foundation by introducing workload identity, centralized secret storage, Key Vault access restrictions and Azure Policy governance.
 
-## V1 — Initial Azure deployment
+This is a **cumulative, versioned project**: each milestone builds on the previous architecture, records its implementation and verification, and preserves evidence before the temporary Azure environment is removed.
+
+> **Current status:** V1 and V2 are implemented, documented and released. The temporary Azure resource group was deleted on 10 November 2026 after configuration and evidence preservation. The repository is currently the source of truth for the completed work; the Azure environment is not running. Post-teardown checks for retained resources and delayed billing remain an operational follow-up.
+
+## Version status
+
+| Version | Focus | Main work | Status |
+|---|---|---|---|
+| **V1** | Secure application deployment | Azure VM, Ubuntu, VNet, subnet, NSG, Nginx, React/Vite, Node.js Express API, HTTPS | **Completed** |
+| **V2** | Identity, secrets and governance | Managed Identity, Azure Key Vault, RBAC, Key Vault network restrictions, Azure Policy | **Completed** |
+| **V3** | Hardening and operations | Network hardening, monitoring, backup and restore, patching, Azure Bicep and GitHub Actions OIDC | Planned |
+| **V4** | Detection and investigation | Microsoft Sentinel, KQL, security posture checks and incident investigation | Planned |
+| **V5** | Architecture and resilience | Availability, disaster recovery, RTO/RPO and Zero Trust review | Planned |
+
+See the [version roadmap](docs/versions/) for scope and implementation records.
+
+---
+
+## V1 — Initial Azure application deployment
+
+V1 established the cloud hosting foundation for Togetherly Workforce.
+
+**Implemented components**
 
 - Azure Virtual Network, application subnet and Network Security Group.
 - Ubuntu 24.04 Linux VM in Central India.
-- Nginx serving the React/Vite frontend over HTTPS.
-- Node.js Express TinyFish API running as a systemd service on `127.0.0.1:3001`.
-- Nginx reverse proxy for `/api/tinyfish/*`.
-- Integration with external Supabase and TinyFish services.
-- **V1 status:** Implemented; all 12 sanitised evidence screenshots uploaded under [`evidence/v1/`](evidence/v1/) the temporary Azure resource group was deleted on 10 November 2026.
+- Nginx serving the React/Vite frontend and handling HTTPS with a Let's Encrypt TLS certificate.
+- Node.js Express API running as a systemd service.
+- Nginx reverse proxy forwarding `/api/tinyfish/*` requests to the API on `127.0.0.1:3001`.
+- Supabase for application authentication and data.
+- TinyFish integration for Search, Fetch and Agent workflows.
 
-**Architecture note:** Azure Functions was considered during planning but was not deployed. The V1 API runs on the VM as a Node.js Express service. See [V1 architecture](docs/architecture/v1-architecture.md).
+**V1 request path**
 
-## V2 — Identity, secrets and governance
+```mermaid
+flowchart LR
+    B[User browser] -->|HTTPS| N[Nginx on Azure VM]
+    N --> F[React / Vite frontend]
+    N -->|/api/tinyfish/*| A[Node.js Express API]
+    A --> S[Supabase]
+    A --> T[TinyFish]
+```
 
-V2 adds security controls to the existing VM-based application:
+The API ran on the VM and was managed by systemd. Azure Functions was considered during planning but was **not deployed**.
 
-- System-assigned Managed Identity on the Azure VM.
-- Azure Key Vault with RBAC permission model, soft delete and purge protection.
-- TinyFish API credential stored in Key Vault and retrieved by the Node.js API through Azure Identity and Key Vault SDKs.
-- Key Vault network access restricted to the selected VNet/subnet and an explicitly allowed administrator IP address.
-- Key Vault service endpoint enabled on the application subnet.
-- Key Vault Secrets User assigned to the VM identity; Key Vault Secrets Officer assigned to the authorised operator.
-- Resource-group-scoped `Project=Togetherly` tag policy assignment configured with **DoNotEnforce**.
-- Policy compliance scan reported 8 of 8 resources compliant.
-- TinyFish Search, Fetch and Agent workflows re-tested after the security integration.
-- Fourteen V2 evidence files present in [`evidence/v2/`](evidence/v2/).
+**Evidence:** 12 sanitised V1 screenshots are available in [evidence/v1](evidence/v1/).  
+**Release:** [V1.0.0](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v1.0.0)
 
-V2 was configured manually through the Azure Portal and verified from the VM and application. **GitHub OIDC, a Key Vault private endpoint, Azure Functions, and Bicep deployment were not implemented in V2.** See [V2 implementation record](docs/versions/v2.md) and [V2 architecture](docs/architecture/v2-architecture.md).
+## V2 — Identity, secrets management and governance
 
-## Roadmap
+V2 strengthened the existing V1 hosting architecture rather than replacing it.
 
-| Version | Certification milestone | Focus | Status |
-|---|---|---|---|
-| V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Implemented; evidence uploaded; resource group deleted |
-| V2 | After SC-900 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; Azure environment deleted; all 14 screenshots uploaded |
-| V3 | After AZ-104 | Network hardening, monitoring, backup and operations, plus Bicep, GitHub OIDC and a Key Vault private endpoint deferred from V2 | Planned |
-| V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
-| V5 | After AZ-305 | Availability, disaster recovery and resilience | Planned |
+**Implemented security controls**
 
-The project will use a **rebuild-and-destroy lifecycle** for each version milestone. See the [V1/V2 Infrastructure Preservation Pack](docs/preservation/v2-infrastructure-preservation-pack.md) for the captured configuration, known gaps, deletion checklist and V3 rebuild sequence. After a version is completed, tested, documented, released and its evidence is safely preserved in GitHub, the Azure resource group and its billable resources will be deleted to prevent idle infrastructure costs. Before the next milestone, the completed earlier versions will be recreated from source-controlled **Azure Bicep** templates, then the new version will be added. V1 and V2 were originally configured manually through the Azure Portal; beginning with V3, Bicep becomes the source of truth for rebuilding V1, V2 and the new V3 infrastructure. Terraform is not part of this project.
+- Enabled a system-assigned Managed Identity on the Azure VM.
+- Stored the TinyFish API credential in Azure Key Vault.
+- Updated the Node.js API to retrieve the secret using Azure Identity `DefaultAzureCredential` and the Key Vault `SecretClient`.
+- Removed the TinyFish API key from the VM application's `.env` file.
+- Assigned **Key Vault Secrets User** to the VM identity and **Key Vault Secrets Officer** to the authorised operator.
+- Restricted Key Vault public network access to selected network paths, including the application VNet/subnet and an administrator IP allow-list.
+- Enabled the `Microsoft.KeyVault` service endpoint on the application subnet.
+- Applied the built-in tag policy for `Project=Togetherly` at resource-group scope.
+- Re-tested TinyFish Search, Fetch, Agent execution and Agent status after the security changes.
+
+**V2 verification result:** the Azure Policy scan reported **8 of 8 evaluated resources compliant** at the time of the scan. The assignment used **DoNotEnforce**, so it evaluated compliance without blocking resource operations.
+
+**V2 secret retrieval flow**
+
+```mermaid
+flowchart TD
+    VM[Azure VM] --> MI[System-assigned Managed Identity]
+    MI -->|Identity token| API[Node.js Express API]
+    API -->|DefaultAzureCredential + SecretClient| KV[Azure Key Vault]
+    KV -->|TINYFISH-API-KEY| API
+    API -->|Server-side request| TF[TinyFish]
+```
+
+The secret is retrieved server-side and is not sent to the browser. Key Vault uses its public endpoint with network ACL restrictions and a VNet service endpoint. **A Key Vault Private Endpoint was not deployed.**
+
+**Evidence:** all 14 V2 screenshot files are available in [evidence/v2](evidence/v2/).  
+**Release:** [V2.0.0](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
+
+---
+
+## Technology stack
+
+| Area | Technologies |
+|---|---|
+| Cloud platform | Microsoft Azure |
+| Compute | Azure Virtual Machines, Ubuntu Linux |
+| Networking | Azure Virtual Network, subnet, Network Security Groups, Key Vault service endpoint |
+| Web and API hosting | Nginx, Node.js, Express, systemd |
+| Frontend | React, Vite |
+| Identity and secrets | System-assigned Managed Identity, Azure Key Vault, Azure RBAC |
+| Governance | Azure Policy |
+| Application services | Supabase, TinyFish |
+| Transport security | HTTPS, Let's Encrypt TLS certificates |
+| Infrastructure as Code | Azure Bicep planned for V3 |
+| CI/CD identity | GitHub Actions OIDC planned for V3 |
 
 ## Repository guide
 
-- [Project overview](PROJECT_OVERVIEW.md): purpose, architecture and roadmap.
-- [Architecture](docs/architecture/): V1 and V2 architecture and network design.
-- [Version records](docs/versions/): implementation status and plans.
-- [Security review](docs/security/v2-review.md): V2 controls, limitations and residual risks.
-- [Cost and operations review](docs/runbooks/v2-cost-and-operations-review.md): cost drivers and safe shutdown guidance.
-- [Infrastructure](infra/): provisioning records and temporary environment resource inventory.
-- [Infrastructure preservation pack](docs/preservation/v2-infrastructure-preservation-pack.md): V1/V2 configuration, pre-deletion checklist and V3 Bicep rebuild sequence.
-- [Evidence](evidence/): versioned implementation evidence.
-- [Deployment runbook](docs/runbooks/deployment.md): V1 deployment record.
+| Path | Purpose |
+|---|---|
+| [docs/architecture](docs/architecture/) | Architecture diagrams, request flows and network design |
+| [docs/versions](docs/versions/) | Version implementation records and roadmap |
+| [docs/security](docs/security/) | Security reviews, controls and limitations |
+| [docs/runbooks](docs/runbooks/) | Deployment, operations and cost guidance |
+| [docs/preservation](docs/preservation/) | V1/V2 configuration preservation and V3 rebuild plan |
+| [docs/releases](docs/releases/) | Version release notes |
+| [infra](infra/) | Infrastructure records and resource inventory |
+| [application](application/) | Azure-specific application deployment notes |
+| [evidence](evidence/) | Sanitised, versioned implementation screenshots |
 
-The Togetherly Workforce application source is maintained separately: [togetherly-workforce](https://github.com/Faizankhan-cyber/togetherly-workforce).
+The Togetherly Workforce application source code is maintained separately in the [togetherly-workforce repository](https://github.com/Faizankhan-cyber/togetherly-workforce).
 
-## Safety
+## Rebuild and cost approach
 
-- Never commit credentials, API keys, tokens, private keys, `.env` files or personal identifiers.
+V1 and V2 were configured manually through the Azure Portal. The project follows a **build, verify, document and decommission** cycle so that cloud resources are not left running when they are not needed.
+
+Beginning with V3, Azure Bicep is planned as the source of truth for rebuilding the completed V1/V2 infrastructure and deploying new versioned changes. GitHub Actions OIDC is also planned for Azure authentication in the V3 workflow.
+
+The resource-group deletion was confirmed, but separately retained resources, soft-deleted Key Vault recovery state and delayed billing still need to be checked in Azure. Resource-group deletion alone does not prove that every possible resource or charge has been cleared.
+
+## Project boundaries
+
+- This repository contains Azure infrastructure records, architecture, documentation, version plans and implementation evidence. It is not the Togetherly Workforce application source repository.
+- V1 and V2 are implementation records, not a currently running public Azure deployment.
+- V2 did not include a Key Vault Private Endpoint, Azure Functions, GitHub Actions OIDC, Bicep deployment, Microsoft Sentinel or Log Analytics.
+- The V2 tag policy was configured in DoNotEnforce mode; the 8/8 result is a policy compliance snapshot, not a full security audit.
+- This is a learning and portfolio project, not a penetration test, independent security audit or compliance certification.
+
+## Security
+
+- Never commit API keys, tokens, passwords, private keys, `.env` files or raw authentication data.
 - Keep TinyFish credentials server-side and retrieve them through Managed Identity.
-- Review screenshots and logs before publishing.
-- Delete Azure resources only after the version's code, configuration, documentation, release and sanitised evidence are preserved and verified.
-- The temporary V1/V2 resource group `rg-togetherly-platform` was deleted on 2026-11-10 after evidence and configuration preservation. Check Azure for retained disks, public IPs, snapshots, soft-deleted Key Vault state and delayed charges. Recreate the environment from Bicep for V3.
-- Check for resources outside the resource group and soft-deleted Key Vaults that may remain after resource-group deletion.
-- Never commit secrets or live personal/billing identifiers to the Bicep templates or parameter files.
-- Do not treat a compliant tag-policy result as a complete security audit.
-- Keep live Azure billing screenshots and remaining credit balances private.
+- Review screenshots and logs before publishing; redact subscription IDs, tenant IDs, principal IDs, public IP addresses and personal information.
+- Test only systems owned by the project or explicitly authorised for testing.
+- Do not publish private billing information or student credit balances.
 
-## License
+## Project links
 
-No open-source license has been selected. All rights reserved unless a license is added.
+- [GitHub repository](https://github.com/Faizankhan-cyber/togetherly-azure-platform)
+- [V2.0.0 release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
+- [Togetherly Workforce application source](https://github.com/Faizankhan-cyber/togetherly-workforce)
