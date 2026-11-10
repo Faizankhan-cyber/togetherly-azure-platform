@@ -9,14 +9,14 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 ## Current status
 
-**V1 deployment and application workflow verification are complete. V2 workload identity, Key Vault secret management, network restrictions and Azure Policy governance have been implemented and functionally tested.** All 14 V2 screenshot files are present under `evidence/v2/`. The remaining evidence task is a full-size visual privacy/readability review.
+**V1 and V2 implementation, functional verification and screenshot uploads are complete.** All 14 V2 screenshots are uploaded under `evidence/v2/`. A separate full-size privacy/readability review remains an optional evidence-quality check, not an outstanding upload.
 
 The V2 VM service-status screenshot showed the service active at capture time. The current VM state has not been independently rechecked during this repository review. Confirm **Stopped (deallocated)** when the VM is not being used. Deallocation stops VM compute billing but does not remove managed-disk, retained public-IP or Key Vault charges.
 
 ## Releases
 
 - **V1.0.0:** [Release notes](docs/releases/v1.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v1.0.0). The tag points to the V1 completion commit, before V2 work.
-- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). The tag represents the V2 implementation and documentation milestone. All 14 evidence files are present; full-size visual review remains open.
+- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). The tag represents the V2 implementation and documentation milestone. All 14 evidence files are uploaded; V2 evidence upload is complete.
 
 ## V1 — Initial Azure deployment
 
@@ -49,13 +49,13 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 
 ## Roadmap
 
-| Version | Focus | Status |
-|---|---|---|
-| V1 | Azure hosting, networking, HTTPS and application integration | Implemented; VM-based workload |
-| V2 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Implemented; 14 evidence files present |
-| V3 | Network hardening, monitoring, backup and operations | Planned |
-| V4 | Microsoft Sentinel, KQL and security investigation | Planned |
-| V5 | Availability, disaster recovery and resilience | Planned |
+| Version | Certification milestone | Focus | Status |
+|---|---|---|---|
+| V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Completed |
+| V2 | After SC-500 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; all 14 screenshots uploaded |
+| V3 | After AZ-104 | Network hardening, monitoring, backup and operations | Planned |
+| V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
+| V5 | After AZ-305 | Availability, disaster recovery and resilience | Planned |
 
 The versions build on one shared resource group, `rg-togetherly-platform`. Preserve shared resources during version-specific cleanup. V1 and V2 were configured manually through the Azure Portal. Azure Bicep is reserved for a later infrastructure-as-code milestone. Terraform is not part of this project.
 
