@@ -29,4 +29,4 @@ This is the planned sequence supplied for the project. Keep the milestone labels
 - [Network topology](network-topology.md)
 - [Version records](../versions/)
 
-The V2 design extends the V1 VM-hosted application. It does not introduce a Key Vault Private Endpoint, GitHub OIDC, Azure Functions or Bicep deployment.
+The V2 design extends the V1 VM-hosted application. It does not introduce a Key Vault Private Endpoint, GitHub OIDC, Azure Functions or Bicep deployment. V1 and V2 were originally deployed manually. After each version is closed and its evidence/configuration is preserved, the Azure environment is planned to be deleted; from V3 onward, Azure Bicep will recreate the completed earlier versions and deploy the new version. Key Vault soft-delete retention and purge protection must be accounted for when choosing vault names during rebuilds.
