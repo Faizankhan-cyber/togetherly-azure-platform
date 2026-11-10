@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-- Access to the Azure subscription and the shared `rg-togetherly-platform` resource group.
+- Access to the Azure subscription; create a temporary deployment resource group named `rg-togetherly-platform` for the V1/V2 environment.
 - Confirm available student credit and estimated costs before creating or starting resources.
 - Verify resource region, VM SKU, public IP, disk, VNet, subnet, and NSG settings.
 - Keep the SSH private key and all application secrets outside Git.
@@ -13,7 +13,7 @@
 
 ## Deployed sequence
 
-1. Verify the shared resource group.
+1. Create or verify the temporary V1/V2 environment resource group.
 2. Create the VNet `vnet-togetherly-platform` and subnet `snet-app`.
 3. Create `nsg-togetherly-v1`; allow SSH only from the administrator's current public IP and allow HTTP/HTTPS for the public web application.
 4. Provision `vm-togetherly-v1` with Ubuntu Server 24.04 LTS in Central India and attach it to the subnet/NSG.
@@ -47,7 +47,7 @@ The initial proposal to host the TinyFish API on Azure Functions was not impleme
 - If Nginx configuration fails, restore the last known-good configuration before reloading.
 - If the API service fails, inspect `systemctl status tinyfish-api` and `journalctl -u tinyfish-api`; never paste secret-bearing logs into GitHub.
 - Before deallocating or deleting resources, inspect dependencies and Azure Cost Management.
-- Never delete `rg-togetherly-platform` as part of V1 cleanup.
+- The owner intends to delete the temporary `rg-togetherly-platform` environment after V2 closure and preservation. Follow the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md); do not delete it until all pre-deletion checks are complete and the owner approves.
 - A deallocated VM may still incur disk and public IP charges. Review each resource separately.
 
 The V1 VM was user-confirmed deallocated on 9 November 2026. This runbook documents the historical deployment and does not mean the services are currently running.
