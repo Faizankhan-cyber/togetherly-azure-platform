@@ -35,7 +35,7 @@ Findings and actions:
 4. The reviewed public platform documentation did not contain the TinyFish secret value, subscription ID or tenant ID in its prose.
 5. The V1 evidence folder contains sanitised public screenshots according to its evidence record. All 14 V2 screenshot files are present under `evidence/v2/`; full-size visual review for redactions and readability remains outstanding.
 
-This review did not scan all Git history, every binary/image, every commit in both repositories, GitHub Actions secrets, the live VM filesystem, Supabase production settings or Azure tenant-wide IAM. A clean current README is not proof that a secret was never committed in history.
+This review did not scan all Git history, every binary/image, every commit in both repositories, GitHub Actions secrets, the live VM filesystem, Supabase production settings or Azure tenant-wide IAM. A clean current README is not proof that a secret was never committed in history. The 14 V2 image files are present in the platform repository, but their full-size visual contents were not inspected as part of this review.
 
 ## Residual risks and follow-up
 
@@ -51,11 +51,11 @@ This review did not scan all Git history, every binary/image, every commit in bo
 
 ## Release status and remaining checks
 
-The Git tag and published GitHub release `v2.0.0` do not yet exist. Release notes are prepared in `docs/releases/v2.0.0.md`. All 14 screenshot files are present in the repository, but their full-size privacy review and live operational checks remain open.
+The Git tag `v2.0.0` and published GitHub release are now live. All 14 screenshot files are present in `evidence/v2/`; their full-size privacy/readability review and live operational checks remain open. The release does not claim that every screenshot has been independently reviewed.
 
-Before publishing the V2 screenshot evidence:
+Before treating the evidence review as closed:
 
-- Upload all 14 screenshots only after redacting account emails, subscription/tenant identifiers, principal IDs, public IP addresses, secret values and tokens.
+- Inspect all 14 screenshots at full size and redact account emails, subscription/tenant identifiers, principal IDs, public IP addresses, secret values and tokens.
 - Confirm the Key Vault networking screenshot shows the intended VNet/subnet rule and service endpoint without revealing the administrator IP.
 - Confirm Search, Fetch and Agent evidence reflects the post-V2 application, not only the earlier V1 tests.
 - Check current Azure VM state and Cost Management actuals/forecast. This documentation review did not access the Azure subscription or billing data.
