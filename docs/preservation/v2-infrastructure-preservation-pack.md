@@ -5,7 +5,7 @@
 **Prepared:** 2026-11-10  
 **Environment:** Azure for Students, Central India  
 **Previous resource group:** `rg-togetherly-platform` (deleted on 2026-11-10; owner-confirmed)  
-**Versions covered:** V1 (AZ-900) and V2 (SC-500)  
+**Versions covered:** V1 (AZ-900) and V2 (SC-900)  
 **Evidence:** [V1 evidence](../../evidence/v1/) · [V2 evidence](../../evidence/v2/)
 
 > **Important:** This pack is based on the repository's implementation records and Azure screenshots supplied for this closure. It is not a live Azure export. The owner confirmed deletion of the resource group on 2026-11-10. Unknown values are deliberately marked as not captured rather than guessed; verify them during the Bicep rebuild rather than treating this document as an exact deployment export.
@@ -28,7 +28,7 @@ V1 and V2 were originally provisioned manually through the Azure Portal. After V
 | Region | Central India |
 | Resource group | `rg-togetherly-platform` |
 | V1 milestone | After AZ-900 |
-| V2 milestone | After SC-500 |
+| V2 milestone | After SC-900 |
 | Provisioning method used | Azure Portal, manual |
 | V1/V2 Bicep deployment | Not performed |
 | Current state | Resource group deleted on 2026-11-10 (owner-confirmed); post-deletion resource and billing checks remain |

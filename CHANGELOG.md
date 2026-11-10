@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-11-10 — Documentation corrections and V3 scope
+
+- Corrected the V2 certification milestone from SC-500 to SC-900. V4 remains SC-500.
+- Updated the V2 evidence filename tables to match the files in `evidence/v2/`.
+- Renamed the V1 SSH evidence file to remove the double dot.
+- Recorded that Azure Bicep is the infrastructure method from V3 onward and Terraform is not used.
+- Moved the items excluded from V2 into the V3 plan: Bicep rebuild, GitHub OIDC, Key Vault private endpoint, Azure Monitor and Log Analytics, Sentinel workspace and security testing.
+- No controls were added. All V3 items remain planned.
+
 ## 2026-11-10 — V2 implementation documentation
 
 - Recorded the V2 Managed Identity, Key Vault, RBAC, network restriction and Azure Policy implementation.

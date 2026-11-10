@@ -15,7 +15,7 @@ This directory contains the platform architecture, network topology, trust bound
 - Distinguish deployed and verified components from planned future capabilities.
 - The resource group `rg-togetherly-platform` is shared across the cumulative V1–V5 platform.
 - V1 and V2 were provisioned manually through the Azure Portal.
-- Azure Bicep was considered for V2 but was **not implemented**. Bicep remains a possible future IaC milestone; Terraform is not part of the current project.
+- Azure Bicep was considered for V2 but was **not implemented**. Bicep is the planned IaC method beginning with V3; Terraform is not part of the current project.
 - The deployed TinyFish API is a Node.js Express service on the VM, not Azure Functions.
 - V2 Key Vault uses a public endpoint with network ACL restrictions and a VNet service endpoint; it does not use a Private Endpoint.
 - V2 Azure Policy assignment uses DoNotEnforce and evaluates compliance without blocking resource operations.

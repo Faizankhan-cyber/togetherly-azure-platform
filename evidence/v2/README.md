@@ -1,23 +1,23 @@
 # V2 Evidence
 
-All 14 V2 implementation screenshots have been uploaded to this folder. GitHub lists 14 image files plus this README. The uploaded files use the `.png.jpeg` suffix created during upload. The screenshot upload deliverable is complete; a separate full-size visual privacy review is still recommended.
+All 14 V2 implementation screenshots have been uploaded to this folder. GitHub lists 14 image files plus this README. The uploaded files are named `NN-sanitized-NN-<description>.jpg`. The screenshot upload deliverable is complete; a separate full-size visual privacy review is still recommended.
 
 | No. | Evidence | Filename |
 |---:|---|---|
-| 01 | VM system-assigned Managed Identity | `01-vm-system-assigned-managed-identity.png.jpeg` |
-| 02 | Key Vault VM Secrets User and operator Secrets Officer RBAC | `02-key-vault-vm-secrets-user-rbac.png.jpeg` |
-| 03 | Key Vault overview | `03-key-vault-overview.png.jpeg` |
-| 04 | Key Vault security properties | `04-key-vault-security-properties.png.jpeg` |
-| 05 | Key Vault secret inventory, with no secret value | `05-key-vault-secret-inventory.png.jpeg` |
-| 06 | Key Vault network access and subnet service endpoint | `06-key-vault-network-security.png.jpeg` |
-| 07 | VM Managed Identity Key Vault retrieval success | `07-vm-managed-identity-keyvault-retrieval.png.jpeg` |
-| 08 | TinyFish API systemd service status | `08-tinyfish-api-service-status.png.jpeg` |
-| 09 | Azure Policy assignment and DoNotEnforce mode | `09-v2-project-tag-policy-assignment.png.jpeg` |
-| 10 | Azure Policy compliance overview | `10-v2-project-tag-policy-compliance.png.jpeg` |
-| 11 | Individual resource compliance details | `11-v2-policy-resource-compliance-details.png.jpeg` |
-| 12 | TinyFish Search verification | `12-tinyfish-search-verification.png.jpeg` |
-| 13 | TinyFish Fetch verification | `13-tinyfish-fetch-verification.png.jpeg` |
-| 14 | TinyFish Agent execution and status | `14-tinyfish-agent-execution-status.png.jpeg` |
+| 01 | VM system-assigned Managed Identity | `01-sanitized-01-vm-system-assigned-managed-identity.jpg` |
+| 02 | Key Vault VM Secrets User and operator Secrets Officer RBAC | `02-sanitized-02-key-vault-vm-secrets-user-rbac.jpg` |
+| 03 | Key Vault overview | `03-sanitized-03-key-vault-overview.jpg` |
+| 04 | Key Vault security properties | `04-sanitized-04-key-vault-security-properties.jpg` |
+| 05 | Key Vault secret inventory, with no secret value | `05-sanitized-05-key-vault-secret-inventory.jpg` |
+| 06 | Key Vault network access and subnet service endpoint | `06-sanitized-06-key-vault-network-security.jpg` |
+| 07 | VM Managed Identity Key Vault retrieval success | `07-sanitized-07-vm-managed-identity-keyvault-retrieval.jpg` |
+| 08 | TinyFish API systemd service status | `08-sanitized-08-tinyfish-api-service-status.jpg` |
+| 09 | Azure Policy assignment and DoNotEnforce mode | `09-sanitized-09-v2-project-tag-policy-assignment.jpg` |
+| 10 | Azure Policy compliance overview | `10-sanitized-10-v2-project-tag-policy-compliance.jpg` |
+| 11 | Individual resource compliance details | `11-sanitized-11-v2-policy-resource-compliance-details.jpg` |
+| 12 | TinyFish Search verification | `12-sanitized-12-tinyfish-search-verification.jpg` |
+| 13 | TinyFish Fetch verification | `13-sanitized-13-tinyfish-fetch-verification.jpg` |
+| 14 | TinyFish Agent execution and status | `14-sanitized-14-tinyfish-agent-execution-status.jpg` |
 
 ## Evidence completion checklist
 

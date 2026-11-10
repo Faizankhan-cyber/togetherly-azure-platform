@@ -7,7 +7,7 @@ Togetherly Azure Platform is a cumulative project built in five versions, with e
 | Version | Certification milestone |
 |---|---|
 | V1 | After AZ-900 |
-| V2 | After SC-500 |
+| V2 | After SC-900 |
 | V3 | After AZ-104 |
 | V4 | After SC-500 |
 | V5 | After AZ-305 |
