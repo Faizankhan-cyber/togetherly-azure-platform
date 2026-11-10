@@ -1,6 +1,6 @@
 # V2 Evidence
 
-All 14 V2 implementation screenshots are now present in this folder. GitHub lists 14 image files plus this README. The uploaded files use the `.png.jpeg` suffix created during upload. File presence has been verified; each image still needs a full-size visual privacy review before being described as fully reviewed.
+All 14 V2 implementation screenshots are present in this folder. GitHub lists 14 image files plus this README. The uploaded files use the `.png.jpeg` suffix created during upload. File presence has been verified; each image still needs a full-size visual privacy review before being described as fully reviewed.
 
 | No. | Evidence | Filename |
 |---:|---|---|
@@ -27,4 +27,4 @@ All 14 V2 implementation screenshots are now present in this folder. GitHub list
 - [ ] Ensure the Key Vault secret value is never visible.
 - [ ] Keep unredacted originals private.
 - [x] Upload all 14 screenshot files to `evidence/v2/`.
-- [ ] After visual review, update the V2 release notes if the release is amended or a follow-up release is published. The existing `v2.0.0` release archive predates these image uploads.
+- [ ] After visual review, publish the V2 Git tag and GitHub release using `docs/releases/v2.0.0.md`.
