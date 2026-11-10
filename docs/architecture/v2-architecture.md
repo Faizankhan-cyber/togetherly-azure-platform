@@ -1,6 +1,6 @@
 # V2 Architecture — Managed Identity, Key Vault and Governance
 
-**Status:** Implemented and functionally verified; sanitised screenshot publication pending.  
+**Status:** Implemented and functionally verified; all 14 screenshot files are present; full-size privacy review pending.  
 **Deployment method:** Manual Azure Portal configuration.  
 **Region:** Central India.  
 **Resource group:** `rg-togetherly-platform`.
