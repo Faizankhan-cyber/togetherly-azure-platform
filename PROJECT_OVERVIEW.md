@@ -13,6 +13,8 @@ This project is separate from Togetherly CloudSec Platform / CloudSec Engine and
 
 ## V1 implementation
 
+**Status:** Implemented; all 12 sanitised evidence screenshots are uploaded under [`evidence/v1/`](evidence/v1/). The temporary V1/V2 Azure resource group was deleted on 10 November 2026 after preservation.
+
 The V1 frontend and TinyFish API were hosted on one Ubuntu Linux VM in Central India.
 
 ```text
@@ -61,7 +63,7 @@ See [V2 architecture and trust boundaries](docs/architecture/v2-architecture.md)
 
 | Version | Certification milestone | Focus | Main capabilities | Status |
 |---|---|---|---|---|
-| V1 | After AZ-900 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented |
+| V1 | After AZ-900 | Initial hosting | VM, VNet, subnet, NSG, Nginx, frontend, TinyFish API and HTTPS | Implemented; evidence uploaded; resource group deleted |
 | V2 | After SC-500 | Identity and governance | Managed Identity, Key Vault, RBAC, Key Vault network ACLs, service endpoint and tag policy | Completed; resource group deleted; all 14 screenshots uploaded |
 | V3 | After AZ-104 | Hardening and operations | Network controls, Azure Monitor, Log Analytics, alerts, backup, restore and patching | Planned |
 | V4 | After SC-500 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
