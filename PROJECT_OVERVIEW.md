@@ -7,7 +7,7 @@ Togetherly Azure Platform is a cumulative cloud engineering project built around
 - **Cloud:** Microsoft Azure
 - **Shared resource group:** `rg-togetherly-platform`
 - **Region:** Central India
-- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. V2's screenshot-upload checklist is complete.
+- **Current milestone:** V1 and V2 implemented and functionally verified; all 14 V2 screenshots uploaded. The project is preparing to destroy the current Azure environment after final V2 closure, then recreate V1 and V2 through Bicep for V3.
 
 This project is separate from Togetherly CloudSec Platform / CloudSec Engine and the older Azure Enterprise Infrastructure project.
 
@@ -67,7 +67,7 @@ See [V2 architecture and trust boundaries](docs/architecture/v2-architecture.md)
 | V4 | After SC-500 | Detection and investigation | Microsoft Sentinel, KQL, Python posture checks and incident investigation | Planned |
 | V5 | After AZ-305 | Architecture and resilience | Availability, disaster recovery, measured RTO/RPO and Zero Trust review | Planned |
 
-V1 and V2 were configured manually through the Azure Portal. Azure Bicep is reserved for a later infrastructure-as-code milestone. Terraform is not part of this project.
+V1 and V2 were originally configured manually through the Azure Portal. From V3 onward, the project will use Azure Bicep to recreate the previous completed versions and deploy the new version. After each version is completed and its evidence/configuration is safely preserved, the Azure environment will be deleted to avoid ongoing charges until the next milestone. Terraform is not part of this project.
 
 ## Repository responsibilities
 
@@ -83,7 +83,8 @@ V1 and V2 were configured manually through the Azure Portal. Azure Bicep is rese
 - Do not commit subscription IDs, tenant IDs, personal IP addresses, private keys or raw authentication data.
 - Do not modify production Supabase data, policies or authentication settings without separate approval.
 - Test only project-owned or explicitly authorised systems.
-- Verify resource dependencies before deleting resources.
-- All versions share `rg-togetherly-platform`; never delete it during version-specific cleanup.
+- Delete Azure resources only after the completed version's source, Bicep templates, configuration records, documentation, release and sanitised evidence are safely preserved.
+- The current `rg-togetherly-platform` environment is temporary and is planned for deletion after V2 closure; V3 will recreate it through Bicep.
+- Check for resources outside the resource group and soft-deleted Key Vaults that may remain after deletion.
 - Azure Policy tag compliance is a governance check, not proof that every resource is secure.
 - Billing amounts and personal credit balances are private and are intentionally not recorded here.
