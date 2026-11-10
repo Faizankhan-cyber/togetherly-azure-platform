@@ -1,4 +1,4 @@
-# Togetherly Azure Platform
+                                                               # Togetherly Azure Platform
 
 <p align="center">
   <strong>A versioned Azure cloud engineering project focused on secure application hosting, identity, secrets management and cloud governance.</strong>
