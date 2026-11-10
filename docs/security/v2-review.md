@@ -33,7 +33,7 @@ Findings and actions:
 2. The application repository's `.env.example` contains placeholders and explicitly warns against placing a service-role key in frontend environment variables.
 3. The application repository's `.gitignore` currently ignores `.env` but does not yet ignore all `.env.*` variants. A direct update was rejected by GitHub branch protection because changes must go through a pull request with required status checks. Treat this as an open repository-hygiene finding; add `.env.*` and an explicit `!.env.example` exception through a reviewed PR.
 4. The reviewed public platform documentation did not contain the TinyFish secret value, subscription ID or tenant ID in its prose.
-5. The V1 evidence folder contains sanitised public screenshots according to its evidence record. V2 screenshots have not yet been uploaded and must be reviewed before publication.
+5. The V1 evidence folder contains sanitised public screenshots according to its evidence record. All 14 V2 screenshot files are present under `evidence/v2/`; full-size visual review for redactions and readability remains outstanding.
 
 This review did not scan all Git history, every binary/image, every commit in both repositories, GitHub Actions secrets, the live VM filesystem, Supabase production settings or Azure tenant-wide IAM. A clean current README is not proof that a secret was never committed in history.
 
@@ -51,7 +51,7 @@ This review did not scan all Git history, every binary/image, every commit in bo
 
 ## Release status and remaining checks
 
-The Git tag and published GitHub release `v2.0.0` already exist. The release notes disclose that the 14 V2 screenshot files are pending owner upload. This review records the implementation release while keeping evidence publication and live operational checks open.
+The Git tag and published GitHub release `v2.0.0` do not yet exist. Release notes are prepared in `docs/releases/v2.0.0.md`. All 14 screenshot files are present in the repository, but their full-size privacy review and live operational checks remain open.
 
 Before publishing the V2 screenshot evidence:
 
