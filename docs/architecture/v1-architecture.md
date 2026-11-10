@@ -2,7 +2,7 @@
 
 **Implementation status:** Deployed and smoke-tested; VM deallocated on 2026-11-09  
 **Hosting model:** Azure VM, Nginx, static frontend, and local Node.js API service  
-**Resource group:** `rg-togetherly-platform` (shared by V1–V5)  
+**Resource group:** `rg-togetherly-platform` (temporary V1/V2 environment; planned for deletion after preservation)  
 **Region:** Central India
 
 ## Integrated application and infrastructure diagram
@@ -25,7 +25,7 @@ Editable source: [V1 integrated Mermaid diagram](diagrams/v1-architecture.mmd).
 
 | Component | Responsibility | Recorded state |
 |---|---|---|
-| Resource Group | Shared V1–V5 management boundary | Created |
+| Resource Group | Temporary V1/V2 environment boundary | Created; planned for deletion after preservation |
 | VNet / subnet | VM network boundary | Created |
 | NSG | Controls inbound SSH, HTTP, and HTTPS | Configured during deployment |
 | Ubuntu VM | Hosts Nginx, frontend build, and API process | User-confirmed deallocated on 2026-11-09 |
