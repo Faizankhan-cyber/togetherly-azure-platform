@@ -9,14 +9,12 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 ## Current status
 
-**V1 and V2 implementation, functional verification and screenshot uploads are complete.** All 14 V2 screenshots are uploaded under `evidence/v2/`. A separate full-size privacy/readability review remains an optional evidence-quality check, not an outstanding upload.
-
-The V2 VM service-status screenshot showed the service active at capture time. The current VM state has not been independently rechecked during this repository review. Confirm **Stopped (deallocated)** when the VM is not being used. Deallocation stops VM compute billing but does not remove managed-disk, retained public-IP or Key Vault charges.
+**V1 and V2 are officially complete.** V2 implementation, functional verification, all 14 evidence uploads, GitHub release `v2.0.0`, preservation documentation and Azure resource-group teardown are complete. The owner confirmed that `rg-togetherly-platform` was deleted from Azure Portal on 2026-11-10. A post-teardown check for retained/orphaned resources and delayed billing remains an operational follow-up; resource-group deletion alone does not prove that every separately retained resource or charge is gone.
 
 ## Releases
 
 - **V1.0.0:** [Release notes](docs/releases/v1.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v1.0.0). The tag points to the V1 completion commit, before V2 work.
-- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). The tag represents the V2 implementation and documentation milestone. All 14 evidence files are uploaded; V2 evidence upload is complete.
+- **V2.0.0:** [Release notes](docs/releases/v2.0.0.md) · [GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). V2 implementation, verification, evidence upload and Azure teardown are complete.
 
 ## V1 — Initial Azure deployment
 
@@ -52,7 +50,7 @@ V2 was configured manually through the Azure Portal and verified from the VM and
 | Version | Certification milestone | Focus | Status |
 |---|---|---|---|
 | V1 | After AZ-900 | Azure hosting, networking, HTTPS and application integration | Completed |
-| V2 | After SC-500 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; all 14 screenshots uploaded |
+| V2 | After SC-500 | Managed Identity, Key Vault, RBAC, network restrictions and Azure Policy | Completed; Azure environment deleted; all 14 screenshots uploaded |
 | V3 | After AZ-104 | Network hardening, monitoring, backup and operations | Planned |
 | V4 | After SC-500 | Microsoft Sentinel, KQL and security investigation | Planned |
 | V5 | After AZ-305 | Availability, disaster recovery and resilience | Planned |
@@ -79,7 +77,7 @@ The Togetherly Workforce application source is maintained separately: [togetherl
 - Keep TinyFish credentials server-side and retrieve them through Managed Identity.
 - Review screenshots and logs before publishing.
 - Delete Azure resources only after the version's code, configuration, documentation, release and sanitised evidence are preserved and verified.
-- The current `rg-togetherly-platform` resource group is a temporary V1/V2 environment and is planned for deletion after the preservation checklist is complete. Recreate it from Bicep for V3.
+- The temporary V1/V2 resource group `rg-togetherly-platform` was deleted on 2026-11-10 after evidence and configuration preservation. Check Azure for retained disks, public IPs, snapshots, soft-deleted Key Vault state and delayed charges. Recreate the environment from Bicep for V3.
 - Check for resources outside the resource group and soft-deleted Key Vaults that may remain after resource-group deletion.
 - Never commit secrets or live personal/billing identifiers to the Bicep templates or parameter files.
 - Do not treat a compliant tag-policy result as a complete security audit.
