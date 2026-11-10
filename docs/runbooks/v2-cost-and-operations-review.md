@@ -70,10 +70,27 @@ The VM was running during the V2 API service verification screenshot. The projec
 - [ ] Review current-month actual cost and forecast in Azure Cost Management.
 - [ ] Confirm a budget and alert threshold are configured; remember that alerts are not hard spending caps.
 
+## Planned rebuild-and-destroy lifecycle
+
+The project owner has chosen to delete the Azure environment after each version is completed, tested, documented, released and its evidence/configuration is safely preserved. This avoids ongoing charges while waiting for the next certification milestone.
+
+For V2 closure, the intended sequence is:
+
+1. Preserve application source, deployment instructions, architecture/network settings, NSG rules, role assignments, policy parameters, Key Vault configuration metadata, release notes and sanitised evidence in GitHub or a secure private backup.
+2. Confirm all secrets can be recreated securely. Never commit secret values, credentials, private keys or tokens to Git, Bicep files or parameter files.
+3. Check DNS, resource dependencies and resources outside `rg-togetherly-platform` that may be billed separately.
+4. Delete the resource group only after final owner approval.
+5. Check Azure Cost Management and the resource inventory after deletion to confirm which charges have stopped and whether any retained resources remain.
+6. Before V3, use Azure Bicep to recreate V1 and V2, then deploy V3 after AZ-104. Repeat the same preservation and teardown process after future version milestones.
+
+**Key Vault recovery caveat:** `togetherly-key-2026` has 90-day soft-delete retention and purge protection enabled. Resource-group deletion does not immediately purge a soft-deleted vault. The vault name may remain reserved during the retention period, and purge protection prevents early permanent deletion. Plan to use a new versioned Key Vault name during the Bicep rebuild if the original name is unavailable. Keep recovery protections enabled.
+
+This teardown is a plan; do not treat it as completed until the Azure Portal confirms the resource group deletion and a follow-up cost/resource review is performed.
+
 ## Safe cleanup rules
 
-- Preserve `rg-togetherly-platform`; it is shared across project versions.
-- Do not delete Key Vault while the VM or application still depends on it.
-- Do not delete the VNet, subnet, NSG, NIC, public IP or disk without checking dependencies.
-- Keep the Key Vault soft-delete and purge-protection safeguards enabled.
+- Do not delete resources until the version's source, configuration, documentation, release and sanitised evidence are preserved.
+- Check dependencies before deleting the VNet, subnet, NSG, NIC, public IP, VM or disk.
+- Keep the Key Vault soft-delete and purge-protection safeguards enabled and account for retained vaults when rebuilding.
+- Check for billable resources outside the resource group after deletion.
 - Keep all credentials and billing screenshots private.
