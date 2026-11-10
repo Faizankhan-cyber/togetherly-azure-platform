@@ -4,19 +4,19 @@ A cumulative Azure cloud engineering project built around the Togetherly Workfor
 
 [![Microsoft Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoftazure&logoColor=white)](https://azure.microsoft.com/)
 [![V1](https://img.shields.io/badge/V1-Deployed-blue)](docs/versions/v1.md)
-[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md) [![Release](https://img.shields.io/badge/Release-v2.0.0-blue)](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0)
+[![V2](https://img.shields.io/badge/V2-Implemented%20%7C%20Evidence%20Uploaded-blue)](docs/versions/v2.md)
 [![Roadmap](https://img.shields.io/badge/Roadmap-V1%E2%80%93V5-informational)](docs/versions/)
 
 ## Current status
 
-**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** The `v2.0.0` GitHub release is published. All 14 V2 screenshot files are now uploaded under `evidence/v2/`; a full-size visual privacy review remains outstanding.
+**V1 is deployed and its application workflows were verified. V2 identity, secret-management, network and governance controls have been implemented and functionally tested.** All 14 V2 screenshot files are present under `evidence/v2/`; a full-size visual privacy review remains outstanding. The V2 release notes are prepared, but the Git tag and published GitHub release still need to be created.
 
 The VM was running during V2 service verification; its current live state has not been independently rechecked for this documentation update. Confirm that it is **Stopped (deallocated)** when not testing. Managed disks, a retained public IP and Key Vault operations may still incur charges while the VM is deallocated.
 
 ## Releases
 
 - **V1.0.0:** [Release notes prepared](docs/releases/v1.0.0.md). The GitHub tag and published release are still pending. The intended tag target is the V1 completion commit, before V2 changes.
-- **V2.0.0:** [Published GitHub release](https://github.com/Faizankhan-cyber/togetherly-azure-platform/releases/tag/v2.0.0). Its release archive predates the later V2 screenshot upload; the current `main` branch contains all 14 screenshot files.
+- **V2.0.0:** [Release notes prepared](docs/releases/v2.0.0.md). The Git tag and published GitHub release are pending. All 14 V2 screenshot files are present on `main`; full-size privacy review remains open.
 
 ## V1 — Initial Azure deployment
 
