@@ -3,7 +3,7 @@
 **Status:** Implemented and functionally verified; all 14 screenshot files are present; full-size privacy/readability review remains open.  
 **Deployment method:** Manual Azure Portal configuration.  
 **Region:** Central India.  
-**Resource group:** `rg-togetherly-platform`.
+**Resource group:** `rg-togetherly-platform` (temporary V1/V2 environment; planned for deletion after preservation).
 
 ## Architecture diagram
 
@@ -84,4 +84,4 @@ The VM successfully retrieved the secret without printing its value. The API ser
 
 The V2 deployment reuses the existing VM and uses a Standard Key Vault, a subnet service endpoint and RBAC. It does not add a Private Endpoint, Azure Functions or a separate monitoring workspace. The VM was running during the service-status capture. Its current state and current Azure Cost Management actuals/forecast have not been independently queried during this repository review. The VM, managed disk, retained public IP and Key Vault operations may have separate charges; see [V2 cost and operations review](../runbooks/v2-cost-and-operations-review.md).
 
-These checks record implementation-time evidence. They are not a formal penetration test, independent audit or guarantee that the current live configuration has not changed. See [V2 implementation record](../versions/v2.md) and [V2 security review](../security/v2-review.md).
+These checks record implementation-time evidence. They are not a formal penetration test, independent audit or guarantee that the current live configuration has not changed. See the [V1/V2 Infrastructure Preservation Pack](../preservation/v2-infrastructure-preservation-pack.md), [V2 implementation record](../versions/v2.md) and [V2 security review](../security/v2-review.md).
